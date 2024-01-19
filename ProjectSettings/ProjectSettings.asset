@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: ecstest
+  productName: Impact Frames
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -642,7 +642,8 @@ PlayerSettings:
   webGLMemoryGeometricGrowthStep: 0.2
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Standalone: STEAMWORKS_NET
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
@@ -753,7 +754,7 @@ PlayerSettings:
   cloudProjectId: 91e16ce9-f11b-4423-946a-c8098b9fe36d
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: ecstest
+  projectName: Impact Frames
   organizationId: lindelow
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

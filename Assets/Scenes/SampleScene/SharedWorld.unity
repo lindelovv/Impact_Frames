@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 736007550}
   - component: {fileID: 736007549}
   m_Layer: 0
-  m_Name: Spawner
+  m_Name: Player1 Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cfee5800409b8a4e8e748d112bdad08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerOne: {fileID: 5530559309006933450, guid: b7add5145c54eda42b3b6a85e54ee16c, type: 3}
+  Player: {fileID: 5530559309006933450, guid: b7add5145c54eda42b3b6a85e54ee16c, type: 3}
 --- !u!4 &736007550
 Transform:
   m_ObjectHideFlags: 0
@@ -162,7 +162,7 @@ Transform:
   m_GameObject: {fileID: 736007548}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -1,15 +1,17 @@
 {
   "dependencies": {
+    "com.rlabrecque.steamworks.net": "https://github.com/rlabrecque/Steamworks.NET.git?path=/com.rlabrecque.steamworks.net",
     "com.unity.collab-proxy": "2.2.0",
     "com.unity.entities": "1.0.16",
     "com.unity.entities.graphics": "1.0.16",
     "com.unity.feature.development": "1.0.1",
     "com.unity.netcode": "1.0.17",
     "com.unity.render-pipelines.universal": "14.0.9",
-    "com.unity.textmeshpro": "3.0.6",
+    "com.unity.textmeshpro": "3.0.7",
     "com.unity.timeline": "1.7.6",
     "com.unity.ugui": "1.0.0",
     "com.unity.visualscripting": "1.9.1",
+    "unityggpo.plugin": "https://github.com/nykwil/UnityGGPO.git?path=/Unity/Packages/UnityGGPO",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
