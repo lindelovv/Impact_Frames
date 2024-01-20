@@ -4,8 +4,6 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Transforms;
-using UnityEngine;
-using UnityEngine.Jobs;
 
 [UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
 [BurstCompile]
@@ -36,9 +34,9 @@ public partial struct MoveSystem : ISystem
 public partial struct MoveJob : IJobEntity
 {
     public float Speed;
-    public void Execute(InputComponent input, ref LocalTransform transform)
+    public void Execute(in InputComponent input, ref LocalTransform transform)
     {
-        var move = new float2(input.X, input.Y);
+        var move = new float2(input.Value.x, input.Value.y);
         move = math.normalizesafe(move) * Speed;
         transform.Position += new float3(move.x, move.y, 0);
     }

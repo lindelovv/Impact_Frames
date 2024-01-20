@@ -24,13 +24,76 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
     ""name"": ""IA_PlayerControls"",
     ""maps"": [
         {
-            ""name"": ""Jump"",
-            ""id"": ""20faccd5-5cce-4eea-86af-6721a0e8f7c1"",
+            ""name"": ""Combat"",
+            ""id"": ""64e2c0a0-4d9b-44e1-95ea-cf37e683f77a"",
             ""actions"": [
                 {
-                    ""name"": ""New action"",
+                    ""name"": ""Jump"",
                     ""type"": ""Button"",
-                    ""id"": ""7076ddf3-5b8f-4fa9-8d29-dba3bfb56080"",
+                    ""id"": ""3cd1477a-2f4d-408d-a918-f712a7492cf5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""cc207a49-7524-4ed3-994b-f065d04ee84f"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Punch"",
+                    ""type"": ""Button"",
+                    ""id"": ""75be10c4-6b91-4f4c-bcf7-be6eaf079dd4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Kick"",
+                    ""type"": ""Button"",
+                    ""id"": ""f25a4586-a842-48a5-8fd4-a49374a58aee"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Block/Parry"",
+                    ""type"": ""Button"",
+                    ""id"": ""1e68240f-90b2-4233-959a-691bdcb6262e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpecialMove"",
+                    ""type"": ""Value"",
+                    ""id"": ""71dea3a5-9f90-4ef3-99a4-1f5eed7805bb"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Value"",
+                    ""id"": ""3ac40184-ee4a-4529-be7c-1e997936717f"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""AnimCancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""9863559a-63b6-4fee-b315-d33e28f845bf"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -40,274 +103,133 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""b0a13816-d08d-41a5-b3f9-ad5e32f08ff0"",
+                    ""id"": ""b62c76d3-3877-4db2-b185-f65a2dd60572"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Move"",
-            ""id"": ""88c9f6f3-f5a1-40c6-a489-df99e2cb94a0"",
-            ""actions"": [
+                },
                 {
-                    ""name"": ""New action"",
-                    ""type"": ""Value"",
-                    ""id"": ""a01a6ccc-e88b-49a4-8448-74553de3fe4c"",
-                    ""expectedControlType"": ""Vector3"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": ""3D Vector"",
-                    ""id"": ""04c5921e-d7e1-46e3-acf1-aa82d6aaf2bb"",
-                    ""path"": ""3DVector"",
+                    ""name"": ""WASD"",
+                    ""id"": ""4b4ce5ab-2551-4004-b460-924f2c6ddea7"",
+                    ""path"": ""2DVector(mode=1)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""Move"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""up"",
-                    ""id"": ""ea4acc1f-3042-45a5-8ffb-6865b00e471b"",
+                    ""name"": ""Up"",
+                    ""id"": ""91f68a09-a1e5-42e9-9a0d-9a30c6facd63"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""down"",
-                    ""id"": ""85a2329a-7ee0-4d63-802b-d123b00684b8"",
+                    ""name"": ""Down"",
+                    ""id"": ""45807c0f-a406-44ef-b29e-10661f59c28d"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""left"",
-                    ""id"": ""5a6b7a9f-780d-4e64-bd5b-5d6e1a64aecc"",
+                    ""name"": ""Left"",
+                    ""id"": ""08e9ae22-94d7-4b1c-8bb4-4ae76da012d5"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""right"",
-                    ""id"": ""72678b8c-fa65-4bbe-aac1-ceb6297a2d69"",
+                    ""name"": ""Right"",
+                    ""id"": ""290c8870-a92e-4925-a656-4baaa935e81d"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
-                {
-                    ""name"": ""forward"",
-                    ""id"": ""e50345a5-033a-4148-a605-efa9dc909aaf"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""New action"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""backward"",
-                    ""id"": ""78184071-5baf-4eab-9f99-450b095a83c8"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""New action"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                }
-            ]
-        },
-        {
-            ""name"": ""Punch"",
-            ""id"": ""d46bce77-990d-409e-93e5-1cac8e54aec7"",
-            ""actions"": [
-                {
-                    ""name"": ""New action"",
-                    ""type"": ""Button"",
-                    ""id"": ""a24a2e50-c4d4-4e2e-bc2e-02577d0c0fbb"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""42eb0783-d768-4003-ad4c-5c83f5bc73b2"",
+                    ""id"": ""9d4bc08e-352c-4d28-ae7c-df792ce5ddd5"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""Punch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Kick"",
-            ""id"": ""54308231-9d0d-4e11-856f-26abb565a14a"",
-            ""actions"": [
-                {
-                    ""name"": ""New action"",
-                    ""type"": ""Button"",
-                    ""id"": ""0baf8b59-c246-4a81-8a57-1a4654f30ba1"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
+                },
                 {
                     ""name"": """",
-                    ""id"": ""3adc60a5-1768-48f6-9093-86fdc7f3cfd6"",
+                    ""id"": ""1c93a62c-d2d5-405c-9f83-c6c6c7eadbbd"",
                     ""path"": ""<Mouse>/backButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""Kick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Block/Parray"",
-            ""id"": ""de86cd41-e8e4-4d71-b729-b5906dbbfd7b"",
-            ""actions"": [
-                {
-                    ""name"": ""New action"",
-                    ""type"": ""Button"",
-                    ""id"": ""32299d4d-f702-4b89-8879-3e6ab0a466fe"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
+                },
                 {
                     ""name"": """",
-                    ""id"": ""c3d7ca94-fb9f-4848-a3c9-1abc62c45771"",
+                    ""id"": ""f65d4d29-c143-4465-a0c1-8ca1bb2747ef"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""Block/Parry"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Special Move"",
-            ""id"": ""000b63f3-1ae7-4b40-9e14-ce68836c4e45"",
-            ""actions"": [
-                {
-                    ""name"": ""New action"",
-                    ""type"": ""Value"",
-                    ""id"": ""ae85ccd7-e5eb-4cc7-bd9f-eb2280d76cce"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                }
-            ],
-            ""bindings"": [
+                },
                 {
                     ""name"": """",
-                    ""id"": ""50b0f35a-9028-4040-b980-b81d115a8856"",
+                    ""id"": ""8988e38e-38ed-47ee-b59d-2c76fe39ee16"",
                     ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""SpecialMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Dash"",
-            ""id"": ""0dce0483-fe5d-4232-9213-81bc38aab411"",
-            ""actions"": [
-                {
-                    ""name"": ""New action"",
-                    ""type"": ""Value"",
-                    ""id"": ""30bd20c0-116b-45ec-b323-d80b8e59889f"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                }
-            ],
-            ""bindings"": [
+                },
                 {
                     ""name"": """",
-                    ""id"": ""cbb7d65e-f344-4234-bfc2-7235d0f54525"",
+                    ""id"": ""7142f8f4-343e-440e-9ccf-513cafdebb65"",
                     ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""AnimCancle"",
-            ""id"": ""29ce4ec1-5c58-4245-a4ab-efa382edd5aa"",
-            ""actions"": [
-                {
-                    ""name"": ""New action"",
-                    ""type"": ""Button"",
-                    ""id"": ""1015458e-5a67-41a8-97a5-79d24de977a0"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
+                },
                 {
                     ""name"": """",
-                    ""id"": ""9f7c109f-265c-47d8-9e82-bf7def709c12"",
+                    ""id"": ""38212729-b926-4571-a587-c9e2b7921488"",
                     ""path"": ""<Mouse>/forwardButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""AnimCancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -316,30 +238,16 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // Jump
-        m_Jump = asset.FindActionMap("Jump", throwIfNotFound: true);
-        m_Jump_Newaction = m_Jump.FindAction("New action", throwIfNotFound: true);
-        // Move
-        m_Move = asset.FindActionMap("Move", throwIfNotFound: true);
-        m_Move_Newaction = m_Move.FindAction("New action", throwIfNotFound: true);
-        // Punch
-        m_Punch = asset.FindActionMap("Punch", throwIfNotFound: true);
-        m_Punch_Newaction = m_Punch.FindAction("New action", throwIfNotFound: true);
-        // Kick
-        m_Kick = asset.FindActionMap("Kick", throwIfNotFound: true);
-        m_Kick_Newaction = m_Kick.FindAction("New action", throwIfNotFound: true);
-        // Block/Parray
-        m_BlockParray = asset.FindActionMap("Block/Parray", throwIfNotFound: true);
-        m_BlockParray_Newaction = m_BlockParray.FindAction("New action", throwIfNotFound: true);
-        // Special Move
-        m_SpecialMove = asset.FindActionMap("Special Move", throwIfNotFound: true);
-        m_SpecialMove_Newaction = m_SpecialMove.FindAction("New action", throwIfNotFound: true);
-        // Dash
-        m_Dash = asset.FindActionMap("Dash", throwIfNotFound: true);
-        m_Dash_Newaction = m_Dash.FindAction("New action", throwIfNotFound: true);
-        // AnimCancle
-        m_AnimCancle = asset.FindActionMap("AnimCancle", throwIfNotFound: true);
-        m_AnimCancle_Newaction = m_AnimCancle.FindAction("New action", throwIfNotFound: true);
+        // Combat
+        m_Combat = asset.FindActionMap("Combat", throwIfNotFound: true);
+        m_Combat_Jump = m_Combat.FindAction("Jump", throwIfNotFound: true);
+        m_Combat_Move = m_Combat.FindAction("Move", throwIfNotFound: true);
+        m_Combat_Punch = m_Combat.FindAction("Punch", throwIfNotFound: true);
+        m_Combat_Kick = m_Combat.FindAction("Kick", throwIfNotFound: true);
+        m_Combat_BlockParry = m_Combat.FindAction("Block/Parry", throwIfNotFound: true);
+        m_Combat_SpecialMove = m_Combat.FindAction("SpecialMove", throwIfNotFound: true);
+        m_Combat_Dash = m_Combat.FindAction("Dash", throwIfNotFound: true);
+        m_Combat_AnimCancel = m_Combat.FindAction("AnimCancel", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -398,403 +306,116 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Jump
-    private readonly InputActionMap m_Jump;
-    private List<IJumpActions> m_JumpActionsCallbackInterfaces = new List<IJumpActions>();
-    private readonly InputAction m_Jump_Newaction;
-    public struct JumpActions
+    // Combat
+    private readonly InputActionMap m_Combat;
+    private List<ICombatActions> m_CombatActionsCallbackInterfaces = new List<ICombatActions>();
+    private readonly InputAction m_Combat_Jump;
+    private readonly InputAction m_Combat_Move;
+    private readonly InputAction m_Combat_Punch;
+    private readonly InputAction m_Combat_Kick;
+    private readonly InputAction m_Combat_BlockParry;
+    private readonly InputAction m_Combat_SpecialMove;
+    private readonly InputAction m_Combat_Dash;
+    private readonly InputAction m_Combat_AnimCancel;
+    public struct CombatActions
     {
         private @IA_PlayerControls m_Wrapper;
-        public JumpActions(@IA_PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_Jump_Newaction;
-        public InputActionMap Get() { return m_Wrapper.m_Jump; }
+        public CombatActions(@IA_PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Jump => m_Wrapper.m_Combat_Jump;
+        public InputAction @Move => m_Wrapper.m_Combat_Move;
+        public InputAction @Punch => m_Wrapper.m_Combat_Punch;
+        public InputAction @Kick => m_Wrapper.m_Combat_Kick;
+        public InputAction @BlockParry => m_Wrapper.m_Combat_BlockParry;
+        public InputAction @SpecialMove => m_Wrapper.m_Combat_SpecialMove;
+        public InputAction @Dash => m_Wrapper.m_Combat_Dash;
+        public InputAction @AnimCancel => m_Wrapper.m_Combat_AnimCancel;
+        public InputActionMap Get() { return m_Wrapper.m_Combat; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(JumpActions set) { return set.Get(); }
-        public void AddCallbacks(IJumpActions instance)
+        public static implicit operator InputActionMap(CombatActions set) { return set.Get(); }
+        public void AddCallbacks(ICombatActions instance)
         {
-            if (instance == null || m_Wrapper.m_JumpActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_JumpActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
+            if (instance == null || m_Wrapper.m_CombatActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CombatActionsCallbackInterfaces.Add(instance);
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
+            @Punch.started += instance.OnPunch;
+            @Punch.performed += instance.OnPunch;
+            @Punch.canceled += instance.OnPunch;
+            @Kick.started += instance.OnKick;
+            @Kick.performed += instance.OnKick;
+            @Kick.canceled += instance.OnKick;
+            @BlockParry.started += instance.OnBlockParry;
+            @BlockParry.performed += instance.OnBlockParry;
+            @BlockParry.canceled += instance.OnBlockParry;
+            @SpecialMove.started += instance.OnSpecialMove;
+            @SpecialMove.performed += instance.OnSpecialMove;
+            @SpecialMove.canceled += instance.OnSpecialMove;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
+            @AnimCancel.started += instance.OnAnimCancel;
+            @AnimCancel.performed += instance.OnAnimCancel;
+            @AnimCancel.canceled += instance.OnAnimCancel;
         }
 
-        private void UnregisterCallbacks(IJumpActions instance)
+        private void UnregisterCallbacks(ICombatActions instance)
         {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
+            @Punch.started -= instance.OnPunch;
+            @Punch.performed -= instance.OnPunch;
+            @Punch.canceled -= instance.OnPunch;
+            @Kick.started -= instance.OnKick;
+            @Kick.performed -= instance.OnKick;
+            @Kick.canceled -= instance.OnKick;
+            @BlockParry.started -= instance.OnBlockParry;
+            @BlockParry.performed -= instance.OnBlockParry;
+            @BlockParry.canceled -= instance.OnBlockParry;
+            @SpecialMove.started -= instance.OnSpecialMove;
+            @SpecialMove.performed -= instance.OnSpecialMove;
+            @SpecialMove.canceled -= instance.OnSpecialMove;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
+            @AnimCancel.started -= instance.OnAnimCancel;
+            @AnimCancel.performed -= instance.OnAnimCancel;
+            @AnimCancel.canceled -= instance.OnAnimCancel;
         }
 
-        public void RemoveCallbacks(IJumpActions instance)
+        public void RemoveCallbacks(ICombatActions instance)
         {
-            if (m_Wrapper.m_JumpActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_CombatActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IJumpActions instance)
+        public void SetCallbacks(ICombatActions instance)
         {
-            foreach (var item in m_Wrapper.m_JumpActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_CombatActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_JumpActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_CombatActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public JumpActions @Jump => new JumpActions(this);
-
-    // Move
-    private readonly InputActionMap m_Move;
-    private List<IMoveActions> m_MoveActionsCallbackInterfaces = new List<IMoveActions>();
-    private readonly InputAction m_Move_Newaction;
-    public struct MoveActions
+    public CombatActions @Combat => new CombatActions(this);
+    public interface ICombatActions
     {
-        private @IA_PlayerControls m_Wrapper;
-        public MoveActions(@IA_PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_Move_Newaction;
-        public InputActionMap Get() { return m_Wrapper.m_Move; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(MoveActions set) { return set.Get(); }
-        public void AddCallbacks(IMoveActions instance)
-        {
-            if (instance == null || m_Wrapper.m_MoveActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_MoveActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
-        }
-
-        private void UnregisterCallbacks(IMoveActions instance)
-        {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
-        }
-
-        public void RemoveCallbacks(IMoveActions instance)
-        {
-            if (m_Wrapper.m_MoveActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(IMoveActions instance)
-        {
-            foreach (var item in m_Wrapper.m_MoveActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_MoveActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public MoveActions @Move => new MoveActions(this);
-
-    // Punch
-    private readonly InputActionMap m_Punch;
-    private List<IPunchActions> m_PunchActionsCallbackInterfaces = new List<IPunchActions>();
-    private readonly InputAction m_Punch_Newaction;
-    public struct PunchActions
-    {
-        private @IA_PlayerControls m_Wrapper;
-        public PunchActions(@IA_PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_Punch_Newaction;
-        public InputActionMap Get() { return m_Wrapper.m_Punch; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PunchActions set) { return set.Get(); }
-        public void AddCallbacks(IPunchActions instance)
-        {
-            if (instance == null || m_Wrapper.m_PunchActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PunchActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
-        }
-
-        private void UnregisterCallbacks(IPunchActions instance)
-        {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
-        }
-
-        public void RemoveCallbacks(IPunchActions instance)
-        {
-            if (m_Wrapper.m_PunchActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(IPunchActions instance)
-        {
-            foreach (var item in m_Wrapper.m_PunchActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_PunchActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public PunchActions @Punch => new PunchActions(this);
-
-    // Kick
-    private readonly InputActionMap m_Kick;
-    private List<IKickActions> m_KickActionsCallbackInterfaces = new List<IKickActions>();
-    private readonly InputAction m_Kick_Newaction;
-    public struct KickActions
-    {
-        private @IA_PlayerControls m_Wrapper;
-        public KickActions(@IA_PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_Kick_Newaction;
-        public InputActionMap Get() { return m_Wrapper.m_Kick; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(KickActions set) { return set.Get(); }
-        public void AddCallbacks(IKickActions instance)
-        {
-            if (instance == null || m_Wrapper.m_KickActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_KickActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
-        }
-
-        private void UnregisterCallbacks(IKickActions instance)
-        {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
-        }
-
-        public void RemoveCallbacks(IKickActions instance)
-        {
-            if (m_Wrapper.m_KickActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(IKickActions instance)
-        {
-            foreach (var item in m_Wrapper.m_KickActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_KickActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public KickActions @Kick => new KickActions(this);
-
-    // Block/Parray
-    private readonly InputActionMap m_BlockParray;
-    private List<IBlockParrayActions> m_BlockParrayActionsCallbackInterfaces = new List<IBlockParrayActions>();
-    private readonly InputAction m_BlockParray_Newaction;
-    public struct BlockParrayActions
-    {
-        private @IA_PlayerControls m_Wrapper;
-        public BlockParrayActions(@IA_PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_BlockParray_Newaction;
-        public InputActionMap Get() { return m_Wrapper.m_BlockParray; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(BlockParrayActions set) { return set.Get(); }
-        public void AddCallbacks(IBlockParrayActions instance)
-        {
-            if (instance == null || m_Wrapper.m_BlockParrayActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_BlockParrayActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
-        }
-
-        private void UnregisterCallbacks(IBlockParrayActions instance)
-        {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
-        }
-
-        public void RemoveCallbacks(IBlockParrayActions instance)
-        {
-            if (m_Wrapper.m_BlockParrayActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(IBlockParrayActions instance)
-        {
-            foreach (var item in m_Wrapper.m_BlockParrayActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_BlockParrayActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public BlockParrayActions @BlockParray => new BlockParrayActions(this);
-
-    // Special Move
-    private readonly InputActionMap m_SpecialMove;
-    private List<ISpecialMoveActions> m_SpecialMoveActionsCallbackInterfaces = new List<ISpecialMoveActions>();
-    private readonly InputAction m_SpecialMove_Newaction;
-    public struct SpecialMoveActions
-    {
-        private @IA_PlayerControls m_Wrapper;
-        public SpecialMoveActions(@IA_PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_SpecialMove_Newaction;
-        public InputActionMap Get() { return m_Wrapper.m_SpecialMove; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(SpecialMoveActions set) { return set.Get(); }
-        public void AddCallbacks(ISpecialMoveActions instance)
-        {
-            if (instance == null || m_Wrapper.m_SpecialMoveActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_SpecialMoveActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
-        }
-
-        private void UnregisterCallbacks(ISpecialMoveActions instance)
-        {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
-        }
-
-        public void RemoveCallbacks(ISpecialMoveActions instance)
-        {
-            if (m_Wrapper.m_SpecialMoveActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(ISpecialMoveActions instance)
-        {
-            foreach (var item in m_Wrapper.m_SpecialMoveActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_SpecialMoveActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public SpecialMoveActions @SpecialMove => new SpecialMoveActions(this);
-
-    // Dash
-    private readonly InputActionMap m_Dash;
-    private List<IDashActions> m_DashActionsCallbackInterfaces = new List<IDashActions>();
-    private readonly InputAction m_Dash_Newaction;
-    public struct DashActions
-    {
-        private @IA_PlayerControls m_Wrapper;
-        public DashActions(@IA_PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_Dash_Newaction;
-        public InputActionMap Get() { return m_Wrapper.m_Dash; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(DashActions set) { return set.Get(); }
-        public void AddCallbacks(IDashActions instance)
-        {
-            if (instance == null || m_Wrapper.m_DashActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_DashActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
-        }
-
-        private void UnregisterCallbacks(IDashActions instance)
-        {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
-        }
-
-        public void RemoveCallbacks(IDashActions instance)
-        {
-            if (m_Wrapper.m_DashActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(IDashActions instance)
-        {
-            foreach (var item in m_Wrapper.m_DashActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_DashActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public DashActions @Dash => new DashActions(this);
-
-    // AnimCancle
-    private readonly InputActionMap m_AnimCancle;
-    private List<IAnimCancleActions> m_AnimCancleActionsCallbackInterfaces = new List<IAnimCancleActions>();
-    private readonly InputAction m_AnimCancle_Newaction;
-    public struct AnimCancleActions
-    {
-        private @IA_PlayerControls m_Wrapper;
-        public AnimCancleActions(@IA_PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_AnimCancle_Newaction;
-        public InputActionMap Get() { return m_Wrapper.m_AnimCancle; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(AnimCancleActions set) { return set.Get(); }
-        public void AddCallbacks(IAnimCancleActions instance)
-        {
-            if (instance == null || m_Wrapper.m_AnimCancleActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_AnimCancleActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
-        }
-
-        private void UnregisterCallbacks(IAnimCancleActions instance)
-        {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
-        }
-
-        public void RemoveCallbacks(IAnimCancleActions instance)
-        {
-            if (m_Wrapper.m_AnimCancleActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(IAnimCancleActions instance)
-        {
-            foreach (var item in m_Wrapper.m_AnimCancleActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_AnimCancleActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public AnimCancleActions @AnimCancle => new AnimCancleActions(this);
-    public interface IJumpActions
-    {
-        void OnNewaction(InputAction.CallbackContext context);
-    }
-    public interface IMoveActions
-    {
-        void OnNewaction(InputAction.CallbackContext context);
-    }
-    public interface IPunchActions
-    {
-        void OnNewaction(InputAction.CallbackContext context);
-    }
-    public interface IKickActions
-    {
-        void OnNewaction(InputAction.CallbackContext context);
-    }
-    public interface IBlockParrayActions
-    {
-        void OnNewaction(InputAction.CallbackContext context);
-    }
-    public interface ISpecialMoveActions
-    {
-        void OnNewaction(InputAction.CallbackContext context);
-    }
-    public interface IDashActions
-    {
-        void OnNewaction(InputAction.CallbackContext context);
-    }
-    public interface IAnimCancleActions
-    {
-        void OnNewaction(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
+        void OnPunch(InputAction.CallbackContext context);
+        void OnKick(InputAction.CallbackContext context);
+        void OnBlockParry(InputAction.CallbackContext context);
+        void OnSpecialMove(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
+        void OnAnimCancel(InputAction.CallbackContext context);
     }
 }

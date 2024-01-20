@@ -1,4 +1,5 @@
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.NetCode;
 using UnityEngine;
 
@@ -15,7 +16,6 @@ public class Input : MonoBehaviour
 
 [GhostComponent(PrefabType = GhostPrefabType.AllPredicted)]
 public struct InputComponent : IInputComponentData
-{ 
-    public int X;
-    public int Y;
+{
+    public float2 Value;
 }
