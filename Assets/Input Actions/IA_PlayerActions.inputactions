@@ -1,0 +1,263 @@
+{
+    "name": "IA_PlayerActions",
+    "maps": [
+        {
+            "name": "Jump",
+            "id": "20faccd5-5cce-4eea-86af-6721a0e8f7c1",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "7076ddf3-5b8f-4fa9-8d29-dba3bfb56080",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b0a13816-d08d-41a5-b3f9-ad5e32f08ff0",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Move",
+            "id": "88c9f6f3-f5a1-40c6-a489-df99e2cb94a0",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "a01a6ccc-e88b-49a4-8448-74553de3fe4c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "cff91281-be11-4f8d-a3a2-025579c6d1d1",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "48384acd-fd43-42a1-968f-c7a8007d48a0",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "54e3970b-e50c-4bd4-80cc-4b5ee8dc8b2f",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "69b4ff3b-917b-419e-ad99-50e5e15b7cbc",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Punch",
+            "id": "d46bce77-990d-409e-93e5-1cac8e54aec7",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "a24a2e50-c4d4-4e2e-bc2e-02577d0c0fbb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "42eb0783-d768-4003-ad4c-5c83f5bc73b2",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Kick",
+            "id": "54308231-9d0d-4e11-856f-26abb565a14a",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "0baf8b59-c246-4a81-8a57-1a4654f30ba1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3adc60a5-1768-48f6-9093-86fdc7f3cfd6",
+                    "path": "<Mouse>/backButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Block/Parray",
+            "id": "de86cd41-e8e4-4d71-b729-b5906dbbfd7b",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "32299d4d-f702-4b89-8879-3e6ab0a466fe",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c3d7ca94-fb9f-4848-a3c9-1abc62c45771",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Special Move",
+            "id": "000b63f3-1ae7-4b40-9e14-ce68836c4e45",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "ae85ccd7-e5eb-4cc7-bd9f-eb2280d76cce",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "50b0f35a-9028-4040-b980-b81d115a8856",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Dash",
+            "id": "0dce0483-fe5d-4232-9213-81bc38aab411",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "30bd20c0-116b-45ec-b323-d80b8e59889f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "cbb7d65e-f344-4234-bfc2-7235d0f54525",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "AnimCancle",
+            "id": "29ce4ec1-5c58-4245-a4ab-efa382edd5aa",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "1015458e-5a67-41a8-97a5-79d24de977a0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9f7c109f-265c-47d8-9e82-bf7def709c12",
+                    "path": "<Mouse>/forwardButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
