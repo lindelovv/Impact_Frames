@@ -12,7 +12,6 @@ public partial class InputSystem : SystemBase
     {
         state.RequireForUpdate<InputComponent>();
         state.RequireForUpdate<NetworkId>();
-
     }
 
     protected override void OnStartRunning()
@@ -33,7 +32,8 @@ public partial class InputSystem : SystemBase
             in SystemAPI.Query<RefRW<InputComponent>>()
                 .WithAll<GhostOwnerIsLocal>())
         {
-            input.ValueRW.Value = _inputActions.Combat.Move.ReadValue<Vector2>();
+            input.ValueRW.MoveValue = _inputActions.Combat.Move.ReadValue<Vector2>();
+            input.ValueRW.JumpValue = _inputActions.Combat.Jump.ReadValue<float>();
         }
     }
 }
