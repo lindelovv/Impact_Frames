@@ -3,6 +3,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Input : MonoBehaviour
 {
@@ -12,24 +13,50 @@ public class Input : MonoBehaviour
     {
         public override void Bake(Input authoring)
         {
-            InputComponent input = new InputComponent
+            InputComponentData inputData = new InputComponentData
             {
                 MovementSpeed = authoring.movementSpeed,
                 JumpStrength = authoring.jumpStrength,
             };
-            AddComponent(GetEntity(TransformUsageFlags.None), input);
+            AddComponent(GetEntity(TransformUsageFlags.None), inputData);
         }
     }
 }
 
 [GhostComponent(PrefabType = GhostPrefabType.AllPredicted)]
-public struct InputComponent : IInputComponentData
+public struct InputComponentData : IInputComponentData
 {
+
     // Movement
-    public float MovementSpeed;
+    public float MovementSpeed;  // byt ut mot player speed variabeln i Player.cs
     public float2 MoveValue;
     
-    // Jumping
+    // Jumping & DoubleJump
     public float JumpValue;
     public float JumpStrength;
+    public bool isJumping;
+
+
+    // Punch & HeavyPunch
+    public bool isPunching;
+    public float PunchValue;
+
+
+    // Kick & HeavyKick
+    public bool isKicking;
+
+
+    // Block
+
+    
+    // Parray
+
+
+    // Dash & AirDash
+
+
+    // Special Attack
+
+
+    // Animation Cancle
 }
