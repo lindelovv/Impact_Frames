@@ -28,15 +28,6 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
             ""id"": ""64e2c0a0-4d9b-44e1-95ea-cf37e683f77a"",
             ""actions"": [
                 {
-                    ""name"": ""Jump"",
-                    ""type"": ""Button"",
-                    ""id"": ""3cd1477a-2f4d-408d-a918-f712a7492cf5"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Move"",
                     ""type"": ""Value"",
                     ""id"": ""cc207a49-7524-4ed3-994b-f065d04ee84f"",
@@ -44,6 +35,15 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""3cd1477a-2f4d-408d-a918-f712a7492cf5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""Punch"",
@@ -101,72 +101,6 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""b62c76d3-3877-4db2-b185-f65a2dd60572"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Jump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""WASD"",
-                    ""id"": ""4b4ce5ab-2551-4004-b460-924f2c6ddea7"",
-                    ""path"": ""2DVector(mode=1)"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""Up"",
-                    ""id"": ""91f68a09-a1e5-42e9-9a0d-9a30c6facd63"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Down"",
-                    ""id"": ""45807c0f-a406-44ef-b29e-10661f59c28d"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Left"",
-                    ""id"": ""08e9ae22-94d7-4b1c-8bb4-4ae76da012d5"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Right"",
-                    ""id"": ""290c8870-a92e-4925-a656-4baaa935e81d"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
                 {
                     ""name"": """",
                     ""id"": ""9d4bc08e-352c-4d28-ae7c-df792ce5ddd5"",
@@ -232,6 +166,72 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""AnimCancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""WASD"",
+                    ""id"": ""4b4ce5ab-2551-4004-b460-924f2c6ddea7"",
+                    ""path"": ""2DVector(mode=1)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Up"",
+                    ""id"": ""91f68a09-a1e5-42e9-9a0d-9a30c6facd63"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Down"",
+                    ""id"": ""45807c0f-a406-44ef-b29e-10661f59c28d"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Left"",
+                    ""id"": ""08e9ae22-94d7-4b1c-8bb4-4ae76da012d5"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Right"",
+                    ""id"": ""290c8870-a92e-4925-a656-4baaa935e81d"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b62c76d3-3877-4db2-b185-f65a2dd60572"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -240,8 +240,8 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
 }");
         // Combat
         m_Combat = asset.FindActionMap("Combat", throwIfNotFound: true);
-        m_Combat_Jump = m_Combat.FindAction("Jump", throwIfNotFound: true);
         m_Combat_Move = m_Combat.FindAction("Move", throwIfNotFound: true);
+        m_Combat_Jump = m_Combat.FindAction("Jump", throwIfNotFound: true);
         m_Combat_Punch = m_Combat.FindAction("Punch", throwIfNotFound: true);
         m_Combat_Kick = m_Combat.FindAction("Kick", throwIfNotFound: true);
         m_Combat_BlockParry = m_Combat.FindAction("Block/Parry", throwIfNotFound: true);
@@ -309,8 +309,8 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
     // Combat
     private readonly InputActionMap m_Combat;
     private List<ICombatActions> m_CombatActionsCallbackInterfaces = new List<ICombatActions>();
-    private readonly InputAction m_Combat_Jump;
     private readonly InputAction m_Combat_Move;
+    private readonly InputAction m_Combat_Jump;
     private readonly InputAction m_Combat_Punch;
     private readonly InputAction m_Combat_Kick;
     private readonly InputAction m_Combat_BlockParry;
@@ -321,8 +321,8 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
     {
         private @IA_PlayerControls m_Wrapper;
         public CombatActions(@IA_PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Jump => m_Wrapper.m_Combat_Jump;
         public InputAction @Move => m_Wrapper.m_Combat_Move;
+        public InputAction @Jump => m_Wrapper.m_Combat_Jump;
         public InputAction @Punch => m_Wrapper.m_Combat_Punch;
         public InputAction @Kick => m_Wrapper.m_Combat_Kick;
         public InputAction @BlockParry => m_Wrapper.m_Combat_BlockParry;
@@ -338,12 +338,12 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_CombatActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_CombatActionsCallbackInterfaces.Add(instance);
-            @Jump.started += instance.OnJump;
-            @Jump.performed += instance.OnJump;
-            @Jump.canceled += instance.OnJump;
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
             @Punch.started += instance.OnPunch;
             @Punch.performed += instance.OnPunch;
             @Punch.canceled += instance.OnPunch;
@@ -366,12 +366,12 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
 
         private void UnregisterCallbacks(ICombatActions instance)
         {
-            @Jump.started -= instance.OnJump;
-            @Jump.performed -= instance.OnJump;
-            @Jump.canceled -= instance.OnJump;
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
             @Punch.started -= instance.OnPunch;
             @Punch.performed -= instance.OnPunch;
             @Punch.canceled -= instance.OnPunch;
@@ -409,8 +409,8 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
     public CombatActions @Combat => new CombatActions(this);
     public interface ICombatActions
     {
-        void OnJump(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
         void OnPunch(InputAction.CallbackContext context);
         void OnKick(InputAction.CallbackContext context);
         void OnBlockParry(InputAction.CallbackContext context);
