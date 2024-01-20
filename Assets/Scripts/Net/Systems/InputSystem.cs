@@ -1,8 +1,10 @@
 using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [UpdateInGroup(typeof(GhostInputSystemGroup))]
+
 public partial struct InputSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
@@ -17,8 +19,11 @@ public partial struct InputSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
+       
+
         bool left = UnityEngine.Input.GetKey(KeyCode.A);
         bool right = UnityEngine.Input.GetKey(KeyCode.D);
+        bool jump = 
 
         foreach (var input in SystemAPI.Query<RefRW<InputComponent>>()
                      .WithAll<GhostOwnerIsLocal>())
