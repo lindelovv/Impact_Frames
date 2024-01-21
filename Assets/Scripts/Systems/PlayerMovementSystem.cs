@@ -1,15 +1,9 @@
-using UnityEngine;
-using System.Collections;
-
-using System.Diagnostics;
-using System.Numerics;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Transforms;
-using UnityEngine.InputSystem;
 
 [UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
 [BurstCompile]
@@ -19,6 +13,7 @@ public partial struct PlayerMovementSystem : ISystem  // Detta hette tidigare Mo
     public void OnCreate(ref SystemState state)
     {
         var builder = new EntityQueryBuilder(Allocator.Temp)
+            .WithAll<PlayerComponent>()
             .WithAll<InputComponentData>()  //inputComponent för att komma åt inputscriptets inputs
             .WithAll<LocalTransform>(); // för att kunna röra saker, transform
         state.RequireForUpdate(state.GetEntityQuery(builder));
@@ -33,11 +28,6 @@ public partial struct PlayerMovementSystem : ISystem  // Detta hette tidigare Mo
     {
         var moveJob = new MoveJob { DeltaTime = SystemAPI.Time.DeltaTime };  //Movejob har valt deltatime som variablar vi vill ha där och Job är för multithreading
         state.Dependency = moveJob.ScheduleParallel(state.Dependency);
-
-        var fightJob = new FightJob { DeltaTimea = SystemAPI.Time.DeltaTime };
-        state.Dependency = fightJob.ScheduleParallel(state.Dependency);
-
-        
     }
 }
 
@@ -45,15 +35,14 @@ public partial struct PlayerMovementSystem : ISystem  // Detta hette tidigare Mo
 public partial struct MoveJob : IJobEntity
 {
     public float DeltaTime;
-    public void Execute(in InputComponentData input, ref LocalTransform transform)  // Execute tillhör IJobEntity Interfacet
+    public void Execute(in InputComponentData input, in PlayerComponent playerData, ref LocalTransform transform)  // Execute tillhör IJobEntity Interfacet
     {
         // Movement
-        var move = new float2(input.MoveValue.x, 0) * input.MovementSpeed;
+        var move = new float2(input.MoveValue.x, 0) * playerData.MovementSpeed;
         // Jump
-        move += new float2(0, input.JumpValue) * input.JumpStrength;
+        move += new float2(0, input.JumpValue) * playerData.JumpStrength;
         
         // Move
         transform.Position += new float3(move.x, move.y, 0) * DeltaTime;
     }
-
 }

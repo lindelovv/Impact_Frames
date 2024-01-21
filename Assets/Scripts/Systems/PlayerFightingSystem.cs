@@ -1,11 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
-using Unity.Transforms;
-using UnityEngine;
-using UnityEngine.InputSystem;
 
 public partial struct PlayerFightingSystem : ISystem
 {
@@ -24,20 +19,17 @@ public partial struct PlayerFightingSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-                var fightJob = new FightJob { DeltaTimea = SystemAPI.Time.DeltaTime };
+        var fightJob = new FightJob { DeltaTime = SystemAPI.Time.DeltaTime };
         state.Dependency = fightJob.ScheduleParallel(state.Dependency);
     }
-
 }
 
 [BurstCompile]
 public partial struct FightJob : IJobEntity
 {
-    public float DeltaTimea;
+    public float DeltaTime;
     public void Execute(in InputComponentData input)  // Execute tillhör IJobEntity Interfacet
     {
         
     }
-
-
 }
