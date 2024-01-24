@@ -11,7 +11,7 @@ public partial class InputSystem : SystemBase
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<InputComponentData>();
-        //state.RequireForUpdate<NetworkId>();
+        state.RequireForUpdate<NetworkId>();
     }
 
     protected override void OnStartRunning()
