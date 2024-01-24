@@ -2,6 +2,7 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 
+[BurstCompile]
 public partial struct PlayerFightingSystem : ISystem
 {
     [BurstCompile]

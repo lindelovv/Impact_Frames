@@ -3,6 +3,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
+using Unity.Physics;
 using Unity.Transforms;
 
 [UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
@@ -35,12 +36,18 @@ public partial struct PlayerMovementSystem : ISystem  // Detta hette tidigare Mo
 public partial struct MoveJob : IJobEntity
 {
     public float DeltaTime;
-    public void Execute(in InputComponentData input, in PlayerComponent playerData, ref LocalTransform transform)  // Execute tillhör IJobEntity Interfacet
+    public void Execute(in InputComponentData input, in PlayerComponent playerData, in PlayerStateComponent state,
+                        ref LocalTransform transform, ref PhysicsVelocity physicsVelocity, ref PhysicsMass physicsMass)  // Execute tillhör IJobEntity Interfacet
     {
         // Movement
         var move = new float2(input.MoveValue.x, 0) * playerData.MovementSpeed;
+        
         // Jump
-        move += new float2(0, input.JumpValue) * playerData.JumpStrength;
+        //if (state.isGrounded)
+        //{
+        //    physicsVelocity.ApplyLinearImpulse(physicsMass, new float3(0, input.JumpValue, 0) * playerData.JumpStrength);
+        //}
+        move += new float2(0, input.JumpValue) * playerData.JumpStrength; // replaced with above when state check working
         
         // Move
         transform.Position += new float3(move.x, move.y, 0) * DeltaTime;

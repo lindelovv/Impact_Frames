@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 7026778184379402400}
   - component: {fileID: 7430655030576913094}
   - component: {fileID: 5388867121681869033}
-  - component: {fileID: -1209883053618276682}
+  - component: {fileID: -5800080714922723149}
   - component: {fileID: 1244181283632142093}
   - component: {fileID: 1553344042008314389}
   m_Layer: 0
@@ -159,8 +159,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 10
-  MovementSpeed: 4
-  JumpStrength: 4
+  MovementSpeed: 6
+  JumpStrength: 8
 --- !u!114 &6524130790032669571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e929c1deb612afe41ac0cc1c87952e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testDataBool: 0
+  isGrounded: 0
 --- !u!114 &-1779064826349053475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,7 +262,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &-1209883053618276682
+--- !u!54 &-5800080714922723149
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -270,11 +270,11 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5530559309006933450}
   serializedVersion: 4
-  m_Mass: 10
+  m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.005
+  m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: -1, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaTensor: {x: 999, y: 999, z: 999}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
@@ -283,11 +283,11 @@ Rigidbody:
     serializedVersion: 2
     m_Bits: 0
   m_ImplicitCom: 0
-  m_ImplicitTensor: 1
+  m_ImplicitTensor: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 120
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &1244181283632142093
 MonoBehaviour:
