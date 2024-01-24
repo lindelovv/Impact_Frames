@@ -1,7 +1,10 @@
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.NetCode;
+using Unity.Transforms;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [BurstCompile]
@@ -67,6 +70,7 @@ public partial struct GoInGameServerSystem : ISystem
     public void OnUpdate(ref SystemState state)
     {
         var prefab = SystemAPI.GetSingleton<SpawnerComponent>().Player;
+        var spawnPoint = SystemAPI.GetSingleton<SpawnerComponent>().SpawnPoint;
         state.EntityManager.GetName(prefab, out FixedString64Bytes prefabName);
         
         var worldName = state.WorldUnmanaged.Name;
@@ -79,14 +83,16 @@ public partial struct GoInGameServerSystem : ISystem
             in SystemAPI.Query<RefRO<ReceiveRpcCommandRequest>>()
                 .WithAll<GoInGameRPC>()
                 .WithEntityAccess()
-        )
-        {
+        ) {
             cmdBuffer.AddComponent<NetworkStreamInGame>(reqSrc.ValueRO.SourceConnection);
             var networkId = m_NetworkId[reqSrc.ValueRO.SourceConnection];
             
             var player = cmdBuffer.Instantiate(prefab);
             cmdBuffer.SetComponent(player, new GhostOwner { NetworkId = networkId.Value });
+            cmdBuffer.SetComponent(player, new LocalTransform { Position = spawnPoint.Position, Rotation = spawnPoint.Rotation, Scale = spawnPoint.Scale });
+
             Debug.Log($"[Networking] {worldName} connecting {networkId.Value}");
+            
             cmdBuffer.AppendToBuffer(reqSrc.ValueRO.SourceConnection, new LinkedEntityGroup { Value = player });
             cmdBuffer.DestroyEntity(reqEntity);
         }

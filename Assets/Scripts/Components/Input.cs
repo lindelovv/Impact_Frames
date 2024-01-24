@@ -1,4 +1,3 @@
-using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
@@ -6,8 +5,9 @@ using UnityEngine;
 
 public class Input : MonoBehaviour
 {
-    [ReadOnly]
-    [SerializeField] private float2 MoveValue;
+    //-----------------------
+    [Tooltip("[float] Current amount of health."), SerializeField]
+    private float2 MoveValue;
     private class Baker : Baker<Input>
     {
         public override void Bake(Input authoring)
@@ -26,8 +26,6 @@ public struct InputComponentData : IInputComponentData
     
     // Jumping & DoubleJump
     public float JumpValue;
-    
-    public bool isJumping;
 
 
     // Punch & HeavyPunch
