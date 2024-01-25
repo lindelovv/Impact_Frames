@@ -27,13 +27,13 @@ public partial struct PlayerMovementSystem : ISystem  // Detta hette tidigare Mo
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        var moveJob = new MoveJob { DeltaTime = SystemAPI.Time.DeltaTime };  //Movejob har valt deltatime som variablar vi vill ha där och Job är för multithreading
+        var moveJob = new MovePlayerJob { DeltaTime = SystemAPI.Time.DeltaTime };  //Movejob har valt deltatime som variablar vi vill ha där och Job är för multithreading
         state.Dependency = moveJob.ScheduleParallel(state.Dependency);
     }
 }
 
 [BurstCompile]
-public partial struct MoveJob : IJobEntity
+public partial struct MovePlayerJob : IJobEntity
 {
     public float DeltaTime;
     public void Execute(in InputComponentData input, in PlayerComponentData playerData, in PlayerStateComponent state,
