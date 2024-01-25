@@ -1,6 +1,8 @@
 using Unity.Entities;
 using Unity.NetCode;
+using Unity.Transforms;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Player : MonoBehaviour
 {
@@ -21,9 +23,8 @@ public class Player : MonoBehaviour
         public override void Bake(Player authoring)
         {
             var entity = GetEntity(TransformUsageFlags.Dynamic);
-            AddComponent(entity, new PlayerComponent
+            AddComponent(entity, new PlayerComponentData
             {
-                Prefab = entity,
                 Health = authoring.Health,
                 MovementSpeed = authoring.MovementSpeed,
                 JumpStrength = authoring.JumpStrength,
@@ -32,10 +33,36 @@ public class Player : MonoBehaviour
     }
 }
 
-public struct PlayerComponent : IComponentData
+public struct PlayerComponentData : IComponentData
 {
-    public Entity Prefab; // Needed to link prefab to in game entity
     [GhostField] public float Health;
     [GhostField] public float MovementSpeed;
     [GhostField] public float JumpStrength;
 }
+
+/*
+ *  Useful for lookup, might need to use later [saved for reference of structure]
+ * 
+readonly partial struct PlayerAspect : IAspect
+{
+    public readonly Entity Self;
+
+    private readonly RefRW<LocalTransform> Transform;
+    private readonly RefRW<PlayerComponentData> Data;
+    public float Health
+    {
+        get => Data.ValueRO.Health;
+        set => Data.ValueRW.Health = value; 
+    }
+    public float MovementSpeed
+    {
+        get => Data.ValueRO.MovementSpeed;
+        set => Data.ValueRW.MovementSpeed = value; 
+    }
+    public float JumpStrength
+    {
+        get => Data.ValueRO.JumpStrength;
+        set => Data.ValueRW.JumpStrength = value; 
+    }
+}
+*/

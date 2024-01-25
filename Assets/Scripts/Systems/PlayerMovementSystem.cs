@@ -14,7 +14,7 @@ public partial struct PlayerMovementSystem : ISystem  // Detta hette tidigare Mo
     public void OnCreate(ref SystemState state)
     {
         var builder = new EntityQueryBuilder(Allocator.Temp)
-            .WithAll<PlayerComponent>()
+            .WithAll<PlayerComponentData>()
             .WithAll<InputComponentData>()  //inputComponent för att komma åt inputscriptets inputs
             .WithAll<LocalTransform>(); // för att kunna röra saker, transform
         state.RequireForUpdate(state.GetEntityQuery(builder));
@@ -36,7 +36,7 @@ public partial struct PlayerMovementSystem : ISystem  // Detta hette tidigare Mo
 public partial struct MoveJob : IJobEntity
 {
     public float DeltaTime;
-    public void Execute(in InputComponentData input, in PlayerComponent playerData, in PlayerStateComponent state,
+    public void Execute(in InputComponentData input, in PlayerComponentData playerData, in PlayerStateComponent state,
                         ref LocalTransform transform, ref PhysicsVelocity physicsVelocity, ref PhysicsMass physicsMass)  // Execute tillhör IJobEntity Interfacet
     {
         // Movement

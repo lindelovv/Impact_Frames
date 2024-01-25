@@ -7,6 +7,8 @@ using Unity.Transforms;
 using Unity.VisualScripting;
 using UnityEngine;
 
+//-----------------------
+// Client
 [BurstCompile]
 [WorldSystemFilter(WorldSystemFilterFlags.ClientSimulation | WorldSystemFilterFlags.ThinClientSimulation)]
 public partial struct GoInGameClientSystem : ISystem
@@ -23,18 +25,14 @@ public partial struct GoInGameClientSystem : ISystem
     }
 
     [BurstCompile]
-    public void OnDestroy(ref SystemState state)
-    {}
-
-    [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
         var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
-        foreach (
-            var (id, entity) 
-            in SystemAPI.Query<RefRO<NetworkId>>()
-                .WithEntityAccess()
-                .WithNone<NetworkStreamInGame>()
+        
+        foreach (var (id, entity) 
+                 in SystemAPI.Query<RefRO<NetworkId>>()
+                     .WithEntityAccess()
+                     .WithNone<NetworkStreamInGame>()
         ) {
             cmdBuffer.AddComponent<NetworkStreamInGame>(entity);
             var req = cmdBuffer.CreateEntity();
@@ -43,8 +41,12 @@ public partial struct GoInGameClientSystem : ISystem
         }
         cmdBuffer.Playback(state.EntityManager);
     }
+    
+    [BurstCompile] public void OnDestroy(ref SystemState state) {}
 }
 
+//-----------------------
+// Server
 [BurstCompile]
 [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
 public partial struct GoInGameServerSystem : ISystem
@@ -63,10 +65,6 @@ public partial struct GoInGameServerSystem : ISystem
     }
 
     [BurstCompile]
-    public void OnDestroy(ref SystemState state)
-    {}
-
-    [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
         var prefab = SystemAPI.GetSingleton<SpawnerComponent>().Player;
@@ -78,18 +76,17 @@ public partial struct GoInGameServerSystem : ISystem
         var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
         m_NetworkId.Update(ref state);
 
-        foreach (
-            var (reqSrc, reqEntity)
-            in SystemAPI.Query<RefRO<ReceiveRpcCommandRequest>>()
-                .WithAll<GoInGameRPC>()
-                .WithEntityAccess()
+        foreach (var (reqSrc, reqEntity)
+                 in SystemAPI.Query<RefRO<ReceiveRpcCommandRequest>>()
+                     .WithAll<GoInGameRPC>()
+                     .WithEntityAccess()
         ) {
             cmdBuffer.AddComponent<NetworkStreamInGame>(reqSrc.ValueRO.SourceConnection);
             var networkId = m_NetworkId[reqSrc.ValueRO.SourceConnection];
             
             var player = cmdBuffer.Instantiate(prefab);
             cmdBuffer.SetComponent(player, new GhostOwner { NetworkId = networkId.Value });
-            cmdBuffer.SetComponent(player, new LocalTransform { Position = spawnPoint.Position, Rotation = spawnPoint.Rotation, Scale = spawnPoint.Scale });
+            cmdBuffer.SetComponent(player, spawnPoint);
 
             Debug.Log($"[Networking] {worldName} connecting {networkId.Value}");
             
@@ -98,4 +95,6 @@ public partial struct GoInGameServerSystem : ISystem
         }
         cmdBuffer.Playback(state.EntityManager);
     }
+    
+    [BurstCompile] public void OnDestroy(ref SystemState state) {}
 }
