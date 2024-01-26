@@ -47,9 +47,9 @@ public partial struct MoveJob : IJobEntity
         if (state.isGrounded)
         {
             physicsVelocity.ApplyLinearImpulse(physicsMass, new float3(0, input.JumpValue, 0) * playerData.JumpStrength);
+            //move += new float2(0, input.JumpValue) * playerData.JumpStrength; // replaced with above when state check working
         }
-        //move += new float2(0, input.JumpValue) * playerData.JumpStrength; // replaced with above when state check working
-        
+
         // Move
         transform.Position += new float3(move.x, move.y, 0) * DeltaTime;
     }

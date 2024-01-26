@@ -1,17 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Burst;
 using Unity.Entities;
-using Unity.Mathematics;
 using Unity.NetCode;
-using Unity.Physics;
-using Unity.Physics.Aspects;
-using Unity.Physics.Extensions;
 using Unity.Rendering;
 using Unity.Transforms;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using Collider = UnityEngine.Collider;
 
 [BurstCompile]
 [UpdateBefore(typeof(PredictedSimulationSystemGroup))]
@@ -32,8 +24,8 @@ public partial struct UpdatePlayerStateSystem : ISystem
             var (playerState, transform)
             in SystemAPI.Query<RefRW<PlayerStateComponent>, RefRO<LocalTransform>>()
                 .WithAll<WorldRenderBounds>()
-        )
-        {
+        ) {
+            // Set isGrounded to true if the ray has collision close under player
             playerState.ValueRW.isGrounded = Physics.Raycast(
                 transform.ValueRO.Position,
                 -Vector3.up, 

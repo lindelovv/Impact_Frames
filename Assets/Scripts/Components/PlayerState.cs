@@ -44,10 +44,7 @@ public class PlayerState : MonoBehaviour
             });
         }
     }
-
-
 }
-
 
 [GhostComponent(PrefabType = GhostPrefabType.AllPredicted)]
 public struct PlayerStateComponent : IComponentData
@@ -107,4 +104,3 @@ public struct PlayerStateComponent : IComponentData
     /// </summary>
     public bool IsTurning;
 }
-

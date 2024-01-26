@@ -120,6 +120,7 @@ GameObject:
   - component: {fileID: 7026778184379402400}
   - component: {fileID: 7430655030576913094}
   - component: {fileID: 5388867121681869033}
+  - component: {fileID: 5901311057143781144}
   - component: {fileID: -5800080714922723149}
   - component: {fileID: 1244181283632142093}
   - component: {fileID: 1553344042008314389}
@@ -160,7 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 10
   MovementSpeed: 6
-  JumpStrength: 8
+  JumpStrength: 10
 --- !u!114 &6524130790032669571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,6 +263,27 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &5901311057143781144
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5530559309006933450}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 1.3699001, y: 2.5870125, z: 1.4536828}
+  m_Center: {x: -0.00000008940699, y: 0.29326713, z: -0.24061738}
 --- !u!54 &-5800080714922723149
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -270,11 +292,11 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5530559309006933450}
   serializedVersion: 4
-  m_Mass: 6
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: -10, z: 0}
-  m_InertiaTensor: {x: 9999, y: 9999, z: 9999}
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 999, y: 999, z: 999}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
