@@ -4,6 +4,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Physics;
+using Unity.Physics.Extensions;
 using Unity.Transforms;
 
 [UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
@@ -43,11 +44,11 @@ public partial struct MoveJob : IJobEntity
         var move = new float2(input.MoveValue.x, 0) * playerData.MovementSpeed;
         
         // Jump
-        //if (state.isGrounded)
-        //{
-        //    physicsVelocity.ApplyLinearImpulse(physicsMass, new float3(0, input.JumpValue, 0) * playerData.JumpStrength);
-        //}
-        move += new float2(0, input.JumpValue) * playerData.JumpStrength; // replaced with above when state check working
+        if (state.isGrounded)
+        {
+            physicsVelocity.ApplyLinearImpulse(physicsMass, new float3(0, input.JumpValue, 0) * playerData.JumpStrength);
+        }
+        //move += new float2(0, input.JumpValue) * playerData.JumpStrength; // replaced with above when state check working
         
         // Move
         transform.Position += new float3(move.x, move.y, 0) * DeltaTime;

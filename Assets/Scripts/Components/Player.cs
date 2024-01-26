@@ -3,6 +3,7 @@ using Unity.NetCode;
 using Unity.Transforms;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Player : MonoBehaviour
 {
@@ -40,29 +41,26 @@ public struct PlayerComponentData : IComponentData
     [GhostField] public float JumpStrength;
 }
 
-/*
- *  Useful for lookup, might need to use later [saved for reference of structure]
- * 
 readonly partial struct PlayerAspect : IAspect
 {
     public readonly Entity Self;
 
-    private readonly RefRW<LocalTransform> Transform;
-    private readonly RefRW<PlayerComponentData> Data;
+    private readonly RefRW<LocalTransform> _transform;
+    private readonly RefRW<PlayerComponentData> _data;
+    public LocalTransform LocalTransform => _transform.ValueRO;
     public float Health
     {
-        get => Data.ValueRO.Health;
-        set => Data.ValueRW.Health = value; 
+        get => _data.ValueRO.Health;
+        set => _data.ValueRW.Health = value; 
     }
     public float MovementSpeed
     {
-        get => Data.ValueRO.MovementSpeed;
-        set => Data.ValueRW.MovementSpeed = value; 
+        get => _data.ValueRO.MovementSpeed;
+        set => _data.ValueRW.MovementSpeed = value; 
     }
     public float JumpStrength
     {
-        get => Data.ValueRO.JumpStrength;
-        set => Data.ValueRW.JumpStrength = value; 
+        get => _data.ValueRO.JumpStrength;
+        set => _data.ValueRW.JumpStrength = value; 
     }
 }
-*/
