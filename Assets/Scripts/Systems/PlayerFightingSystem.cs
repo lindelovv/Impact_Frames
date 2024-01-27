@@ -13,7 +13,7 @@ public partial struct PlayerFightingSystem : ISystem
     {
         var builder = new EntityQueryBuilder(Allocator.Temp)
             .WithAll<InputComponentData>(); //inputComponent för att komma åt inputscriptets inputs
-            state.RequireForUpdate(state.GetEntityQuery(builder));
+        state.RequireForUpdate(state.GetEntityQuery(builder));
     }
 
     [BurstCompile]
@@ -23,8 +23,10 @@ public partial struct PlayerFightingSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        var fightJob = new FightJob { DeltaTime = SystemAPI.Time.DeltaTime };
-        state.Dependency = fightJob.ScheduleParallel(state.Dependency);
+        // disabled for the moment
+        
+        //state.Dependency = new FightJob { DeltaTime = SystemAPI.Time.DeltaTime }
+        //    .ScheduleParallel(state.Dependency);
     }
 }
 
@@ -32,25 +34,21 @@ public partial struct PlayerFightingSystem : ISystem
 public partial struct FightJob : IJobEntity
 {
     public float DeltaTime;
-    public void Execute(in InputComponentData input, in PlayerStateComponent psc)  // Execute tillhör IJobEntity Interfacet
+    
+    // Execute tillhör IJobEntity Interfacet
+    public void Execute(in InputComponentData input, in PlayerStateComponent psc)
     {
-
         //Input button logik för att köra punch
         Punch(psc);
-
 
         //Input button logik för att köra kick
         Kick(psc);
     }
-
-    
-    
     
     public void Punch(PlayerStateComponent psc)
     {
         if (CanPlayerAttack(psc))
         {
-            
             CheckHit(psc);
             UnityEngine.Debug.Log("Punched!");
 
@@ -73,8 +71,6 @@ public partial struct FightJob : IJobEntity
         }
     }
 
-    
-
     private void CheckHit(PlayerStateComponent psc)
     {
         // Har jag träffat en fiendess hurtbox
@@ -82,21 +78,10 @@ public partial struct FightJob : IJobEntity
         // räkna hur många gånger jag träffa (3)
         //deal more damga
         // kalkylera på varje button klick
-       
-        
     }
-
-
-
-
     
     private bool CanPlayerAttack(PlayerStateComponent psc)
     {
-      
         return psc.isGrounded && !psc.IsAnimationLocked;
     }
-
-
-
-
 }

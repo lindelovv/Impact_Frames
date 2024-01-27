@@ -25,7 +25,7 @@ public struct InputComponentData : IInputComponentData
     public float2 MoveValue;
     
     // Jumping & DoubleJump
-    public float JumpValue;
+    public bool Jump;
 
 
     // Punch & HeavyPunch

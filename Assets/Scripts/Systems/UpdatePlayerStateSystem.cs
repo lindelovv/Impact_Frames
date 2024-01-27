@@ -12,7 +12,7 @@ public partial struct UpdatePlayerStateSystem : ISystem
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate<PlayerComponentData>();
+        state.RequireForUpdate<PlayerData>();
         state.RequireForUpdate<PlayerStateComponent>();
         state.RequireForUpdate<LocalTransform>();
     }

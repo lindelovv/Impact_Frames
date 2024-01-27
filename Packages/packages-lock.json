@@ -7,13 +7,6 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-    "com.rlabrecque.steamworks.net": {
-      "version": "https://github.com/rlabrecque/Steamworks.NET.git?path=/com.rlabrecque.steamworks.net",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "a3fe8091f7237eef3f38becc3faa29b2dc6f9ce9"
-    },
     "com.unity.burst": {
       "version": "1.8.11",
       "depth": 1,
@@ -368,13 +361,6 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
-    },
-    "unityggpo.plugin": {
-      "version": "https://github.com/nykwil/UnityGGPO.git?path=/Unity/Packages/UnityGGPO",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "645507dbae294adb220ae24ae3435327023da483"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

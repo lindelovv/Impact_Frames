@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 [UpdateInGroup(typeof(GhostInputSystemGroup))]
 public partial class InputSystem : SystemBase
 {
-    private IA_PlayerControls _inputActions = null;
+    private IA_PlayerControls _inputActions;
     
     public void OnCreate(ref SystemState state)
     {
@@ -33,19 +33,8 @@ public partial class InputSystem : SystemBase
                 .WithAll<GhostOwnerIsLocal>()
         ) {
             inputData.ValueRW.MoveValue = _inputActions.Combat.Move.ReadValue<Vector2>();
-            inputData.ValueRW.JumpValue = _inputActions.Combat.Jump.ReadValue<float>();
+            inputData.ValueRW.Jump = _inputActions.Combat.Jump.WasPressedThisFrame();
             inputData.ValueRW.PunchValue = _inputActions.Combat.Punch.ReadValue<float>();    
-        }
-    }
-           
-    // vill kolla vad som sker om man trycker punch, men det kanske borde göras i fightsystem eller redan i input.cs
-    // Kan inte använda för vi använder inte player input och assignar unity events. 
-    public void punch(InputAction.CallbackContext callbackcontext)
-    {
-        if (callbackcontext.performed)
-        {
-            Debug.Log("Punch! " +  callbackcontext);
-            //Gör all logik här för att slå
         }
     }
 }
