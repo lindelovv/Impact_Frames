@@ -32,7 +32,7 @@ public partial class InputSystem : SystemBase
             in SystemAPI.Query<RefRW<InputComponentData>>()
                 .WithAll<GhostOwnerIsLocal>()
         ) {
-            inputData.ValueRW.MoveValue = _inputActions.Combat.Move.ReadValue<Vector2>();
+            inputData.ValueRW.HorizontalMoveValue = _inputActions.Combat.Move.ReadValue<float>();
             inputData.ValueRW.Jump = _inputActions.Combat.Jump.WasPressedThisFrame();
             inputData.ValueRW.PunchValue = _inputActions.Combat.Punch.ReadValue<float>();    
         }

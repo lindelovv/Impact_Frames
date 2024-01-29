@@ -4,21 +4,23 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Physics;
-using Unity.Physics.Extensions;
 using Unity.Transforms;
+using VertexFragment;
 
 [BurstCompile]
 [UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
-public partial struct PlayerMovementSystem : ISystem  // Detta hette tidigare MoveSystem, menades det Moves, som i alla saker en player kan göra? Isf kan vi flytta tillbaka fightingsystem hit
+public partial struct PlayerMovementSystem : ISystem  // Detta hette tidigare MoveSystem, menades det Moves, som i alla saker en player kan gï¿½ra? Isf kan vi flytta tillbaka fightingsystem hit
 {
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
+        
         var builder = new EntityQueryBuilder(Allocator.Temp)
             .WithAll<PlayerData>()
-            .WithAll<InputComponentData>()  //inputComponent för att komma åt inputscriptets inputs
-            .WithAll<LocalTransform>(); // för att kunna röra saker, transform
+            .WithAll<InputComponentData>()  //inputComponent fï¿½r att komma ï¿½t inputscriptets inputs
+            .WithAll<LocalTransform>(); // fï¿½r att kunna rï¿½ra saker, transform
         state.RequireForUpdate(state.GetEntityQuery(builder));
+        state.RequireForUpdate<PhysicsWorldSingleton>();
     }
 
     [BurstCompile]
@@ -28,8 +30,11 @@ public partial struct PlayerMovementSystem : ISystem  // Detta hette tidigare Mo
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        state.Dependency = new MovementJob { DeltaTime = SystemAPI.Time.DeltaTime } //Movejob har valt deltatime som variablar vi vill ha där och Job är för multithreading
-            .ScheduleParallel(state.Dependency);
+        //Movejob har valt deltatime som variablar vi vill ha dÃ¤r och Job Ã¤r fÃ¶r multithreading
+        state.Dependency = new MovementJob { 
+            DeltaTime = SystemAPI.Time.DeltaTime,
+            CollisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld
+        }.ScheduleParallel(state.Dependency);
     }
 }
 
@@ -37,32 +42,75 @@ public partial struct PlayerMovementSystem : ISystem  // Detta hette tidigare Mo
 public partial struct MovementJob : IJobEntity
 {
     public float DeltaTime;
-    public void Execute( // Execute tillhör IJobEntity Interfacet
+    public CollisionWorld CollisionWorld;
+    
+    public void Execute( // Execute tillhÃ¶r IJobEntity Interfacet
         in InputComponentData input,
         in PlayerData playerData,
         in PlayerStateComponent state,
-        ref LocalTransform transform
-        //ref PhysicsVelocity physicsVelocity,
-        //ref PhysicsMass physicsMass
+        ref Entity entity,
+        ref VelocityComponent velocity,
+        ref LocalTransform transform,
+        ref PhysicsCollider collider
     ) {
-        //// Gravity
-        //{
-        //    if (!state.isGrounded) {
-        //        transform.Position.y += playerData.Gravity;
-        //    }
-        //}
-        
-        // Movement
+        // Calculate Gravity
         {
-            transform.Position.x = (input.MoveValue.x * playerData.MovementSpeed) * DeltaTime;
+            velocity.CurrentVelocity.y += (playerData.Gravity * (state.isGrounded ? 0.0f : 1.0f));
+        }
+        
+        // Calculate Horizontal Movement
+        {
+            velocity.CurrentVelocity.x += (input.HorizontalMoveValue * playerData.MovementSpeed);
         }
 
-        //// Jump
-        //{
-        //    if (input.Jump && state.isGrounded) {
-        //        physicsVelocity.ApplyLinearImpulse(physicsMass, new float3(0, playerData.JumpStrength, 0));
-        //        //move += new float2(0, input.JumpValue) * playerData.JumpStrength; // replaced with above when state check working
-        //    }
-        //}
+        // Calculate Jump / Vertical Movement
+        {
+            velocity.CurrentVelocity.y += (input.Jump && state.isGrounded ? 0.0f : 1.0f) * playerData.JumpStrength;
+        }
+
+        // Apply all movement to player
+        {
+            var collisions = PhysicsUtils.ColliderCastAll(
+                collider,
+                transform.Position,
+                transform.Position + velocity.CurrentVelocity,
+                ref CollisionWorld,
+                entity
+            );
+            if (collisions.Length != 0)
+            {
+                RigidTransform rigidTransform = new RigidTransform {
+                    pos = transform.Position + velocity.CurrentVelocity,
+                };
+                if (PhysicsUtils.ColliderDistance(
+                        out DistanceHit penetration,
+                        collider,
+                        1.0f,
+                        rigidTransform,
+                        ref CollisionWorld,
+                        entity,
+                        PhysicsCollisionFilters.DynamicWithPhysical,
+                        null)
+                ) {
+                    if (penetration.Distance < 0.0f)
+                    {
+                        velocity.CurrentVelocity += (penetration.SurfaceNormal * -penetration.Distance);
+                        if (PhysicsUtils.ColliderCast(
+                                out ColliderCastHit adjustedHit,
+                                collider,
+                                transform.Position,
+                                transform.Position + velocity.CurrentVelocity,
+                                ref CollisionWorld,
+                                entity,
+                                PhysicsCollisionFilters.DynamicWithPhysical)
+                        )
+                        {
+                            velocity.CurrentVelocity *= adjustedHit.Fraction;
+                        }
+                    }
+                }
+            }
+            transform.Position += velocity.CurrentVelocity * DeltaTime;
+        }
     }
 }

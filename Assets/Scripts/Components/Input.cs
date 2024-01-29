@@ -22,7 +22,7 @@ public struct InputComponentData : IInputComponentData
 {
 
     // Movement
-    public float2 MoveValue;
+    public float HorizontalMoveValue;
     
     // Jumping & DoubleJump
     public bool Jump;

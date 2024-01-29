@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Transforms;
 
@@ -9,6 +10,7 @@ public class Player : MonoBehaviour
     [Tooltip("[float] How fast the player can move.")] public float MovementSpeed;
     [Tooltip("[float] How high the player can jump.")] public float JumpStrength;
     [Tooltip("[float] Strength of the downwards pull.")] public float Gravity;
+    [Tooltip("[float3] Override starting velocity. Normally should be {0,0,0}.")] public float StartingVelocity;
     
     [Header("Health")] 
     [Tooltip("[float] Remaining health points.")] public float CurrentHealth;
@@ -30,6 +32,10 @@ public class Player : MonoBehaviour
             AddComponent(entity, new HealthComponent {
                 CurrentHealth = authoring.CurrentHealth,
                 MaxHealth = authoring.MaxHealth,
+            });
+            // Same as above
+            AddComponent(entity, new VelocityComponent {
+                CurrentVelocity = authoring.StartingVelocity,
             });
         }
     }
