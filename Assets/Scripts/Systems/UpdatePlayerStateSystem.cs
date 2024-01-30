@@ -1,7 +1,6 @@
 using Unity.Burst;
 using Unity.Entities;
 using Unity.NetCode;
-using Unity.Rendering;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -29,7 +28,7 @@ public partial struct UpdatePlayerStateSystem : ISystem
             playerState.ValueRW.isGrounded = Physics.Raycast(
                 transform.ValueRO.Position,
                 -Vector3.up, 
-                1.22f
+                1.5f
             );
         }
     }

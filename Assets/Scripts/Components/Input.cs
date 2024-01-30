@@ -22,19 +22,16 @@ public struct InputComponentData : IInputComponentData
 {
 
     // Movement
-    public float HorizontalMoveValue;
+    public float2 RequstedHorizontalMovement;
     
     // Jumping & DoubleJump
-    public bool Jump;
-
+    public bool RequestJump;
 
     // Punch & HeavyPunch
-    public bool isPunching;
-    public float PunchValue;
-
+    public bool RequestPunch;
 
     // Kick & HeavyKick
-    public bool isKicking;
+    public bool RequestKicking;
 
 
     // Block
