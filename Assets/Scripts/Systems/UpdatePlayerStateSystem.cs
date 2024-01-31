@@ -1,7 +1,7 @@
 using Unity.Burst;
 using Unity.Entities;
 using Unity.NetCode;
-using Unity.Rendering;
+using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -12,7 +12,7 @@ public partial struct UpdatePlayerStateSystem : ISystem
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate<PlayerComponentData>();
+        state.RequireForUpdate<PlayerData>();
         state.RequireForUpdate<PlayerStateComponent>();
         state.RequireForUpdate<LocalTransform>();
     }
@@ -21,9 +21,9 @@ public partial struct UpdatePlayerStateSystem : ISystem
     public void OnUpdate(ref SystemState state)
     {
         foreach (
-            var (playerState, transform)
-            in SystemAPI.Query<RefRW<PlayerStateComponent>, RefRO<LocalTransform>>()
-                .WithAll<WorldRenderBounds>()
+            var (playerState, transform, inputComponentData)
+            in SystemAPI.Query<RefRW<PlayerStateComponent>, RefRO<LocalTransform>, RefRO<InputComponentData>>()
+                //.WithAll<WorldRenderBounds>()
         ) {
             // Set isGrounded to true if the ray has collision close under player
             playerState.ValueRW.isGrounded = Physics.Raycast(
@@ -31,6 +31,12 @@ public partial struct UpdatePlayerStateSystem : ISystem
                 -Vector3.up, 
                 1.5f
             );
+            
+            // Character rotation
+            if (inputComponentData.ValueRO.RequstedHorizontalMovement.x != 0.0f)
+            {
+                playerState.ValueRW.isFacingRight = (inputComponentData.ValueRO.RequstedHorizontalMovement.x > 0.0f);
+            }
         }
     }
 }

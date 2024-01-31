@@ -1,56 +1,98 @@
+using System.Runtime.CompilerServices;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Physics;
-using Unity.Physics.Extensions;
 using Unity.Transforms;
+using UnityEditor;
+using UnityEngine;
 
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
 [BurstCompile]
-public partial struct PlayerMovementSystem : ISystem  // Detta hette tidigare MoveSystem, menades det Moves, som i alla saker en player kan göra? Isf kan vi flytta tillbaka fightingsystem hit
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
+public partial struct PlayerMovementSystem : ISystem
 {
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
+        // Use EntityQueryBuilder to find all entities with the given components.
         var builder = new EntityQueryBuilder(Allocator.Temp)
-            .WithAll<PlayerComponentData>()
-            .WithAll<InputComponentData>()  //inputComponent för att komma åt inputscriptets inputs
-            .WithAll<LocalTransform>(); // för att kunna röra saker, transform
-        state.RequireForUpdate(state.GetEntityQuery(builder));
-    }
+            .WithAll<PlayerData>()
+            .WithAll<InputComponentData>() //inputComponent fÃ¶r att komma Ã¥t inputscriptets inputs
+            .WithAll<LocalTransform>(); // fÃ¶r att kunna rÃ¶ra saker, transform
 
-    [BurstCompile]
-    public void OnDestroy(ref SystemState state)
-    {}
+        // Components in RequireForUpdate are all types we need to run system (the query above and the physics world)
+        state.RequireForUpdate(state.GetEntityQuery(builder));
+        state.RequireForUpdate<PhysicsWorldSingleton>();
+    }
 
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        var moveJob = new MoveJob { DeltaTime = SystemAPI.Time.DeltaTime };  //Movejob har valt deltatime som variablar vi vill ha där och Job är för multithreading
-        state.Dependency = moveJob.ScheduleParallel(state.Dependency);
-    }
-}
-
-[BurstCompile]
-public partial struct MoveJob : IJobEntity
-{
-    public float DeltaTime;
-    public void Execute(in InputComponentData input, in PlayerComponentData playerData, in PlayerStateComponent state,
-                        ref LocalTransform transform, ref PhysicsVelocity physicsVelocity, ref PhysicsMass physicsMass)  // Execute tillhör IJobEntity Interfacet
-    {
-        // Movement
-        var move = new float2(input.MoveValue.x, 0) * playerData.MovementSpeed;
-        
-        // Jump
-        if (state.isGrounded)
+        foreach (var player
+                 in SystemAPI.Query<PlayerAspect>()
+                )
         {
-            physicsVelocity.ApplyLinearImpulse(physicsMass, new float3(0, input.JumpValue, 0) * playerData.JumpStrength);
-            //move += new float2(0, input.JumpValue) * playerData.JumpStrength; // replaced with above when state check working
-        }
+            // Increase gravity if falling
+            {
+                if (!player.State.isGrounded && player.Velocity.y <= 1.0f)
+                {
+                    player.GravityFactor = 4;
+                }
+                else
+                {
+                    player.GravityFactor = 1;
+                }
+            }
 
-        // Move
-        transform.Position += new float3(move.x, move.y, 0) * DeltaTime;
+            // Calculate & Add Horizontal Movement
+            {
+                if (player.RequestedMovement.x == 0) // If not moving, change velocity towards 0
+                {
+                    player.Velocity = new float3(Util.moveTowards(
+                        player.Velocity.x,
+                        player.Position.x,
+                        player.Damping * SystemAPI.Time.DeltaTime
+                    ), player.Velocity.y, 0);
+                }
+                else
+                {
+                    player.Velocity = new float3(Util.moveTowards( // Else towards max speed
+                        player.Velocity.x,
+                        player.RequestedMovement.x * player.MaxSpeed,
+                        player.Acceleration * SystemAPI.Time.DeltaTime
+                    ), player.Velocity.y, 0);
+                    
+                    // @TODO: set this to not try to increase velocity into walls
+                    var castPosition = Util.ColliderCast( // Check for blocking hit
+                        SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld,
+                        player.Collider, 
+                        player.Position, 
+                        player.Position + (player.Velocity * SystemAPI.Time.DeltaTime)
+                    );
+                }
+            }
+
+            // Rotation
+            {
+                player.Rotation = quaternion.Euler(
+                    0,
+                    player.State.isFacingRight ? 360.1f : 180.3f, 0,
+                    math.RotationOrder.YXZ
+                );
+            }
+
+            // Calculate & Add Jump / Vertical Movement
+            {
+                player.Velocity += new float3(
+                    0, 
+                    (player is { RequestJump: true, State: { isGrounded: true } }
+                        ? player.JumpHeight * SystemAPI.Time.DeltaTime 
+                        : 0.0f),
+                    0
+                );
+            }
+        }
     }
 }
