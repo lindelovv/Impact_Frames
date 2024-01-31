@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 1244181283632142093}
   - component: {fileID: 1553344042008314389}
   - component: {fileID: 2326246504429062440}
+  - component: {fileID: -639539125941874452}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -53,20 +54,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentHealth: 10
   MaxHealth: 10
-  Speed: 60
-  JumpHeight: 120
-  Gravity:
-    x: 0
-    y: -10
-    z: 0
-  AirResistance: 0.6
+  Speed: 30
+  MaxSpeed: 60
+  JumpHeight: 160
+  Damping: 2
   StartingVelocity:
     x: 0
     y: 0
     z: 0
-  TerminalVelocity: 80
-  StaticFriction: 0.6
-  KineticFriction: 0.4
 --- !u!114 &6524130790032669571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,7 +84,7 @@ MonoBehaviour:
   HasCompletedMusicalChallenge: 0
   IsInRange: 0
   IsOnCooldown: 0
-  IsTurning: 0
+  isFacingRight: 1
 --- !u!114 &-1779064826349053475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,3 +207,24 @@ CapsuleCollider:
   m_Height: 2.5870125
   m_Direction: 1
   m_Center: {x: -0.00000008940699, y: 0.29326713, z: -0.24061738}
+--- !u!114 &-639539125941874452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5530559309006933450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb54ea4f67dc17342bcd49954c53502d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DrawColliders: 0
+  DrawColliderEdges: 0
+  DrawColliderAabbs: 0
+  DrawBroadphase: 0
+  DrawMassProperties: 0
+  DrawContacts: 0
+  DrawCollisionEvents: 0
+  DrawTriggerEvents: 0
+  DrawJoints: 0

@@ -21,7 +21,7 @@ public class PlayerState : MonoBehaviour
     public bool HasCompletedMusicalChallenge;
     public bool IsInRange;
     public bool IsOnCooldown;
-    public bool IsTurning;
+    public bool isFacingRight;
 
     private class Baker : Baker<PlayerState>
     {
@@ -40,7 +40,7 @@ public class PlayerState : MonoBehaviour
                 HasCompletedMusicalChallenge = authoring.HasCompletedMusicalChallenge,
                 IsInRange = authoring.IsInRange,
                 IsOnCooldown = authoring.IsOnCooldown,
-                IsTurning = authoring.IsTurning, 
+                isFacingRight = authoring.isFacingRight, 
             });
         }
     }
@@ -102,5 +102,5 @@ public struct PlayerStateComponent : IComponentData
     /// <summary>
     /// Required for Facing the right direction
     /// </summary>
-    public bool IsTurning;
+    public bool isFacingRight;
 }
