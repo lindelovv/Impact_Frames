@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20&amp;%20Hud/Network%20Racing/UI/USS/Loading.uss?fileID=7433441132597879392&amp;guid=7ca9ef584799d5046b69cf8e6beb3d7c&amp;type=3#Loading" />
+    <ui:VisualElement name="loading-screen-container" class="container" style="display: none;">
+        <ui:Label tabindex="-1" text="LOADING..." name="loading-label" class="loading-text" style="-unity-font: url(&apos;project://database/Assets/UI%20&amp;%20Hud/Fonts/eEmotionallyBeaten.ttf?fileID=12800000&amp;guid=f8d7738016d37b44d8bf75b80a8d1624&amp;type=3#eEmotionallyBeaten&apos;);" />
+        <ui:VisualElement name="loading-circle" class="loading-circle" style="background-image: url(&apos;project://database/Assets/Art/Textures/UI/loading-circle.png?fileID=2800000&amp;guid=c621fadaf84534a4197c837f12479d4c&amp;type=3#loading-circle&apos;);" />
+    </ui:VisualElement>
+</ui:UXML>
