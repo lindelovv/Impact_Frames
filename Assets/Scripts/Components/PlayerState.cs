@@ -1,11 +1,6 @@
-using System.Text;
 using Unity.Entities;
 using Unity.NetCode;
-using Unity.VisualScripting;
 using UnityEngine;
-using static Unity.Collections.AllocatorManager;
-using static UnityEngine.AudioSettings;
-using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerState : MonoBehaviour
 {

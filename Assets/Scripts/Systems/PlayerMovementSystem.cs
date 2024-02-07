@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -6,8 +5,6 @@ using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Physics;
 using Unity.Transforms;
-using UnityEditor;
-using UnityEngine;
 
 [BurstCompile]
 [UpdateInGroup(typeof(PredictedSimulationSystemGroup))]

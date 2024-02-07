@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -16,7 +14,7 @@ public class OneWayBoxCollider : MonoBehaviour
     [SerializeField] private Vector3 entryDirection = Vector3.up;
     [SerializeField] private Boolean hasLocalDirection = false;
     [SerializeField, Range (1.0f, 2.0f)] private float triggerScale = 1.25f;
-    private new BoxCollider collisionBox = null;
+    private BoxCollider collisionBox = null;
     private BoxCollider collisionCheckTrigger = null;
 
 

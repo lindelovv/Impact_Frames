@@ -1,9 +1,6 @@
-using System.Diagnostics;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
-using System.Collections;
-using Unity.Physics;
 
 [BurstCompile]
 public partial struct PlayerFightingSystem : ISystem

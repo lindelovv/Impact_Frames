@@ -1,7 +1,6 @@
 using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [UpdateInGroup(typeof(GhostInputSystemGroup))]
 public partial class InputSystem : SystemBase
