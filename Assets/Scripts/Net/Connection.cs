@@ -1,11 +1,21 @@
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
-using Unity.Mathematics;
 using Unity.NetCode;
-using Unity.Transforms;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Scripting;
+
+public struct GoInGameRPC : IRpcCommand {}
+
+//[Preserve]
+//public class Connection : ClientServerBootstrap
+//{
+//    public override bool Initialize(string defaultWorldName)
+//    {
+//        AutoConnectPort = 7979;                     // Enable auto connect
+//        return base.Initialize(defaultWorldName);   // Use the regular bootstrap
+//    }
+//}
 
 //-----------------------
 // Client
