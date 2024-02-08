@@ -45,7 +45,9 @@ public class Frontend : MonoBehaviour
         //and other issues.
         DestroyLocalSimulationWorld();
         if (World.DefaultGameObjectInjectionWorld == null)
+        {
             World.DefaultGameObjectInjectionWorld = server;
+        }
         SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
         var port = ParsePortOrDefault(Port.text);

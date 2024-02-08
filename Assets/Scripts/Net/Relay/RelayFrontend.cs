@@ -208,7 +208,7 @@ public class RelayFrontend : Frontend
             World.DefaultGameObjectInjectionWorld = server;
         }
 
-        SceneManager.LoadSceneAsync(/*GetAndSaveSceneSelection()*/ "Main", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("Main", LoadSceneMode.Additive);
 
         var joinCodeEntity = server.EntityManager.CreateEntity(ComponentType.ReadOnly<JoinCode>());
         server.EntityManager.SetComponentData(joinCodeEntity, new JoinCode { Value = joinCode });
@@ -219,6 +219,7 @@ public class RelayFrontend : Frontend
 
         networkStreamEntity = client.EntityManager.CreateEntity(ComponentType.ReadWrite<NetworkStreamRequestConnect>());
         client.EntityManager.SetName(networkStreamEntity, "NetworkStreamRequestConnect");
+        
         // For IPC this will not work and give an error in the transport layer. For this sample we force the client to connect through the relay service.
         // For a locally hosted server, the client would need to connect to NetworkEndpoint.AnyIpv4, and the relayClientData.Endpoint in all other cases.
         client.EntityManager.SetComponentData(networkStreamEntity, new NetworkStreamRequestConnect { Endpoint = relayClientData.Endpoint });
@@ -244,11 +245,11 @@ public class RelayFrontend : Frontend
         {
             World.DefaultGameObjectInjectionWorld = client;
         }
-
         SceneManager.LoadSceneAsync("Main", LoadSceneMode.Additive);
 
         var networkStreamEntity = client.EntityManager.CreateEntity(ComponentType.ReadWrite<NetworkStreamRequestConnect>());
         client.EntityManager.SetName(networkStreamEntity, "NetworkStreamRequestConnect");
+        
         // For IPC this will not work and give an error in the transport layer. For this sample we force the client to connect through the relay service.
         // For a locally hosted server, the client would need to connect to NetworkEndpoint.AnyIpv4, and the relayClientData.Endpoint in all other cases.
         client.EntityManager.SetComponentData(networkStreamEntity, new NetworkStreamRequestConnect { Endpoint = relayClientData.Endpoint });
