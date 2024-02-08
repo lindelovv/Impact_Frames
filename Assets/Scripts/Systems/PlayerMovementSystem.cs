@@ -65,12 +65,12 @@ public partial struct PlayerMovementSystem : ISystem
                     ), player.Velocity.y, 0);
                     
                     // @TODO: set this to not try to increase velocity into walls
-                    var castPosition = Util.ColliderCast( // Check for blocking hit
-                        SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld,
-                        player.Collider, 
-                        player.Position, 
-                        player.Position + (player.Velocity * SystemAPI.Time.DeltaTime)
-                    );
+                    //var castPosition = Util.ColliderCast( // Check for blocking hit
+                    //    SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld,
+                    //    player.Collider, 
+                    //    player.Position, 
+                    //    player.Position + (player.Velocity * SystemAPI.Time.DeltaTime)
+                    //);
                 }
             }
 

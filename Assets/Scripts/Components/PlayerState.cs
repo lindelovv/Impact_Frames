@@ -52,7 +52,7 @@ public struct PlayerStateComponent : IComponentData
     /// <summary>
     /// Required specifically for Jump.
     /// </summary>
-    public bool isGrounded;
+    [GhostField] public bool isGrounded;
 
     /// <summary>
     /// Required for Movement, Jump, Punch, Kick, Block, Special Move, Grab, Dash, and Air Dash.

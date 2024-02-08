@@ -7,27 +7,10 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-/// <summary>
-/// HUD implementation. Implements behaviour for the buttons, hosting server, joining client, and starting game.
-///
-/// Text fields output the status of server and client registering with the relay server once the user presses
-/// the respective buttons.
-///
-/// A bootstrap world is constructed to run the jobs for setting up host and client configuration for relay server.
-/// Once this is done the game can be launched and the configuration can be retrieved from the constructed world.
-/// </summary>
 public class RelayFrontend : Frontend
 {
-    public string HostConnectionStatus
-    {
-        get => HostConnectionLabel.text;
-        set => HostConnectionLabel.text = value;
-    }
-    public string ClientConnectionStatus
-    {
-        get => ClientConnectionLabel.text;
-        set => ClientConnectionLabel.text = value;
-    }
+    public string HostConnectionStatus   { get => HostConnectionLabel.text;   set => HostConnectionLabel.text = value;   }
+    public string ClientConnectionStatus { get => ClientConnectionLabel.text; set => ClientConnectionLabel.text = value; }
 
     public Button JoinExistingGame;
     public Text HostConnectionLabel;
