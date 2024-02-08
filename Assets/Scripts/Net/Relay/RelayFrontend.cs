@@ -3,11 +3,11 @@ using Unity.Entities;
 using Unity.NetCode;
 using Unity.Networking.Transport;
 using Unity.Networking.Transport.Relay;
-using UnityEngine.Events;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class RelayFrontend : Frontend
+public class RelayFrontend : MonoBehaviour
 {
     public string HostConnectionStatus   { get => HostConnectionLabel.text;   set => HostConnectionLabel.text = value;   }
     public string ClientConnectionStatus { get => ClientConnectionLabel.text; set => ClientConnectionLabel.text = value; }
@@ -15,6 +15,9 @@ public class RelayFrontend : Frontend
     public Button JoinExistingGame;
     public Text HostConnectionLabel;
     public Text ClientConnectionLabel;
+    
+    public InputField JoinCodeField;
+    public Button ClientServerButton;
 
     string m_OldValue;
     ConnectionState m_State;
@@ -30,40 +33,10 @@ public class RelayFrontend : Frontend
         JoinLocalGame,
     }
 
-    public void OnRelayEnable(Toggle value)
+    public void Start()
     {
-        TogglePersistentState(!value.isOn);
-        if (value.isOn)
-        {
-            Port.gameObject.SetActive(false);
-            m_OldValue = Address.text;
-            Address.text = string.Empty;
-            Address.placeholder.GetComponent<Text>().text = "Join Code for Host Server";
-            ClientServerButton.onClick.AddListener(() => { m_State = ConnectionState.SetupHost; });
-            JoinExistingGame.onClick.AddListener(() => { m_State = ConnectionState.SetupClient; });
-        }
-        else
-        {
-            Port.gameObject.SetActive(true);
-            Address.text = m_OldValue;
-            Address.placeholder.GetComponent<Text>().text = string.Empty;
-            ClientServerButton.onClick.RemoveAllListeners();
-            JoinExistingGame.onClick.RemoveAllListeners();
-        }
-    }
-
-    void TogglePersistentState(bool shouldListen)
-    {
-        if (shouldListen)
-        {
-            ClientServerButton.onClick.SetPersistentListenerState(0, UnityEventCallState.RuntimeOnly);
-            JoinExistingGame.onClick.SetPersistentListenerState(0, UnityEventCallState.RuntimeOnly);
-        }
-        else
-        {
-            ClientServerButton.onClick.SetPersistentListenerState(0, UnityEventCallState.Off);
-            JoinExistingGame.onClick.SetPersistentListenerState(0, UnityEventCallState.Off);
-        }
+        ClientServerButton.onClick.AddListener(() => { m_State = ConnectionState.SetupHost; });
+        JoinExistingGame.onClick.AddListener(() => { m_State = ConnectionState.SetupClient; });
     }
 
     public void Update()
@@ -79,7 +52,7 @@ public class RelayFrontend : Frontend
             case ConnectionState.SetupClient:
             {
                 var isServerHostedLocally = m_HostServerSystem?.RelayServerData.Endpoint.IsValid;
-                var enteredJoinCode = !string.IsNullOrEmpty(Address.text);
+                var enteredJoinCode = !string.IsNullOrEmpty(JoinCodeField.text);
                 if (isServerHostedLocally.GetValueOrDefault())
                 {
                     SetupClient();
@@ -148,7 +121,7 @@ public class RelayFrontend : Frontend
         var world = World.All[0];
         var enableRelayServerEntity = world.EntityManager.CreateEntity(ComponentType.ReadWrite<EnableRelayServer>());
         world.EntityManager.AddComponent<EnableRelayServer>(enableRelayServerEntity);
-        m_HostClientSystem.JoinUsingCode(Address.text);
+        m_HostClientSystem.JoinUsingCode(JoinCodeField.text);
     }
 
     /// <summary>
@@ -191,7 +164,7 @@ public class RelayFrontend : Frontend
             World.DefaultGameObjectInjectionWorld = server;
         }
 
-        SceneManager.LoadSceneAsync(/*GetAndSaveSceneSelection()*/ "Main", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("Main", LoadSceneMode.Additive);
 
         var joinCodeEntity = server.EntityManager.CreateEntity(ComponentType.ReadOnly<JoinCode>());
         server.EntityManager.SetComponentData(joinCodeEntity, new JoinCode { Value = joinCode });
@@ -235,6 +208,18 @@ public class RelayFrontend : Frontend
         // For IPC this will not work and give an error in the transport layer. For this sample we force the client to connect through the relay service.
         // For a locally hosted server, the client would need to connect to NetworkEndpoint.AnyIpv4, and the relayClientData.Endpoint in all other cases.
         client.EntityManager.SetComponentData(networkStreamEntity, new NetworkStreamRequestConnect { Endpoint = relayClientData.Endpoint });
+    }
+    
+    protected void DestroyLocalSimulationWorld()
+    {
+        foreach (var world in World.All)
+        {
+            if (world.Flags == WorldFlags.Game)
+            {
+                world.Dispose();
+                break;
+            }
+        }
     }
 }
 #endif

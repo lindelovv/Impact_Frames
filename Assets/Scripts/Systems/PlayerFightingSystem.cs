@@ -12,7 +12,7 @@ public partial struct PlayerFightingSystem : ISystem
     public void OnCreate(ref SystemState state)
     {
         var builder = new EntityQueryBuilder(Allocator.Temp)
-            .WithAll<InputComponentData>(); //inputComponent för att komma åt inputscriptets inputs
+            .WithAll<InputComponentData>(); //inputComponent fÃ¶r att komma Ã¥t inputscriptets inputs
         state.RequireForUpdate(state.GetEntityQuery(builder));
     }
 
@@ -35,13 +35,13 @@ public partial struct FightJob : IJobEntity
 {
     public float DeltaTime;
     
-    // Execute tillhör IJobEntity Interfacet
+    // Execute tillhÃ¶r IJobEntity Interfacet
     public void Execute(in InputComponentData input, in PlayerStateComponent psc)
     {
-        //Input button logik för att köra punch
+        //Input button logik fÃ¶r att kï¿½ra punch
         Punch(psc);
 
-        //Input button logik för att köra kick
+        //Input button logik fÃ¶r att kï¿½ra kick
         Kick(psc);
     }
     
@@ -73,11 +73,11 @@ public partial struct FightJob : IJobEntity
 
     private void CheckHit(PlayerStateComponent psc)
     {
-        // Har jag träffat en fiendess hurtbox
+        // Har jag trÃ¤ffat en fiendess hurtbox
         //deal damage
-        // räkna hur många gånger jag träffa (3)
+        // rÃ¤kna hur mÃ¥nga gÃ¥nger jag trÃ¤ffa (3)
         //deal more damga
-        // kalkylera på varje button klick
+        // kalkylera pÃ¥ varje button klick
     }
     
     private bool CanPlayerAttack(PlayerStateComponent psc)

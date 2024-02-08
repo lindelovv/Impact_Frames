@@ -30,9 +30,9 @@ public class FrontendHUD : MonoBehaviour
         foreach (var world in clientServerWorlds)
             world.Dispose();
 
-        if (string.IsNullOrEmpty(Frontend.OldFrontendWorldName))
-            Frontend.OldFrontendWorldName = "DefaultWorld";
-        ClientServerBootstrap.CreateLocalWorld(Frontend.OldFrontendWorldName);
+        //if (string.IsNullOrEmpty(Frontend.OldFrontendWorldName))
+        //    Frontend.OldFrontendWorldName = "DefaultWorld";
+        //ClientServerBootstrap.CreateLocalWorld(Frontend.OldFrontendWorldName);
         SceneManager.LoadScene("Frontend");
     }
 

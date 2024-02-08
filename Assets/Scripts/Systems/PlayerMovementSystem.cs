@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -6,8 +5,6 @@ using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Physics;
 using Unity.Transforms;
-using UnityEditor;
-using UnityEngine;
 
 [BurstCompile]
 [UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
@@ -30,10 +27,10 @@ public partial struct PlayerMovementSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        foreach (var player
-                 in SystemAPI.Query<PlayerAspect>()
-                )
-        {
+        foreach (
+            var player
+            in SystemAPI.Query<PlayerAspect>()
+        ) {
             // Increase gravity if falling
             {
                 if (!player.State.isGrounded && player.Velocity.y <= 1.0f)

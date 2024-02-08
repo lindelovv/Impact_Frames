@@ -67,7 +67,10 @@ public partial class ConnectingPlayer : SystemBase
             case ClientStatus.Ready:
             {
 #if !UNITY_SERVER
-                UIBehaviour.ClientConnectionStatus = "Success";
+                if (UIBehaviour != null)
+                {
+                    UIBehaviour.ClientConnectionStatus = "Success";
+                }
 #endif
                 m_ClientStatus = ClientStatus.Unknown;
                 return;
@@ -193,9 +196,14 @@ public partial class ConnectingPlayer : SystemBase
 
         // Prepare the Relay server data and compute the nonce values
         // A player joining the host passes its own connectionData as well as the host's
-        var relayServerData = new RelayServerData(ref serverEndpoint, 0, ref allocationIdBytes, ref connectionData,
-            ref hostConnectionData, ref key, connectionType == "dtls");
-
-        return relayServerData;
+        return new RelayServerData(
+            ref serverEndpoint, 
+            0, 
+            ref allocationIdBytes, 
+            ref connectionData,
+            ref hostConnectionData, 
+            ref key, 
+            connectionType == "dtls"
+        );
     }
 }

@@ -1024,6 +1024,7 @@ GameObject:
   m_Component:
   - component: {fileID: 833036043}
   - component: {fileID: 833036042}
+  - component: {fileID: 833036044}
   m_Layer: 0
   m_Name: SharedWorld
   m_TagString: Untagged
@@ -1067,6 +1068,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &833036044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833036041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bd6bf266b32e49ac8c5951317b6b250, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnableLagCompensation: 0
+  ServerHistorySize: 0
+  ClientHistorySize: 0
+  ClientNonGhostWorldIndex: 0
 --- !u!4 &870138368 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8149049283786265350, guid: f8e5f663764bb9848a8525be4963b189, type: 3}

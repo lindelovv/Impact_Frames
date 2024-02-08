@@ -3,19 +3,38 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
-using UnityEngine.Scripting;
+
+[UnityEngine.Scripting.Preserve]
+public class NetCodeBootstrap : ClientServerBootstrap
+{
+    public override bool Initialize(string defaultWorldName)
+    {
+#if UNITY_EDITOR
+        var sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        bool isFrontend = sceneName == "Frontend";
+#elif !FRONTEND_PLAYER_BUILD
+        bool isFrontend = false;
+#endif
+
+#if UNITY_EDITOR || !FRONTEND_PLAYER_BUILD
+        if (!isFrontend)
+        {
+            AutoConnectPort = 7979;
+            CreateDefaultClientServerWorlds();
+        }
+        else
+        {
+            AutoConnectPort = 0;
+            CreateLocalWorld(defaultWorldName);
+        }
+#else
+        CreateLocalWorld(defaultWorldName);
+#endif
+        return true;
+    }
+}
 
 public struct GoInGameRPC : IRpcCommand {}
-
-//[Preserve]
-//public class Connection : ClientServerBootstrap
-//{
-//    public override bool Initialize(string defaultWorldName)
-//    {
-//        AutoConnectPort = 7979;                     // Enable auto connect
-//        return base.Initialize(defaultWorldName);   // Use the regular bootstrap
-//    }
-//}
 
 //-----------------------
 // Client
