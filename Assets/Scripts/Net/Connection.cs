@@ -3,6 +3,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Scripting;
 
 public struct GoInGameRPC : IRpcCommand {}

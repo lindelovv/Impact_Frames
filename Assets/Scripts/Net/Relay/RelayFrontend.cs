@@ -208,7 +208,8 @@ public class RelayFrontend : Frontend
             World.DefaultGameObjectInjectionWorld = server;
         }
 
-        SceneManager.LoadSceneAsync(/*GetAndSaveSceneSelection()*/ "Main", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("Main", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync(4, LoadSceneMode.Additive);
 
         var joinCodeEntity = server.EntityManager.CreateEntity(ComponentType.ReadOnly<JoinCode>());
         server.EntityManager.SetComponentData(joinCodeEntity, new JoinCode { Value = joinCode });
@@ -246,6 +247,7 @@ public class RelayFrontend : Frontend
         }
 
         SceneManager.LoadSceneAsync("Main", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync(4, LoadSceneMode.Additive);
 
         var networkStreamEntity = client.EntityManager.CreateEntity(ComponentType.ReadWrite<NetworkStreamRequestConnect>());
         client.EntityManager.SetName(networkStreamEntity, "NetworkStreamRequestConnect");

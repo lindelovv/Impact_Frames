@@ -3,14 +3,14 @@ using Unity.Mathematics;
 using Unity.NetCode;
 using UnityEngine;
 
-public class Input : MonoBehaviour
+public class InputData : MonoBehaviour
 {
     //-----------------------
     [Tooltip("[float] Current amount of health."), SerializeField]
     private float2 MoveValue;
-    private class Baker : Baker<Input>
+    private class Baker : Baker<InputData>
     {
-        public override void Bake(Input authoring)
+        public override void Bake(InputData authoring)
         {
             AddComponent<InputComponentData>(GetEntity(TransformUsageFlags.None));
         }
