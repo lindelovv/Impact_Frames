@@ -60,8 +60,8 @@ public partial struct PlayerFightingSystem : ISystem
         
         if (hasHit)
         {
-            var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            Debug.Log($"hit { entityManager.GetName(hit.Entity) }");
+            //var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+            //Debug.Log($"hit { entityManager.GetName(hit.Entity) }");
         }
 
         // Set Animation Logic

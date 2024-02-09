@@ -9,11 +9,7 @@ public class FrontendHUD : MonoBehaviour
     [SerializeField]
     UnityEngine.EventSystems.EventSystem m_EventSystem;
 
-    public string ConnectionStatus
-    {
-        get { return m_ConnectionLabel.text; }
-        set { m_ConnectionLabel.text = value; }
-    }
+    public string ConnectionStatus { get { return m_ConnectionLabel.text; } set { m_ConnectionLabel.text = value; } }
 
     [SerializeField]
     UnityEngine.UI.Text m_ConnectionLabel;
@@ -21,18 +17,15 @@ public class FrontendHUD : MonoBehaviour
     public void ReturnToFrontend()
     {
         var clientServerWorlds = new List<World>();
-        foreach (var world in World.All)
-        {
-            if (world.IsClient() || world.IsServer())
-                clientServerWorlds.Add(world);
+        foreach (var world in World.All) {
+            if (world.IsClient() || world.IsServer()) { clientServerWorlds.Add(world); }
         }
 
-        foreach (var world in clientServerWorlds)
+        foreach (var world in clientServerWorlds) {
             world.Dispose();
+        }
 
-        if (string.IsNullOrEmpty(Frontend.OldFrontendWorldName))
-            Frontend.OldFrontendWorldName = "DefaultWorld";
-        ClientServerBootstrap.CreateLocalWorld(Frontend.OldFrontendWorldName);
+        ClientServerBootstrap.CreateLocalWorld("Menu");
         SceneManager.LoadScene("Menu");
     }
 
@@ -51,8 +44,9 @@ public class FrontendHUD : MonoBehaviour
 
         // We must always have an event system (DOTS-7177), but some scenes will already have one,
         // so we only enable ours if we can't find someone else's.
-        if (FindObjectOfType<UnityEngine.EventSystems.EventSystem>(false) == null)
+        if (FindObjectOfType<UnityEngine.EventSystems.EventSystem>(false) == null) {
             m_EventSystem.gameObject.SetActive(true);
+        }
     }
 }
 
