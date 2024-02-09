@@ -33,9 +33,9 @@ public partial struct UpdatePlayerStateSystem : ISystem
             );
             
             // Character rotation
-            if (inputComponentData.ValueRO.RequstedHorizontalMovement.x != 0.0f)
+            if (inputComponentData.ValueRO.RequestedMovement.x != 0.0f)
             {
-                playerState.ValueRW.isFacingRight = (inputComponentData.ValueRO.RequstedHorizontalMovement.x > 0.0f);
+                playerState.ValueRW.isFacingRight = (inputComponentData.ValueRO.RequestedMovement.x > 0.0f);
             }
         }
     }

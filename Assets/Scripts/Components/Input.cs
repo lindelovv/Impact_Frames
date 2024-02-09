@@ -3,14 +3,14 @@ using Unity.Mathematics;
 using Unity.NetCode;
 using UnityEngine;
 
-public class Input : MonoBehaviour
+public class InputData : MonoBehaviour
 {
     //-----------------------
     [Tooltip("[float] Current amount of health."), SerializeField]
     private float2 MoveValue;
-    private class Baker : Baker<Input>
+    private class Baker : Baker<InputData>
     {
-        public override void Bake(Input authoring)
+        public override void Bake(InputData authoring)
         {
             AddComponent<InputComponentData>(GetEntity(TransformUsageFlags.None));
         }
@@ -20,18 +20,17 @@ public class Input : MonoBehaviour
 [GhostComponent(PrefabType = GhostPrefabType.AllPredicted)]
 public struct InputComponentData : IInputComponentData
 {
-
     // Movement
-    public float2 RequstedHorizontalMovement;
+    [GhostField] public float2 RequestedMovement;
     
     // Jumping & DoubleJump
-    public bool RequestJump;
+    [GhostField] public bool RequestJump;
 
     // Punch & HeavyPunch
-    public bool RequestPunch;
+    [GhostField] public bool RequestPunch;
 
     // Kick & HeavyKick
-    public bool RequestKicking;
+    public bool RequestKick;
 
 
     // Block
