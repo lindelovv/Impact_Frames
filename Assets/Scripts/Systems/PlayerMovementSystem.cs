@@ -48,7 +48,7 @@ public partial struct PlayerMovementSystem : ISystem
 
             // Calculate & Add Horizontal Movement
             {
-                if (player.RequestedMovement.x == 0) // If not moving, change velocity towards 0
+                if (player.Input.RequestedMovement.x == 0) // If not moving, change velocity towards 0
                 {
                     player.Velocity = new float3(Util.moveTowards(
                         player.Velocity.x,
@@ -60,7 +60,7 @@ public partial struct PlayerMovementSystem : ISystem
                 {
                     player.Velocity = new float3(Util.moveTowards( // Else towards max speed
                         player.Velocity.x,
-                        player.RequestedMovement.x * player.MaxSpeed,
+                        player.Input.RequestedMovement.x * player.MaxSpeed,
                         player.Acceleration * SystemAPI.Time.DeltaTime
                     ), player.Velocity.y, 0);
                     
@@ -88,12 +88,13 @@ public partial struct PlayerMovementSystem : ISystem
             {
                 player.Velocity += new float3(
                     0, 
-                    (player is { RequestJump: true, State: { isGrounded: true } }
+                    (player is { Input: { RequestJump: true }, State: { isGrounded: true } }
                         ? player.JumpHeight * SystemAPI.Time.DeltaTime 
                         : 0.0f),
                     0
                 );
             }
+            //Debug.DrawLine(player.Position, player.Position + (player.Velocity / 2), Color.cyan, 1);
         }
     }
 }

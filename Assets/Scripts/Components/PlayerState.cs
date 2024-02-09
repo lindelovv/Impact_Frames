@@ -102,5 +102,5 @@ public struct PlayerStateComponent : IComponentData
     /// <summary>
     /// Required for Facing the right direction
     /// </summary>
-    public bool isFacingRight;
+    [GhostField] public bool isFacingRight;
 }

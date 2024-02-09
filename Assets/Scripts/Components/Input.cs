@@ -6,8 +6,9 @@ using UnityEngine;
 public class InputData : MonoBehaviour
 {
     //-----------------------
-    [Tooltip("[float] Current amount of health."), SerializeField]
-    private float2 MoveValue;
+    [Tooltip("[float2] Movement requested from { w, a, s, d } keypresses."), SerializeField]
+    private float2 RequestedMove;
+    
     private class Baker : Baker<InputData>
     {
         public override void Bake(InputData authoring)
@@ -17,7 +18,7 @@ public class InputData : MonoBehaviour
     }
 }
 
-[GhostComponent(PrefabType = GhostPrefabType.AllPredicted)]
+[GhostComponent(PrefabType = GhostPrefabType.AllPredicted, OwnerSendType = SendToOwnerType.SendToNonOwner)]
 public struct InputComponentData : IInputComponentData
 {
     // Movement
