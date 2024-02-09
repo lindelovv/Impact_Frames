@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8b34d15a6274c42b431052fd32e0b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveValue:
+  RequestedMove:
     x: 0
     y: 0
 --- !u!33 &7026778184379402400
@@ -108,7 +108,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5530559309006933450}
-  m_Mesh: {fileID: 70948873267775455, guid: 2fb653f5124bd8c42a7ba3fe8b48057e, type: 3}
+  m_Mesh: {fileID: -1277366460620338370, guid: 614e71e51b7362c48ac343197e1efbc2, type: 3}
 --- !u!23 &7430655030576913094
 MeshRenderer:
   m_ObjectHideFlags: 0

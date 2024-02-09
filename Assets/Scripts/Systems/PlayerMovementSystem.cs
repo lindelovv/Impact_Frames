@@ -94,6 +94,7 @@ public partial struct PlayerMovementSystem : ISystem
                     0
                 );
             }
+            //Debug.DrawLine(player.Position, player.Position + (player.Velocity / 2), Color.cyan, 1);
         }
     }
 }

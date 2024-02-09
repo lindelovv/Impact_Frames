@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
 
@@ -16,7 +17,7 @@ public struct Util {
     }
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static unsafe float3 ColliderCast(CollisionWorld collisionWorld, PhysicsCollider collider, float3 from, float3 to)
+    public static unsafe Entity ColliderCast(CollisionWorld collisionWorld, PhysicsCollider collider, float3 from, float3 to)
     {
         ColliderCastHit hit = new ColliderCastHit();
         
@@ -26,7 +27,6 @@ public struct Util {
             End = to,
         }, out hit);
         
-        if (haveHit) { return from - hit.Position; }
-        return to;
+        return hit.Entity;
     }
 }
