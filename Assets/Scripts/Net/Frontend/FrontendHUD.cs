@@ -33,7 +33,7 @@ public class FrontendHUD : MonoBehaviour
         if (string.IsNullOrEmpty(Frontend.OldFrontendWorldName))
             Frontend.OldFrontendWorldName = "DefaultWorld";
         ClientServerBootstrap.CreateLocalWorld(Frontend.OldFrontendWorldName);
-        SceneManager.LoadScene("Frontend");
+        SceneManager.LoadScene("Menu");
     }
 
     public void Start()

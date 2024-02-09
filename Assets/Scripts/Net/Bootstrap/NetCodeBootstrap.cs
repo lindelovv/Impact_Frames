@@ -29,7 +29,7 @@ public class NetCodeBootstrap : ClientServerBootstrap
         // is set, otherwise we assume it is a single level.
         // The define FRONTEND_PLAYER_BUILD needs to be set in the build config for the frontend player.
         var sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        bool isFrontend = sceneName == "Frontend";
+        bool isFrontend = sceneName == "Menu";
 #elif !FRONTEND_PLAYER_BUILD
         bool isFrontend = false;
 #endif

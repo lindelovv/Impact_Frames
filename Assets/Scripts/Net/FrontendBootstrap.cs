@@ -9,7 +9,7 @@ public class FrontendBootstrap : MonoBehaviour
 #if UNITY_SERVER
         string sceneName = "Main";
 #else
-        string sceneName = "Frontend";
+        string sceneName = "Menu";
 #endif
         SceneManager.LoadScene(sceneName);
     }

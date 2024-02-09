@@ -20,18 +20,17 @@ public class InputData : MonoBehaviour
 [GhostComponent(PrefabType = GhostPrefabType.AllPredicted)]
 public struct InputComponentData : IInputComponentData
 {
-
     // Movement
-    public float2 RequstedHorizontalMovement;
+    [GhostField] public float2 RequestedMovement;
     
     // Jumping & DoubleJump
-    public bool RequestJump;
+    [GhostField] public bool RequestJump;
 
     // Punch & HeavyPunch
-    public bool RequestPunch;
+    [GhostField] public bool RequestPunch;
 
     // Kick & HeavyKick
-    public bool RequestKicking;
+    public bool RequestKick;
 
 
     // Block

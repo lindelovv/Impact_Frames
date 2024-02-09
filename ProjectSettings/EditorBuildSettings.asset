@@ -6,16 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scripts/Net/Frontend.unity
+    path: Assets/Scenes/Menu.unity
     guid: 7ece359fb535f444987a320fa1b9bd78
   - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scripts/Net/FrontendHUD.unity
+    path: Assets/Scenes/Subscenes/FrontendHUD.unity
     guid: 47da412bf1f65c740b4a4b1f355f8f74
   - enabled: 1
-    path: Assets/Scripts/Net/Relay/RelayHUD.unity
+    path: Assets/Scenes/Subscenes/RelayHUD.unity
     guid: 8a84d013f2a6893448d1a6975f22ab83
   - enabled: 1
     path: Assets/Scenes/Subscenes/SubScene_Lobby.unity
