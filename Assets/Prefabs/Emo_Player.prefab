@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 42c8a6dfb3e8f494aaecab6cd17751f1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 42c8a6dfb3e8f494aaecab6cd17751f1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 42c8a6dfb3e8f494aaecab6cd17751f1, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 42c8a6dfb3e8f494aaecab6cd17751f1, type: 3}
       propertyPath: m_LocalRotation.x
@@ -30,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 42c8a6dfb3e8f494aaecab6cd17751f1, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 42c8a6dfb3e8f494aaecab6cd17751f1, type: 3}
       propertyPath: m_LocalRotation.z
@@ -42,12 +42,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 42c8a6dfb3e8f494aaecab6cd17751f1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 42c8a6dfb3e8f494aaecab6cd17751f1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2255050680597841328, guid: 42c8a6dfb3e8f494aaecab6cd17751f1, type: 3}
+      propertyPath: m_RootBone
+      value: 
+      objectReference: {fileID: 6423432863799859112}
+    - target: {fileID: -157699513662737570, guid: 42c8a6dfb3e8f494aaecab6cd17751f1, type: 3}
+      propertyPath: m_RootBone
+      value: 
+      objectReference: {fileID: 6423432863799859112}
     - target: {fileID: 919132149155446097, guid: 42c8a6dfb3e8f494aaecab6cd17751f1, type: 3}
       propertyPath: m_Name
       value: Emo_Player
@@ -236,7 +244,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4515867642041206214}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 3da911043f2dd6846b1ad977d439186a, type: 2}
   m_CullingMode: 0
@@ -249,3 +257,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &6423432863799859112 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -1491146365204598977, guid: 42c8a6dfb3e8f494aaecab6cd17751f1, type: 3}
+  m_PrefabInstance: {fileID: 3632993539287234711}
+  m_PrefabAsset: {fileID: 0}
