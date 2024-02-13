@@ -7,18 +7,35 @@ using Unity.Transforms;
 
 public class Player : MonoBehaviour
 {
+    //_______________
     [Header("Health")] 
-    [Tooltip("[float] Remaining health points.")] public float CurrentHealth;
-    [Tooltip("[float] The maximum health possible.")] public float MaxHealth;
     
+    [Tooltip("[float] Remaining health points.")]
+    public float CurrentHealth;
+    
+    [Tooltip("[float] The maximum health possible.")]
+    public float MaxHealth;
+    
+    //_______________
     [Header("Movement")] 
-    [Tooltip("[float] How fast the player can move.")] public float Speed;
-    [Tooltip("[float] Maximum movespeed.")] public float MaxSpeed;
-    [Tooltip("[float] How high the player can jump.")] public float JumpHeight;
     
+    [Tooltip("[float] How fast the player can move.")]
+    public float Speed;
+    
+    [Tooltip("[float] Maximum movespeed.")]
+    public float MaxSpeed;
+    
+    [Tooltip("[float] How high the player can jump.")]
+    public float JumpHeight;
+    
+    //_______________
     [Header("Physics")] 
-    [Tooltip("[float] Movement resistance.")] public float Damping;
-    [Tooltip("[float3] Override starting velocity. Normally should be {0,0,0}.")] public float3 StartingVelocity;
+    
+    [Tooltip("[float] Movement resistance.")]
+    public float Damping;
+    
+    [Tooltip("[float3] Override starting velocity. Normally should be {0,0,0}.")]
+    public float3 StartingVelocity;
 
     public class Baker : Baker<Player>
     {

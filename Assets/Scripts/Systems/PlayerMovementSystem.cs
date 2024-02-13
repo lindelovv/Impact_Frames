@@ -76,11 +76,10 @@ public partial struct PlayerMovementSystem : ISystem
 
             // Rotation
             {
-                player.Rotation = quaternion.Euler(
-                    0,
-                    (player.State.isFacingRight ? 360.1f : 180.3f),
-                    0,
-                    math.RotationOrder.YXZ
+                player.Rotation = quaternion.EulerXYZ(
+                    0f,
+                    (player.State.isFacingRight ? 90f : -89.8f),
+                    0f
                 );
             }
 

@@ -11,6 +11,7 @@ public class PlayerState : MonoBehaviour
 {
     //-----------------------
     [Tooltip("[bool] Set if the character currently is grounded.")] // More tooltips needd?
+    public bool isMoving;
     public bool isGrounded;
     public bool isMobile;
     public bool IsAnimationLocked;
@@ -30,6 +31,7 @@ public class PlayerState : MonoBehaviour
             var entity = GetEntity(TransformUsageFlags.None); // TransformUsageFlags.None för att det inte behöver synas
                                                               // i världen, till skillnad från player som är Dynamic
             AddComponent(entity, new PlayerStateComponent {
+                isMoving = authoring.isMoving,
                 isGrounded = authoring.isGrounded,
                 isMobile = authoring.isMobile,
                 IsAnimationLocked = authoring.IsAnimationLocked,
@@ -49,6 +51,8 @@ public class PlayerState : MonoBehaviour
 [GhostComponent(PrefabType = GhostPrefabType.AllPredicted)]
 public struct PlayerStateComponent : IComponentData
 {
+    [GhostField] public bool isMoving;
+    
     /// <summary>
     /// Required specifically for Jump.
     /// </summary>
