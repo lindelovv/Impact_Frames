@@ -9,7 +9,7 @@ public partial struct AnimationSystem : ISystem
 {
     public void OnUpdate(ref SystemState state)
     {
-        var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
+        var cmdBuffer = new EntityCommandBuffer(Allocator.TempJob);
 
         foreach (
             var (animatedGameObject, entity)
