@@ -62,50 +62,106 @@ public partial struct GoInGameClientSystem : ISystem
 [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
 public partial struct GoInGameServerSystem : ISystem
 {
-    private ComponentLookup<NetworkId> m_NetworkId;
+    private ComponentLookup<NetworkId> _networkId;
     
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
-        var builder = new EntityQueryBuilder(Allocator.Temp)
-            .WithAll<GoInGameRPC>()
-            .WithAll<ReceiveRpcCommandRequest>();
         state.RequireForUpdate<SpawnerComponent>();
-        state.RequireForUpdate(state.GetEntityQuery(builder));
-        m_NetworkId = state.GetComponentLookup<NetworkId>(true);
+        state.RequireForUpdate(new EntityQueryBuilder(Allocator.Temp)
+            .WithAll<GoInGameRPC>()
+            .WithAll<ReceiveRpcCommandRequest>()
+            .Build(ref state)
+        );
+        _networkId = state.GetComponentLookup<NetworkId>(true);
     }
 
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        var prefab = SystemAPI.GetSingleton<SpawnerComponent>().Player;
-        var spawnPoint = SystemAPI.GetSingleton<SpawnerComponent>().SpawnPoint;
-        state.EntityManager.GetName(prefab, out FixedString64Bytes prefabName);
+        var spawner = SystemAPI.GetSingleton<SpawnerComponent>();
+        state.EntityManager.GetName(spawner.Player, out FixedString64Bytes prefabName);
         
         var worldName = state.WorldUnmanaged.Name;
         
         var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
-        m_NetworkId.Update(ref state);
+        _networkId.Update(ref state);
 
-        foreach (var (reqSrc, reqEntity)
-                 in SystemAPI.Query<RefRO<ReceiveRpcCommandRequest>>()
-                     .WithAll<GoInGameRPC>()
-                     .WithEntityAccess()
+        foreach (
+            var (reqSrc, entity)
+            in SystemAPI.Query<RefRO<ReceiveRpcCommandRequest>>()
+                .WithAll<GoInGameRPC>()
+                .WithEntityAccess()
         ) {
-            cmdBuffer.AddComponent<NetworkStreamInGame>(reqSrc.ValueRO.SourceConnection);
-            var networkId = m_NetworkId[reqSrc.ValueRO.SourceConnection];
+            // Error: Received a ghost - Player - from the server which has a different hash on the client.
+            // https://forum.unity.com/threads/received-a-ghost-from-the-server-which-has-a-different-hash-on-the-client.1542728/
             
-            var player = cmdBuffer.Instantiate(prefab);
+            // https://docs.unity3d.com/Packages/com.unity.netcode@1.0/manual/ghost-spawning.html
+            
+            cmdBuffer.AddComponent<NetworkStreamInGame>(reqSrc.ValueRO.SourceConnection);
+            var networkId = _networkId[reqSrc.ValueRO.SourceConnection];
+            
+            var player = cmdBuffer.Instantiate(spawner.Player);
             cmdBuffer.SetComponent(player, new GhostOwner { NetworkId = networkId.Value });
-            cmdBuffer.SetComponent(player, spawnPoint);
+            cmdBuffer.SetComponent(player, spawner.SpawnPoint);
 
-            Debug.Log($"[Networking] {worldName} connecting {networkId.Value}");
+            Debug.Log($"[Networking] Player {networkId.Value} connecting to {worldName}.");
             
             cmdBuffer.AppendToBuffer(reqSrc.ValueRO.SourceConnection, new LinkedEntityGroup { Value = player });
-            cmdBuffer.DestroyEntity(reqEntity);
+            cmdBuffer.DestroyEntity(entity);
         }
         cmdBuffer.Playback(state.EntityManager);
     }
-    
-    [BurstCompile] public void OnDestroy(ref SystemState state) {}
 }
+
+// reference
+
+//namespace Samples.HelloNetcode
+//{
+//    // Place any established network connection in-game so ghost snapshot sync can start
+//    [UpdateInGroup(typeof(HelloNetcodeSystemGroup))]
+//    [WorldSystemFilter(WorldSystemFilterFlags.ClientSimulation | WorldSystemFilterFlags.ServerSimulation | WorldSystemFilterFlags.ThinClientSimulation)]
+//    public partial class GoInGameSystem : SystemBase
+//    {
+//        private EntityQuery m_NewConnections;
+//
+//        protected override void OnCreate()
+//        {
+//            RequireForUpdate<EnableGoInGame>();
+//            RequireForUpdate(m_NewConnections);
+//        }
+//
+//        protected override void OnUpdate()
+//        {
+//            var commandBuffer = new EntityCommandBuffer(Allocator.Temp);
+//            FixedString32Bytes worldName = World.Name;
+//            // Go in game as soon as we have a connection set up (connection network ID has been set)
+//            Entities.WithName("NewConnectionsGoInGame").WithStoreEntityQueryInField(ref m_NewConnections).WithNone<NetworkStreamInGame>().ForEach(
+//                (Entity ent, in NetworkId id) =>
+//                {
+//                    UnityEngine.Debug.Log($"[{worldName}] Go in game connection {id.Value}");
+//                    commandBuffer.AddComponent<NetworkStreamInGame>(ent);
+//                }).Run();
+//            commandBuffer.Playback(EntityManager);
+//        }
+//    }
+//}
+
+//namespace Samples.HelloNetcode
+//{
+//    public struct EnableGoInGame : IComponentData { }
+//
+//    [DisallowMultipleComponent]
+//    public class EnableGoInGameAuthoring : MonoBehaviour
+//    {
+//        class Baker : Baker<EnableGoInGameAuthoring>
+//        {
+//            public override void Bake(EnableGoInGameAuthoring authoring)
+//            {
+//                EnableGoInGame component = default(EnableGoInGame);
+//                var entity = GetEntity(TransformUsageFlags.Dynamic);
+//                AddComponent(entity, component);
+//            }
+//        }
+//    }
+//}

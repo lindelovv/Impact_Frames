@@ -4542,6 +4542,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1432564580}
     m_Modifications:
+    - target: {fileID: 3241027323664299393, guid: f92990436405b6f46b122c3db5fd97f8, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 4592643069801107800, guid: ff6587c54d43e744d81aeb8ffa4210dc, type: 3}
+    - target: {fileID: 3947661100658011294, guid: f92990436405b6f46b122c3db5fd97f8, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 4592643069801107800, guid: ff6587c54d43e744d81aeb8ffa4210dc, type: 3}
     - target: {fileID: 5458776368235511851, guid: f92990436405b6f46b122c3db5fd97f8, type: 3}
       propertyPath: m_Name
       value: Prefab_Windowedwall&Stairs3Units
@@ -7582,6 +7590,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1432564580}
     m_Modifications:
+    - target: {fileID: 3241027323664299393, guid: f92990436405b6f46b122c3db5fd97f8, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 4592643069801107800, guid: ff6587c54d43e744d81aeb8ffa4210dc, type: 3}
+    - target: {fileID: 3947661100658011294, guid: f92990436405b6f46b122c3db5fd97f8, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 4592643069801107800, guid: ff6587c54d43e744d81aeb8ffa4210dc, type: 3}
     - target: {fileID: 5458776368235511851, guid: f92990436405b6f46b122c3db5fd97f8, type: 3}
       propertyPath: m_Name
       value: Prefab_Windowedwall&Stairs3Units

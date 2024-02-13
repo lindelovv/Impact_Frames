@@ -27,8 +27,11 @@ public partial class UpdateCameraTargetSystem : SystemBase
 
     protected override void OnUpdate()
     {
-        foreach (var transform in SystemAPI.Query<RefRO<LocalToWorld>>())
-        {
+        foreach (
+            var transform
+            in SystemAPI.Query<RefRO<LocalToWorld>>()
+                .WithAll<GhostOwnerIsLocal>()
+        ) {
             _cameraTarget.position = transform.ValueRO.Position;
             _cameraTarget.rotation = transform.ValueRO.Rotation;
         }
