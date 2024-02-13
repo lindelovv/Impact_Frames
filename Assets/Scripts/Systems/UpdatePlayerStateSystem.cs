@@ -1,5 +1,6 @@
 using Unity.Burst;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Physics;
 using Unity.Transforms;
@@ -31,11 +32,16 @@ public partial struct UpdatePlayerStateSystem : ISystem
                 -Vector3.up, 
                 1.5f
             );
-            
+            var isMoving = (inputComponentData.ValueRO.RequestedMovement != float2.zero);
             // Character rotation
-            if (inputComponentData.ValueRO.RequestedMovement.x != 0.0f)
+            if (isMoving.x)
             {
+                playerState.ValueRW.isMoving = true;
                 playerState.ValueRW.isFacingRight = (inputComponentData.ValueRO.RequestedMovement.x > 0.0f);
+            }
+            else if (!isMoving.y)
+            {
+                playerState.ValueRW.isMoving = false;
             }
         }
     }
