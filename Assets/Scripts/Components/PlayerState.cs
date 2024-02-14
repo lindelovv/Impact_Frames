@@ -61,47 +61,47 @@ public struct PlayerStateComponent : IComponentData
     /// <summary>
     /// Required for Movement, Jump, Punch, Kick, Block, Special Move, Grab, Dash, and Air Dash.
     /// </summary>
-    public bool isMobile;
+    [GhostField] public bool isMobile;
 
     /// <summary>
     /// Required for Movement, Jump, Block, Grab, Dash, and Air Dash
     /// </summary>
-    public bool IsAnimationLocked;
+    [GhostField] public bool IsAnimationLocked;
 
     /// <summary>
     /// Required Bunny Jump, Attacks 
     /// </summary>
-    public bool IsOnBeat;
+    [GhostField] public bool IsOnBeat;
 
     /// <summary>
     /// Required for Perfect Block sucess, and incoming attack to calculate damage taken
     /// </summary>
-    public bool IsAttacked;
+    [GhostField] public bool IsAttacked;
 
     /// <summary>
     /// Required if Hurtbox collider is hit, to calculate damage, and Perfect Block fail
     /// </summary>
-    public bool IsHit; 
+    [GhostField] public bool IsHit; 
 
     /// <summary>
     /// Required for pressing Special Move button.
     /// </summary>
-    public bool HasFullComboMeterEnergy;
+    [GhostField] public bool HasFullComboMeterEnergy;
 
     /// <summary>
     /// Required for Special Move Sucess.
     /// </summary>
-    public bool HasCompletedMusicalChallenge;
+    [GhostField] public bool HasCompletedMusicalChallenge;
 
     /// <summary>
     /// Required if In Range of opponent, for Grab.
     /// </summary>
-    public bool IsInRange;
+    [GhostField] public bool IsInRange;
    
     /// <summary>
     /// Required for every state that can have a cooldown
     /// </summary>
-    public bool IsOnCooldown;
+    [GhostField] public bool IsOnCooldown;
 
     /// <summary>
     /// Required for Facing the right direction

@@ -31,7 +31,7 @@ public struct InputComponentData : IInputComponentData
     [GhostField] public bool RequestPunch;
 
     // Kick & HeavyKick
-    public bool RequestKick;
+    [GhostField] public bool RequestKick;
 
 
     // Block

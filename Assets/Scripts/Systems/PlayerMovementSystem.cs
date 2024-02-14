@@ -38,7 +38,7 @@ public partial struct PlayerMovementSystem : ISystem
             {
                 if (!player.State.isGrounded && player.Velocity.y <= 1.0f)
                 {
-                    player.GravityFactor = 4;
+                    player.GravityFactor = 5;
                 }
                 else
                 {
