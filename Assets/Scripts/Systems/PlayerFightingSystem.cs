@@ -46,7 +46,7 @@ public partial struct PlayerFightingSystem : ISystem
     
     public void Punch(PlayerAspect player)
     {
-        var forward = player.State.isFacingRight ? 1 : -1;
+        var forward = player.IsFacingRight ? 1 : -1;
         
         RaycastHit hit = new RaycastHit();
         bool hasHit = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld.CastRay(new RaycastInput {

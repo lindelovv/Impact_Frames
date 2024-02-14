@@ -101,17 +101,22 @@ public readonly partial struct PlayerAspect : IAspect
     private readonly RefRW<LocalTransform> _transform;
     
     // Shorthand names for the component data variables (use these for access)
-    public float CurrentHealth        { get => _health.ValueRO.CurrentHealth;       set => _health.ValueRW.CurrentHealth = value;       }
-    public float MaxHealth            { get => _health.ValueRO.MaxHealth;           set => _health.ValueRW.MaxHealth = value;           }
-    public float Acceleration         { get => _data.ValueRO.MovementSpeed;         set => _data.ValueRW.MovementSpeed = value;         }
-    public float MaxSpeed             { get => _data.ValueRO.MaxSpeed;              set => _data.ValueRW.MaxSpeed = value;              }
-    public float JumpHeight           { get => _data.ValueRO.JumpHeight;            set => _data.ValueRW.JumpHeight = value;            }
-    public InputComponentData Input   { get => _input.ValueRO;                      set => _input.ValueRW = value;                      }  
-    public PlayerStateComponent State { get => _state.ValueRO;                      set => _state.ValueRW = value;                      }
-    public float3 Position            { get => _transform.ValueRO.Position;         set => _transform.ValueRW.Position = value;         }
-    public quaternion Rotation        { get => _transform.ValueRO.Rotation;         set => _transform.ValueRW.Rotation = value;         }
-    public PhysicsCollider Collider   { get => _collider.ValueRO;                   set => _collider.ValueRW = value;                   }
-    public float3 Velocity            { get => _physicsVelocity.ValueRO.Linear;     set => _physicsVelocity.ValueRW.Linear = value;     }
-    public float Damping              { get => _physicsDamping.ValueRO.Linear;      set => _physicsDamping.ValueRW.Linear = value;      }
-    public float GravityFactor        { get => _physicsGravityFactor.ValueRO.Value; set => _physicsGravityFactor.ValueRW.Value = value; }
+    public float CurrentHealth      { get => _health.ValueRO.CurrentHealth;       set => _health.ValueRW.CurrentHealth = value;       }
+    public float MaxHealth          { get => _health.ValueRO.MaxHealth;           set => _health.ValueRW.MaxHealth = value;           }
+    public float Acceleration       { get => _data.ValueRO.MovementSpeed;         set => _data.ValueRW.MovementSpeed = value;         }
+    public float MaxSpeed           { get => _data.ValueRO.MaxSpeed;              set => _data.ValueRW.MaxSpeed = value;              }
+    public float JumpHeight         { get => _data.ValueRO.JumpHeight;            set => _data.ValueRW.JumpHeight = value;            }
+    public InputComponentData Input { get => _input.ValueRO;                      set => _input.ValueRW = value;                      }
+
+    public bool IsMoving            { get => _state.ValueRO.isMoving;             set => _state.ValueRW.isMoving = value;             }          
+    public bool IsGrounded          { get => _state.ValueRO.isGrounded;           set => _state.ValueRW.isGrounded = value;           }
+    public bool IsFacingRight       { get => _state.ValueRO.isFacingRight;        set => _state.ValueRW.isFacingRight = value;        }
+    public bool IsFalling           { get => _state.ValueRO.isFalling;            set => _state.ValueRW.isFalling = value;            }
+    public bool IsJumping           { get => _state.ValueRO.isJumping;            set => _state.ValueRW.isJumping = value;            }
+    public float3 Position          { get => _transform.ValueRO.Position;         set => _transform.ValueRW.Position = value;         }
+    public quaternion Rotation      { get => _transform.ValueRO.Rotation;         set => _transform.ValueRW.Rotation = value;         }
+    public PhysicsCollider Collider { get => _collider.ValueRO;                   set => _collider.ValueRW = value;                   }
+    public float3 Velocity          { get => _physicsVelocity.ValueRO.Linear;     set => _physicsVelocity.ValueRW.Linear = value;     }
+    public float Damping            { get => _physicsDamping.ValueRO.Linear;      set => _physicsDamping.ValueRW.Linear = value;      }
+    public float GravityFactor      { get => _physicsGravityFactor.ValueRO.Value; set => _physicsGravityFactor.ValueRW.Value = value; }
 }

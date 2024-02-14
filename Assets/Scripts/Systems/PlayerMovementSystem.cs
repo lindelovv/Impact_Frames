@@ -30,20 +30,15 @@ public partial struct PlayerMovementSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        foreach (var player
-                 in SystemAPI.Query<PlayerAspect>()
-                )
-        {
+        foreach (
+            var player
+            in SystemAPI.Query<PlayerAspect>()
+        ) {
             // Increase gravity if falling
             {
-                if (!player.State.isGrounded && player.Velocity.y <= 1.0f)
-                {
-                    player.GravityFactor = 5;
-                }
-                else
-                {
-                    player.GravityFactor = 1;
-                }
+                player.GravityFactor = player is { IsGrounded: false, Velocity: { y: <= 1.0f } }
+                    ? 5 
+                    : 1;
             }
 
             // Calculate & Add Horizontal Movement
@@ -64,13 +59,12 @@ public partial struct PlayerMovementSystem : ISystem
                         player.Acceleration * SystemAPI.Time.DeltaTime
                     ), player.Velocity.y, 0);
                     
-                    // @TODO: set this to not try to increase velocity into walls
-                    var castPosition = Util.ColliderCast( // Check for blocking hit
-                        SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld,
-                        player.Collider, 
-                        player.Position, 
-                        player.Position + (player.Velocity * SystemAPI.Time.DeltaTime)
-                    );
+                    //var castPosition = Util.ColliderCast( // Check for blocking hit
+                    //    SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld,
+                    //    player.Collider, 
+                    //    player.Position, 
+                    //    player.Position + (player.Velocity * SystemAPI.Time.DeltaTime)
+                    //);
                 }
             }
 
@@ -78,7 +72,7 @@ public partial struct PlayerMovementSystem : ISystem
             {
                 player.Rotation = quaternion.EulerXYZ(
                     0f,
-                    (player.State.isFacingRight ? 90f : -89.8f),
+                    (player.IsFacingRight ? 90f : -89.8f),
                     0f
                 );
             }
@@ -87,7 +81,7 @@ public partial struct PlayerMovementSystem : ISystem
             {
                 player.Velocity += new float3(
                     0, 
-                    (player is { Input: { RequestJump: true }, State: { isGrounded: true } }
+                    (player is { Input: { RequestJump: true }, IsGrounded: true }
                         ? player.JumpHeight * SystemAPI.Time.DeltaTime 
                         : 0.0f),
                     0
