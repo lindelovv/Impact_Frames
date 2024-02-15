@@ -21,6 +21,8 @@ public class InputData : MonoBehaviour
 [GhostComponent(PrefabType = GhostPrefabType.AllPredicted, OwnerSendType = SendToOwnerType.SendToNonOwner)]
 public struct InputComponentData : IInputComponentData
 {
+    // TODO: change to use InputEvent, *probably* native way to input buffer 
+    
     // Movement
     [GhostField] public float2 RequestedMovement;
     
