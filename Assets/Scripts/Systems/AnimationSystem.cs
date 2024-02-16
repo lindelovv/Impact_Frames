@@ -1,11 +1,12 @@
 ﻿using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.NetCode;
 using Unity.Transforms;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-[UpdateInGroup(typeof(PresentationSystemGroup), OrderFirst = true)]
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup), OrderFirst = true)]
 public partial struct AnimationSystem : ISystem
 {
     private readonly struct _parameters {
