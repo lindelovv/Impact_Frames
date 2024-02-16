@@ -36,7 +36,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player
+    path: Character_Rig_Skin_Final1:Root_Player
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -61,7 +61,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -185,7 +185,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/L_Pelvis
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:L_Pelvis
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -309,7 +309,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/L_Pelvis/L_Knee
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:L_Pelvis/Character_Rig_Skin_Final1:L_Knee
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -334,7 +334,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/L_Pelvis/L_Knee/L_IKLeg
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:L_Pelvis/Character_Rig_Skin_Final1:L_Knee/Character_Rig_Skin_Final1:L_IKLeg
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -449,7 +449,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/L_Pelvis/L_Knee/L_IKLeg/L_Foot
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:L_Pelvis/Character_Rig_Skin_Final1:L_Knee/Character_Rig_Skin_Final1:L_IKLeg/Character_Rig_Skin_Final1:L_Foot
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -591,7 +591,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/R_Pelvis
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:R_Pelvis
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -724,7 +724,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/R_Pelvis/R_Knee
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:R_Pelvis/Character_Rig_Skin_Final1:R_Knee
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -749,7 +749,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/R_Pelvis/R_Knee/R_IKLeg
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:R_Pelvis/Character_Rig_Skin_Final1:R_Knee/Character_Rig_Skin_Final1:R_IKLeg
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -891,7 +891,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/R_Pelvis/R_Knee/R_IKLeg/R_Foot
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:R_Pelvis/Character_Rig_Skin_Final1:R_Knee/Character_Rig_Skin_Final1:R_IKLeg/Character_Rig_Skin_Final1:R_Foot
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -1024,7 +1024,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -1049,7 +1049,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -1074,7 +1074,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -1171,7 +1171,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/Neck
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:Neck
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -1196,7 +1196,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/Neck/Face
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:Neck/Character_Rig_Skin_Final1:Face
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -1221,7 +1221,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/Neck/Hood
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:Neck/Character_Rig_Skin_Final1:Hood
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -1291,7 +1291,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/L_Collarbone
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:L_Collarbone
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -1442,7 +1442,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -1584,7 +1584,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder/Character_Rig_Skin_Final1:L_Elbow
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder/Character_Rig_Skin_Final1:L_Elbow
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -1609,7 +1609,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder/Character_Rig_Skin_Final1:L_Elbow/Character_Rig_Skin_Final1:L_Wrist
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder/Character_Rig_Skin_Final1:L_Elbow/Character_Rig_Skin_Final1:L_Wrist
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -1634,7 +1634,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder/Character_Rig_Skin_Final1:L_Elbow/Character_Rig_Skin_Final1:L_Wrist/Character_Rig_Skin_Final1:L_Hand
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder/Character_Rig_Skin_Final1:L_Elbow/Character_Rig_Skin_Final1:L_Wrist/Character_Rig_Skin_Final1:L_Hand
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -1704,7 +1704,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/R_Collarbone
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:R_Collarbone
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -1846,7 +1846,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -1979,7 +1979,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder/Character_Rig_Skin_Final1:R_Elbow
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder/Character_Rig_Skin_Final1:R_Elbow
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -2004,7 +2004,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder/Character_Rig_Skin_Final1:R_Elbow/Character_Rig_Skin_Final1:R_Wrist
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder/Character_Rig_Skin_Final1:R_Elbow/Character_Rig_Skin_Final1:R_Wrist
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -2029,7 +2029,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder/Character_Rig_Skin_Final1:R_Elbow/Character_Rig_Skin_Final1:R_Wrist/Character_Rig_Skin_Final1:R_Hand
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder/Character_Rig_Skin_Final1:R_Elbow/Character_Rig_Skin_Final1:R_Wrist/Character_Rig_Skin_Final1:R_Hand
   m_CompressedRotationCurves: []
   m_EulerCurves: []
   m_PositionCurves:
@@ -2057,7 +2057,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player
+    path: Character_Rig_Skin_Final1:Root_Player
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -2082,7 +2082,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -2224,7 +2224,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/L_Pelvis
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:L_Pelvis
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -2249,7 +2249,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/L_Pelvis/L_Knee
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:L_Pelvis/Character_Rig_Skin_Final1:L_Knee
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -2274,7 +2274,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/L_Pelvis/L_Knee/L_IKLeg
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:L_Pelvis/Character_Rig_Skin_Final1:L_Knee/Character_Rig_Skin_Final1:L_IKLeg
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -2425,7 +2425,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/L_Pelvis/L_Knee/L_IKLeg/L_Foot
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:L_Pelvis/Character_Rig_Skin_Final1:L_Knee/Character_Rig_Skin_Final1:L_IKLeg/Character_Rig_Skin_Final1:L_Foot
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -2567,7 +2567,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/R_Pelvis
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:R_Pelvis
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -2592,7 +2592,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/R_Pelvis/R_Knee
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:R_Pelvis/Character_Rig_Skin_Final1:R_Knee
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -2617,7 +2617,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/R_Pelvis/R_Knee/R_IKLeg
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:R_Pelvis/Character_Rig_Skin_Final1:R_Knee/Character_Rig_Skin_Final1:R_IKLeg
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -2768,7 +2768,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/R_Pelvis/R_Knee/R_IKLeg/R_Foot
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:R_Pelvis/Character_Rig_Skin_Final1:R_Knee/Character_Rig_Skin_Final1:R_IKLeg/Character_Rig_Skin_Final1:R_Foot
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -2910,7 +2910,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -2935,7 +2935,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -2960,7 +2960,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3093,7 +3093,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/Neck
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:Neck
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3118,7 +3118,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/Neck/Face
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:Neck/Character_Rig_Skin_Final1:Face
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3143,7 +3143,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/Neck/Hood
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:Neck/Character_Rig_Skin_Final1:Hood
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3249,7 +3249,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/L_Collarbone
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:L_Collarbone
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3274,7 +3274,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3299,7 +3299,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder/Character_Rig_Skin_Final1:L_Elbow
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder/Character_Rig_Skin_Final1:L_Elbow
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3324,7 +3324,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder/Character_Rig_Skin_Final1:L_Elbow/Character_Rig_Skin_Final1:L_Wrist
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder/Character_Rig_Skin_Final1:L_Elbow/Character_Rig_Skin_Final1:L_Wrist
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3349,7 +3349,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder/Character_Rig_Skin_Final1:L_Elbow/Character_Rig_Skin_Final1:L_Wrist/Character_Rig_Skin_Final1:L_Hand
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder/Character_Rig_Skin_Final1:L_Elbow/Character_Rig_Skin_Final1:L_Wrist/Character_Rig_Skin_Final1:L_Hand
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3455,7 +3455,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/R_Collarbone
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:R_Collarbone
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3552,7 +3552,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3577,7 +3577,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder/Character_Rig_Skin_Final1:R_Elbow
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder/Character_Rig_Skin_Final1:R_Elbow
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3602,7 +3602,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder/Character_Rig_Skin_Final1:R_Elbow/Character_Rig_Skin_Final1:R_Wrist
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder/Character_Rig_Skin_Final1:R_Elbow/Character_Rig_Skin_Final1:R_Wrist
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3627,7 +3627,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder/Character_Rig_Skin_Final1:R_Elbow/Character_Rig_Skin_Final1:R_Wrist/Character_Rig_Skin_Final1:R_Hand
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder/Character_Rig_Skin_Final1:R_Elbow/Character_Rig_Skin_Final1:R_Wrist/Character_Rig_Skin_Final1:R_Hand
   m_ScaleCurves:
   - curve:
       serializedVersion: 2
@@ -3653,7 +3653,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player
+    path: Character_Rig_Skin_Final1:Root_Player
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3678,7 +3678,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3703,7 +3703,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/L_Pelvis
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:L_Pelvis
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3728,7 +3728,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/L_Pelvis/L_Knee
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:L_Pelvis/Character_Rig_Skin_Final1:L_Knee
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3753,7 +3753,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/L_Pelvis/L_Knee/L_IKLeg
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:L_Pelvis/Character_Rig_Skin_Final1:L_Knee/Character_Rig_Skin_Final1:L_IKLeg
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3778,7 +3778,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/L_Pelvis/L_Knee/L_IKLeg/L_Foot
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:L_Pelvis/Character_Rig_Skin_Final1:L_Knee/Character_Rig_Skin_Final1:L_IKLeg/Character_Rig_Skin_Final1:L_Foot
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3803,7 +3803,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/R_Pelvis
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:R_Pelvis
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3828,7 +3828,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/R_Pelvis/R_Knee
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:R_Pelvis/Character_Rig_Skin_Final1:R_Knee
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3853,7 +3853,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/R_Pelvis/R_Knee/R_IKLeg
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:R_Pelvis/Character_Rig_Skin_Final1:R_Knee/Character_Rig_Skin_Final1:R_IKLeg
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3878,7 +3878,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/Root_C_Pelvis/R_Pelvis/R_Knee/R_IKLeg/R_Foot
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:Root_C_Pelvis/Character_Rig_Skin_Final1:R_Pelvis/Character_Rig_Skin_Final1:R_Knee/Character_Rig_Skin_Final1:R_IKLeg/Character_Rig_Skin_Final1:R_Foot
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3903,7 +3903,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3928,7 +3928,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3953,7 +3953,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -3978,7 +3978,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/Neck
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:Neck
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -4003,7 +4003,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/Neck/Face
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:Neck/Character_Rig_Skin_Final1:Face
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -4028,7 +4028,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/Neck/Hood
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:Neck/Character_Rig_Skin_Final1:Hood
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -4053,7 +4053,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/L_Collarbone
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:L_Collarbone
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -4078,7 +4078,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -4103,7 +4103,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder/Character_Rig_Skin_Final1:L_Elbow
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder/Character_Rig_Skin_Final1:L_Elbow
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -4128,7 +4128,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder/Character_Rig_Skin_Final1:L_Elbow/Character_Rig_Skin_Final1:L_Wrist
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder/Character_Rig_Skin_Final1:L_Elbow/Character_Rig_Skin_Final1:L_Wrist
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -4153,7 +4153,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder/Character_Rig_Skin_Final1:L_Elbow/Character_Rig_Skin_Final1:L_Wrist/Character_Rig_Skin_Final1:L_Hand
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:L_Collarbone/Character_Rig_Skin_Final1:L_Shoulder/Character_Rig_Skin_Final1:L_Elbow/Character_Rig_Skin_Final1:L_Wrist/Character_Rig_Skin_Final1:L_Hand
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -4178,7 +4178,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/R_Collarbone
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:R_Collarbone
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -4203,7 +4203,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -4228,7 +4228,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder/Character_Rig_Skin_Final1:R_Elbow
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder/Character_Rig_Skin_Final1:R_Elbow
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -4253,7 +4253,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder/Character_Rig_Skin_Final1:R_Elbow/Character_Rig_Skin_Final1:R_Wrist
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder/Character_Rig_Skin_Final1:R_Elbow/Character_Rig_Skin_Final1:R_Wrist
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -4323,7 +4323,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Root_Player/C_Belly/C_Spine/Root_UpperChest/R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder/Character_Rig_Skin_Final1:R_Elbow/Character_Rig_Skin_Final1:R_Wrist/Character_Rig_Skin_Final1:R_Hand
+    path: Character_Rig_Skin_Final1:Root_Player/Character_Rig_Skin_Final1:C_Belly/Character_Rig_Skin_Final1:C_Spine/Character_Rig_Skin_Final1:Root_UpperChest/Character_Rig_Skin_Final1:R_Collarbone/Character_Rig_Skin_Final1:R_Shoulder/Character_Rig_Skin_Final1:R_Elbow/Character_Rig_Skin_Final1:R_Wrist/Character_Rig_Skin_Final1:R_Hand
   m_FloatCurves:
   - serializedVersion: 2
     curve:
@@ -4351,7 +4351,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Enabled
-    path: Emo_Face
+    path: Character_Rig_Skin_Final1:Emo_Face
     classID: 25
     script: {fileID: 0}
     flags: 0
@@ -4381,7 +4381,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Enabled
-    path: Emo_Hair
+    path: Character_Rig_Skin_Final1:Emo_Hair
     classID: 25
     script: {fileID: 0}
     flags: 0
@@ -4411,7 +4411,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Enabled
-    path: Emo_Body
+    path: Character_Rig_Skin_Final1:Emo_Body
     classID: 25
     script: {fileID: 0}
     flags: 0
@@ -4424,7 +4424,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 2354629339
+      path: 947390759
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4433,7 +4433,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3905575578
+      path: 1904175877
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4442,7 +4442,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3848923586
+      path: 1363749438
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4451,7 +4451,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 634136306
+      path: 3482813528
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4460,7 +4460,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3470294643
+      path: 2088824373
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4469,7 +4469,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3222481162
+      path: 3583862625
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4478,7 +4478,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1765106821
+      path: 2084223766
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4487,7 +4487,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2350668391
+      path: 2568193524
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4496,7 +4496,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2275300006
+      path: 3683346159
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4505,7 +4505,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2354629339
+      path: 947390759
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4514,7 +4514,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 4212510913
+      path: 4177086383
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4523,7 +4523,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3905575578
+      path: 1904175877
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4532,7 +4532,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3848923586
+      path: 1363749438
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4541,7 +4541,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1809331216
+      path: 2874075477
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4550,7 +4550,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 634136306
+      path: 3482813528
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4559,7 +4559,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3470294643
+      path: 2088824373
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4568,7 +4568,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3222481162
+      path: 3583862625
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4577,7 +4577,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1765106821
+      path: 2084223766
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4586,7 +4586,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 311671926
+      path: 1317439551
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4595,7 +4595,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3776290611
+      path: 4127541076
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4604,7 +4604,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2350668391
+      path: 2568193524
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4613,7 +4613,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2275300006
+      path: 3683346159
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4622,7 +4622,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 774353482
+      path: 959932973
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4631,7 +4631,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1774609162
+      path: 1371738066
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -4640,7 +4640,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 999496773
+      path: 2114963465
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4649,7 +4649,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1627330483
+      path: 2694567137
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4658,7 +4658,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 4212510913
+      path: 4177086383
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4667,7 +4667,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3776792205
+      path: 2506798078
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4676,7 +4676,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1809331216
+      path: 2874075477
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4685,7 +4685,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2547285986
+      path: 1460946052
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4694,7 +4694,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1856223614
+      path: 398854500
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4703,7 +4703,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3244915131
+      path: 3883270528
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4712,7 +4712,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1136752383
+      path: 4042050152
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4721,7 +4721,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1915900764
+      path: 3240095691
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4730,7 +4730,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 311671926
+      path: 1317439551
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4739,7 +4739,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3776290611
+      path: 4127541076
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4748,7 +4748,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1661852186
+      path: 2259403624
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4757,7 +4757,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3381833630
+      path: 4053254982
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4766,7 +4766,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 774353482
+      path: 959932973
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4775,7 +4775,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3485194035
+      path: 706596417
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4784,7 +4784,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1774609162
+      path: 1371738066
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4793,7 +4793,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 999496773
+      path: 2114963465
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4802,7 +4802,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1627330483
+      path: 2694567137
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4811,7 +4811,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3776792205
+      path: 2506798078
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4820,7 +4820,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2547285986
+      path: 1460946052
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4829,7 +4829,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1856223614
+      path: 398854500
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4838,7 +4838,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3244915131
+      path: 3883270528
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4847,7 +4847,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1136752383
+      path: 4042050152
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4856,7 +4856,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1915900764
+      path: 3240095691
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4865,7 +4865,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1661852186
+      path: 2259403624
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4874,7 +4874,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3381833630
+      path: 4053254982
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4883,7 +4883,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3485194035
+      path: 706596417
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4892,7 +4892,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1774609162
+      path: 1371738066
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -4901,7 +4901,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 999496773
+      path: 2114963465
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -4910,7 +4910,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1627330483
+      path: 2694567137
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -4919,7 +4919,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2354629339
+      path: 947390759
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -4928,7 +4928,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 4212510913
+      path: 4177086383
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -4937,7 +4937,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3776792205
+      path: 2506798078
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -4946,7 +4946,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3905575578
+      path: 1904175877
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -4955,7 +4955,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3848923586
+      path: 1363749438
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -4964,7 +4964,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1809331216
+      path: 2874075477
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -4973,7 +4973,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2547285986
+      path: 1460946052
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -4982,7 +4982,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 634136306
+      path: 3482813528
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -4991,7 +4991,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3470294643
+      path: 2088824373
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -5000,7 +5000,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1856223614
+      path: 398854500
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -5009,7 +5009,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3244915131
+      path: 3883270528
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -5018,7 +5018,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3222481162
+      path: 3583862625
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -5027,7 +5027,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1136752383
+      path: 4042050152
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -5036,7 +5036,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1915900764
+      path: 3240095691
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -5045,7 +5045,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1765106821
+      path: 2084223766
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -5054,7 +5054,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 311671926
+      path: 1317439551
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -5063,7 +5063,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3776290611
+      path: 4127541076
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -5072,7 +5072,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1661852186
+      path: 2259403624
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -5081,7 +5081,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3381833630
+      path: 4053254982
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -5090,7 +5090,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2350668391
+      path: 2568193524
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -5099,7 +5099,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2275300006
+      path: 3683346159
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -5108,7 +5108,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 774353482
+      path: 959932973
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -5117,7 +5117,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3485194035
+      path: 706596417
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -5126,7 +5126,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 700305429
+      path: 4150435934
       attribute: 3305885265
       script: {fileID: 0}
       typeID: 25
@@ -5135,7 +5135,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2959002219
+      path: 1853995552
       attribute: 3305885265
       script: {fileID: 0}
       typeID: 25
@@ -5144,7 +5144,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 4144079040
+      path: 702468235
       attribute: 3305885265
       script: {fileID: 0}
       typeID: 25
@@ -5163,7 +5163,7 @@ AnimationClip:
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 0
+    m_LoopTime: 1
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
