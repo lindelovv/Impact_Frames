@@ -3,11 +3,13 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [UpdateInGroup(typeof(PresentationSystemGroup), OrderFirst = true)]
 public partial struct AnimationSystem : ISystem
 {
     private readonly struct _parameters {
+        public static readonly int Random = Animator.StringToHash("Random");
         public static readonly int IsMoving = Animator.StringToHash("IsMoving");
         public static readonly int IsGrounded = Animator.StringToHash("IsGrounded");
         public static readonly int IsJumping = Animator.StringToHash("IsJumping");
@@ -36,6 +38,8 @@ public partial struct AnimationSystem : ISystem
             var (transform, animatorReference, playerState)
             in SystemAPI.Query<LocalTransform, AnimationReferenceData, PlayerStateComponent>()
         ) {
+            animatorReference.Animator.SetInteger(_parameters.Random, Random.Range(0, 2));
+
             animatorReference.Animator.SetBool(_parameters.IsMoving, playerState.isMoving);
             animatorReference.Animator.SetBool(_parameters.IsGrounded, playerState.isGrounded);
             animatorReference.Animator.SetBool(_parameters.IsFalling, playerState.isFalling);

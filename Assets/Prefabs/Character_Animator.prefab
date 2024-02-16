@@ -62,7 +62,7 @@ PrefabInstance:
       objectReference: {fileID: 4561886228431612709}
     - target: {fileID: 919132149155446097, guid: 961e2bbc249dfd24f8e190d1a430e2f0, type: 3}
       propertyPath: m_Name
-      value: Character_Emo 1
+      value: Character_Animator
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 961e2bbc249dfd24f8e190d1a430e2f0, type: 3}
       propertyPath: m_TagString
