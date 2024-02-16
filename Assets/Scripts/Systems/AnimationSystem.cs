@@ -12,6 +12,7 @@ public partial struct AnimationSystem : ISystem
         public static readonly int IsGrounded = Animator.StringToHash("IsGrounded");
         public static readonly int IsJumping = Animator.StringToHash("IsJumping");
         public static readonly int IsFalling = Animator.StringToHash("IsFalling");
+        public static readonly int IsPunching = Animator.StringToHash("IsPunching");
     };
     
     public void OnUpdate(ref SystemState state)
@@ -39,6 +40,7 @@ public partial struct AnimationSystem : ISystem
             animatorReference.Animator.SetBool(_parameters.IsGrounded, playerState.isGrounded);
             animatorReference.Animator.SetBool(_parameters.IsFalling, playerState.isFalling);
             animatorReference.Animator.SetBool(_parameters.IsJumping, playerState.isJumping);
+            animatorReference.Animator.SetBool(_parameters.IsPunching, playerState.isPunching);
             
             animatorReference.Animator.transform.position = new float3(
                 transform.Position.x,

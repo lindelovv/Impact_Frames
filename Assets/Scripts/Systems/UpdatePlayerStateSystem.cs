@@ -54,6 +54,8 @@ public partial struct UpdatePlayerStateSystem : ISystem
             {
                 player.IsMoving = false;
             }
+
+            player.IsPunching = player.Input.RequestPunch; // TODO: change to stay longer
         }
     }
 }

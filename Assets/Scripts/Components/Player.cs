@@ -113,6 +113,7 @@ public readonly partial struct PlayerAspect : IAspect
     public bool IsFacingRight       { get => _state.ValueRO.isFacingRight;        set => _state.ValueRW.isFacingRight = value;        }
     public bool IsFalling           { get => _state.ValueRO.isFalling;            set => _state.ValueRW.isFalling = value;            }
     public bool IsJumping           { get => _state.ValueRO.isJumping;            set => _state.ValueRW.isJumping = value;            }
+    public bool IsPunching          { get => _state.ValueRO.isPunching;           set => _state.ValueRW.isPunching = value;           }
     public float3 Position          { get => _transform.ValueRO.Position;         set => _transform.ValueRW.Position = value;         }
     public quaternion Rotation      { get => _transform.ValueRO.Rotation;         set => _transform.ValueRW.Rotation = value;         }
     public PhysicsCollider Collider { get => _collider.ValueRO;                   set => _collider.ValueRW = value;                   }
