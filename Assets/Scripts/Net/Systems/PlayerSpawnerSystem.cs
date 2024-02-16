@@ -1,7 +1,9 @@
 ﻿    
     using Unity.Collections;
     using Unity.Entities;
+    using Unity.Mathematics;
     using Unity.NetCode;
+    using Unity.Transforms;
     using UnityEngine;
 
     public struct PlayerSpawned : IComponentData { }
@@ -14,31 +16,26 @@
     [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
     public partial class SpawnPlayerSystem : SystemBase
     {
-        private EntityQuery m_NewPlayers;
+        private EntityQuery _newPlayers;
 
         protected override void OnCreate()
         {
-            RequireForUpdate(m_NewPlayers);
+            RequireForUpdate(_newPlayers);
             // Must wait for the spawner entity scene to be streamed in, most likely instantaneous in
             // this sample but good to be sure
             RequireForUpdate<SpawnerComponent>();
-            EntityQuery sceneQuery = GetEntityQuery(new EntityQueryDesc()
-            {
-                Any = new[]
-                {
-                    ComponentType.ReadOnly<EnableSpawnPlayer>(), ComponentType.ReadOnly<EnableRemotePredictedPlayer>()
-                }
-            });
-            RequireForUpdate(sceneQuery);
         }
 
         protected override void OnUpdate()
         {
-            Debug.Log("SpawnUpdate");
             var prefab = SystemAPI.GetSingleton<SpawnerComponent>().Player;
+            var spawnPoint = SystemAPI.GetSingleton<SpawnerComponent>().SpawnPoint;
             var commandBuffer = new EntityCommandBuffer(Allocator.Temp);
-            Entities.WithName("SpawnPlayer").WithStoreEntityQueryInField(ref m_NewPlayers).WithNone<PlayerSpawned>().ForEach(
-                (Entity connectionEntity, in NetworkStreamInGame req, in NetworkId networkId) =>
+            Entities
+                .WithName("SpawnPlayer")
+                .WithStoreEntityQueryInField(ref _newPlayers)
+                .WithNone<PlayerSpawned>()
+                .ForEach((Entity connectionEntity, in NetworkStreamInGame req, in NetworkId networkId) =>
                 {
                     Debug.Log($"Spawning player for connection {networkId.Value}");
                     var player = commandBuffer.Instantiate(prefab);
@@ -60,8 +57,9 @@
                     commandBuffer.AppendToBuffer(connectionEntity, new LinkedEntityGroup{Value = player});
 
                     commandBuffer.AddComponent(player, new ConnectionOwner { Entity = connectionEntity });
-                    Debug.Log("SpawnUpdateLambda");
-                }).Run();
+                    commandBuffer.SetComponent(player, spawnPoint);
+                }
+            ).Run();
             commandBuffer.Playback(EntityManager);
         }
     }
