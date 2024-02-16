@@ -22,27 +22,40 @@ public partial struct UpdatePlayerStateSystem : ISystem
     public void OnUpdate(ref SystemState state)
     {
         foreach (
-            var (playerState, transform, inputComponentData)
-            in SystemAPI.Query<RefRW<PlayerStateComponent>, RefRO<LocalTransform>, RefRO<InputComponentData>>()
+            var player
+            in SystemAPI.Query<PlayerAspect>()
                 //.WithAll<WorldRenderBounds>()
         ) {
             // Set isGrounded to true if the ray has collision close under player
-            playerState.ValueRW.isGrounded = Physics.Raycast(
-                transform.ValueRO.Position,
-                -Vector3.up, 
+            player.IsGrounded = Physics.Raycast(
+                player.Position,
+                -Vector3.up,
                 1.5f
             );
-            var isMoving = (inputComponentData.ValueRO.RequestedMovement != float2.zero);
+            if (player.IsGrounded)
+            {
+                player.IsJumping = player.Input.RequestJump;
+                player.IsFalling = false;
+            }
+            else
+            {
+                player.IsFalling = player is { Velocity: { y: < 0f } };
+            }
+            
+            var isMoving = (player.Input.RequestedMovement != float2.zero);
+            
             // Character rotation
             if (isMoving.x)
             {
-                playerState.ValueRW.isMoving = true;
-                playerState.ValueRW.isFacingRight = (inputComponentData.ValueRO.RequestedMovement.x > 0.0f);
+                player.IsMoving = true;
+                player.IsFacingRight = (player.Input.RequestedMovement.x > 0.0f);
             }
             else if (!isMoving.y)
             {
-                playerState.ValueRW.isMoving = false;
+                player.IsMoving = false;
             }
+
+            player.IsPunching = player.Input.RequestPunch; // TODO: change to stay longer
         }
     }
 }

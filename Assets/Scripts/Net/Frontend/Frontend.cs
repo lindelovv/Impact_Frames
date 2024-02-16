@@ -206,7 +206,7 @@ public class RelayFrontend : MonoBehaviour
         //This prevent rendering (rendering from multiple world with presentation is not greatly supported)
         //and other issues.
         DestroyLocalSimulationWorld();
-        if (World.DefaultGameObjectInjectionWorld == null) {
+        if (World.DefaultGameObjectInjectionWorld == null){
             World.DefaultGameObjectInjectionWorld = client;
         }
 

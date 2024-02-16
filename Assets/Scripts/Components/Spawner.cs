@@ -1,5 +1,6 @@
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.NetCode;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -27,6 +28,6 @@ public class Spawner : MonoBehaviour
 
 public struct SpawnerComponent : IComponentData
 {
-    public Entity Player;
-    public LocalTransform SpawnPoint;
+    [GhostField] public Entity Player;
+    [GhostField] public LocalTransform SpawnPoint;
 }
