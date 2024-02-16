@@ -1,34 +1,9 @@
 fileFormatVersion: 2
-guid: 961e2bbc249dfd24f8e190d1a430e2f0
+guid: eb3ddf809c8a5c049bac467b237c5817
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: lambert40
-    second: {fileID: -2640376908024315238, guid: a9c2be04483855545a617183b49004c8, type: 3}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: lambert41
-    second: {fileID: -2640376908024315238, guid: a9c2be04483855545a617183b49004c8, type: 3}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: lambert42
-    second: {fileID: -2640376908024315238, guid: a9c2be04483855545a617183b49004c8, type: 3}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: lambert43
-    second: {fileID: 751585417706704616, guid: 82aa2b41bab02ac4fa95c4799807dc1c, type: 3}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: lambert44
-    second: {fileID: 1547101114776039939, guid: 82aa2b41bab02ac4fa95c4799807dc1c, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -124,7 +99,7 @@ ModelImporter:
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 1
+  avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
