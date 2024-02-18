@@ -6,7 +6,8 @@ using Unity.Transforms;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup), OrderFirst = true)]
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup), OrderFirst = true),
+ WorldSystemFilter(WorldSystemFilterFlags.ClientSimulation)]
 public partial struct AnimationSystem : ISystem
 {
     private readonly struct _parameters {
