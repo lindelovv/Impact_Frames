@@ -2,6 +2,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
+using Unity.Services.Relay.Models;
 using Unity.Transforms;
 using UnityEngine;
 using Random = UnityEngine.Random;
