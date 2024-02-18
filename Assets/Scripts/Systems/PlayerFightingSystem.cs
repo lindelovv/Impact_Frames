@@ -6,7 +6,6 @@ using Unity.Physics;
 using UnityEngine;
 using BoxCollider = Unity.Physics.BoxCollider;
 using Collider = Unity.Physics.Collider;
-using RaycastHit = Unity.Physics.RaycastHit;
 
 [BurstCompile]
 public partial struct PlayerFightingSystem : ISystem
@@ -44,22 +43,39 @@ public partial struct PlayerFightingSystem : ISystem
         }
     }
     
-    public void Punch(PlayerAspect player)
+    public unsafe void Punch(PlayerAspect player)
     {
-        var forward = player.IsFacingRight ? 1 : -1;
+        var forward = player.State.HasFlag(State.IsFacingRight) ? 1 : -1;
         
-        RaycastHit hit = new RaycastHit();
-        bool hasHit = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld.CastRay(new RaycastInput {
-            Filter = CollisionFilter.Default,
+        //RaycastHit rayHit = new RaycastHit();
+        //bool hasRayHit = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld.CastRay(new RaycastInput {
+        //    Filter = CollisionFilter.Default,
+        //    Start = player.Position + (forward * new float3(0.9f, 0, 0)),
+        //    End = player.Position + (forward * new float3(1, 0, 0)),
+        //}, out rayHit);
+        
+        //Debug.DrawLine(player.Position + (forward * new float3(0.9f, 0, 0)), player.Position + (forward * new float3(1, 0, 0)), Color.magenta, 1);
+        //Debug.DrawLine(player.Position + (forward * new float3(0.95f, 0.05f, 0)), player.Position + (forward * new float3(0.95f, -0.05f, 0)), Color.magenta, 1);
+        
+        ColliderCastHit hit = new ColliderCastHit();
+        bool hasHit = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld.CastCollider(new ColliderCastInput {
+            Collider = (Collider*)BoxCollider.Create(new BoxGeometry {
+                BevelRadius = 0f,
+                Center = float3.zero,
+                Orientation = quaternion.identity,
+                Size = new float3(1,1,1)
+            }, filter: new CollisionFilter {
+                BelongsTo = 0,
+                CollidesWith = ~0u,
+                GroupIndex = 0,
+            }).GetUnsafePtr(),
             Start = player.Position + (forward * new float3(0.9f, 0, 0)),
             End = player.Position + (forward * new float3(1, 0, 0)),
         }, out hit);
-        
-        Debug.DrawLine(player.Position + (forward * new float3(0.9f, 0, 0)), player.Position + (forward * new float3(1, 0, 0)), Color.magenta, 1);
-        Debug.DrawLine(player.Position + (forward * new float3(0.95f, 0.05f, 0)), player.Position + (forward * new float3(0.95f, -0.05f, 0)), Color.magenta, 1);
-        
+
         if (hasHit)
         {
+            Debug.Log($"entity: {World.DefaultGameObjectInjectionWorld.EntityManager.GetName(hit.Entity)}");
             //var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
             //Debug.Log($"hit { entityManager.GetName(hit.Entity) }");
         }
