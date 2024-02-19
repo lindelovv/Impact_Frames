@@ -2,12 +2,14 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.NetCode;
 using Unity.Physics;
 using UnityEngine;
 using BoxCollider = Unity.Physics.BoxCollider;
 using Collider = Unity.Physics.Collider;
 
 [BurstCompile]
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
 public partial struct PlayerFightingSystem : ISystem
 {
     [BurstCompile]
@@ -27,6 +29,7 @@ public partial struct PlayerFightingSystem : ISystem
         //    CollisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld,
         //}.ScheduleParallel(state.Dependency);
         
+        
         foreach (var player in SystemAPI.Query<PlayerAspect>())
         {
             //Input button logik för att köra punch
@@ -43,9 +46,10 @@ public partial struct PlayerFightingSystem : ISystem
         }
     }
     
+    [BurstCompile]
     public unsafe void Punch(PlayerAspect player)
     {
-        var forward = player.State.HasFlag(State.IsFacingRight) ? 1 : -1;
+        var forward = player.IsFacingRight ? 1 : -1;
         
         //RaycastHit rayHit = new RaycastHit();
         //bool hasRayHit = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld.CastRay(new RaycastInput {
@@ -65,7 +69,7 @@ public partial struct PlayerFightingSystem : ISystem
                 Orientation = quaternion.identity,
                 Size = new float3(1,1,1)
             }, filter: new CollisionFilter {
-                BelongsTo = 0,
+                BelongsTo = ~0u,
                 CollidesWith = ~0u,
                 GroupIndex = 0,
             }).GetUnsafePtr(),
@@ -73,11 +77,12 @@ public partial struct PlayerFightingSystem : ISystem
             End = player.Position + (forward * new float3(1, 0, 0)),
         }, out hit);
 
-        if (hasHit)
-        {
-            Debug.Log($"entity: {World.DefaultGameObjectInjectionWorld.EntityManager.GetName(hit.Entity)}");
-            //var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            //Debug.Log($"hit { entityManager.GetName(hit.Entity) }");
+        var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        if (   hasHit 
+            && hit.Entity != player.Self 
+            && entityManager.HasComponent<HealthComponent>(hit.Entity)
+        ) {
+            Debug.Log($"entity: {entityManager.GetName(hit.Entity)}");
         }
 
         // Set Animation Logic
@@ -85,6 +90,7 @@ public partial struct PlayerFightingSystem : ISystem
         // Set Sound Logic
     }
     
+    [BurstCompile]
     public void Kick(PlayerAspect player)
     {
         Debug.Log("Kick");
