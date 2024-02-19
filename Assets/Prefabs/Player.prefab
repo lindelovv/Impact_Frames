@@ -77,14 +77,7 @@ MonoBehaviour:
   isMoving: 0
   isGrounded: 0
   isMobile: 0
-  IsAnimationLocked: 0
   IsOnBeat: 0
-  IsAttacked: 0
-  IsHit: 0
-  HasFullComboMeterEnergy: 0
-  HasCompletedMusicalChallenge: 0
-  IsInRange: 0
-  IsOnCooldown: 0
   isFacingRight: 1
 --- !u!114 &-1779064826349053475
 MonoBehaviour:

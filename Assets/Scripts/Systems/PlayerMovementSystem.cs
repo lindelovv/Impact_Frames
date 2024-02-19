@@ -36,9 +36,9 @@ public partial struct PlayerMovementSystem : ISystem
         ) {
             // Increase gravity if falling
             {
-                player.GravityFactor = player is { IsGrounded: false, Velocity: { y: <= 1.0f } }
-                    ? 5 
-                    : 1;
+                player.GravityFactor = (!player.State.HasFlag(State.IsGrounded) && player.Velocity.y <= 1.0f)
+                    ? 5  // if falling
+                    : 1; // if not
             }
 
             // Calculate & Add Horizontal Movement
@@ -72,7 +72,7 @@ public partial struct PlayerMovementSystem : ISystem
             {
                 player.Rotation = quaternion.EulerXYZ(
                     0f,
-                    (player.IsFacingRight ? 90f : -89.8f),
+                    (player.State.HasFlag(State.IsFacingRight) ? 90f : -89.8f),
                     0f
                 );
             }
@@ -81,9 +81,9 @@ public partial struct PlayerMovementSystem : ISystem
             {
                 player.Velocity += new float3(
                     0, 
-                    (player is { Input: { RequestJump: true }, IsGrounded: true }
+                    (player.Input.RequestJump && player.State.HasFlag(State.IsGrounded))
                         ? player.JumpHeight * SystemAPI.Time.DeltaTime 
-                        : 0.0f),
+                        : 0.0f,
                     0
                 );
             }

@@ -1,4 +1,4 @@
-using Unity.Collections;
+﻿using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
@@ -71,11 +71,11 @@ public partial struct AnimationUpdateSystem : ISystem
             //    Debug.Log(animatorReference.Animator.GetInteger(_parameters.Random));
             //}
 
-            animatorReference.Animator.SetBool(_parameters.IsMoving, playerState.isMoving);
-            animatorReference.Animator.SetBool(_parameters.IsGrounded, playerState.isGrounded);
-            animatorReference.Animator.SetBool(_parameters.IsFalling, playerState.isFalling);
-            animatorReference.Animator.SetBool(_parameters.IsJumping, playerState.isJumping);
-            animatorReference.Animator.SetBool(_parameters.IsPunching, playerState.isPunching);
+            animatorReference.Animator.SetBool(_parameters.IsMoving, playerState.State.HasFlag(State.IsMoving));
+            animatorReference.Animator.SetBool(_parameters.IsGrounded, playerState.State.HasFlag(State.IsGrounded));
+            animatorReference.Animator.SetBool(_parameters.IsFalling, playerState.State.HasFlag(State.IsFalling));
+            animatorReference.Animator.SetBool(_parameters.IsJumping, playerState.State.HasFlag(State.IsJumping));
+            animatorReference.Animator.SetBool(_parameters.IsPunching, playerState.State.HasFlag(State.IsPunching));
             
             var animatorTransform = animatorReference.Animator.transform;
             animatorTransform.position = new float3(

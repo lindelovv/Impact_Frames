@@ -27,19 +27,35 @@ public partial struct UpdatePlayerStateSystem : ISystem
                 //.WithAll<WorldRenderBounds>()
         ) {
             // Set isGrounded to true if the ray has collision close under player
-            player.IsGrounded = Physics.Raycast(
-                player.Position,
-                -Vector3.up,
-                1.5f
-            );
-            if (player.IsGrounded)
+            if (Physics.Raycast(
+                    player.Position,
+                    -Vector3.up,
+                    1.5f
+            )) {
+                player.State &= State.IsGrounded;
+            }
+            else 
             {
-                player.IsJumping = player.Input.RequestJump;
-                player.IsFalling = false;
+                player.State |= State.IsGrounded;
+            }
+            
+            if ((player.State & State.IsGrounded) != 0)
+            {
+                if (player.Input.RequestJump)
+                {
+                    player.State |= State.IsJumping;
+                }
+                else
+                {
+                    player.State &= State.IsFalling;
+                }
             }
             else
             {
-                player.IsFalling = player is { Velocity: { y: < 0f } };
+                if (player.Velocity.y < 0f)
+                {
+                    player.State |= State.IsFalling;
+                };
             }
             
             var isMoving = (player.Input.RequestedMovement != float2.zero);
@@ -47,15 +63,30 @@ public partial struct UpdatePlayerStateSystem : ISystem
             // Character rotation
             if (isMoving.x)
             {
-                player.IsMoving = true;
-                player.IsFacingRight = (player.Input.RequestedMovement.x > 0.0f);
+                player.State |= State.IsMoving;
+                if (player.Input.RequestedMovement.x > 0.0f && (player.State & State.IsFacingRight) != 0)
+                {
+                    player.State |= State.IsFacingRight;
+                }
+                else if ((player.State & State.IsFacingRight) == 0)
+                {
+                    player.State &= State.IsFacingRight;
+                }
+                    
             }
             else if (!isMoving.y)
             {
-                player.IsMoving = false;
+                player.State &= State.IsMoving;
             }
 
-            player.IsPunching = player.Input.RequestPunch; // TODO: change to stay longer
+            if (player.Input.RequestPunch)
+            {
+                player.State |= State.IsPunching;
+            }
+            else /* if(timer/animation) */
+            {
+                player.State &= State.IsPunching;
+            }
         }
     }
 }

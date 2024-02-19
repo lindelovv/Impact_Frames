@@ -1,5 +1,6 @@
-﻿
+﻿using Unity.Burst;
 using Unity.Entities;
+using Unity.Jobs;
 
 public partial struct HitboxSystem : ISystem
 {
@@ -16,5 +17,15 @@ public partial struct HitboxSystem : ISystem
         ) {
             
         }
+    }
+}
+
+[BurstCompile]
+public struct HitboxJob : IJobParallelFor
+{
+    [BurstCompile]
+    public void Execute(int index)
+    {
+        throw new System.NotImplementedException();
     }
 }
