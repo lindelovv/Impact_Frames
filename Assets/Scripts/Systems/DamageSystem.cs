@@ -21,6 +21,7 @@ public partial struct DamageSystem : ISystem
                 .WithAll<TakeDamage>()
         ) {
             health.ValueRW.CurrentHealth--;
+            Debug.Log($"{state.EntityManager.GetName(entity)} Health: {health.ValueRO.CurrentHealth}");
             
             if (health.ValueRO.CurrentHealth <= 0) { cmdBuffer.DestroyEntity(entity); }
 
