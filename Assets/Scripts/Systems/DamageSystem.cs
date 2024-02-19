@@ -1,9 +1,10 @@
 ﻿using Unity.Collections;
 using Unity.Entities;
 using Unity.NetCode;
+using UnityEngine;
 
-[UpdateInGroup(typeof(SimulationSystemGroup))]
-public partial struct DestroySystem : ISystem
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
+public partial struct DamageSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
     {
@@ -15,15 +16,19 @@ public partial struct DestroySystem : ISystem
         var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
         foreach (
             var (health, entity)
-            in SystemAPI.Query<HealthComponent>()
+            in SystemAPI.Query<RefRW<HealthComponent>>()
                 .WithEntityAccess()
+                .WithAll<TakeDamage>()
         ) {
-            if (health.CurrentHealth <= 0)
-            {
-                cmdBuffer.DestroyEntity(entity);
-            }
+            health.ValueRW.CurrentHealth--;
+            
+            if (health.ValueRO.CurrentHealth <= 0) { cmdBuffer.DestroyEntity(entity); }
+
+            cmdBuffer.RemoveComponent<TakeDamage>(entity);
         }
         cmdBuffer.Playback(state.EntityManager);
         cmdBuffer.Dispose();
     }
 }
+
+public struct TakeDamage : IComponentData {}

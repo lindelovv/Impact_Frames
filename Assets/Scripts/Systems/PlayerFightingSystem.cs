@@ -29,13 +29,14 @@ public partial struct PlayerFightingSystem : ISystem
         //    CollisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld,
         //}.ScheduleParallel(state.Dependency);
         
+        var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
         
         foreach (var player in SystemAPI.Query<PlayerAspect>())
         {
             //Input button logik för att köra punch
             if (player.Input.RequestPunch /* && notInAnimation */)
             {
-                Punch(player);
+                Punch(player, cmdBuffer);
             }
 
             //Input button logik för att köra kick
@@ -44,10 +45,13 @@ public partial struct PlayerFightingSystem : ISystem
                 Kick(player);
             }
         }
+        
+        cmdBuffer.Playback(state.EntityManager);
+        cmdBuffer.Dispose();
     }
     
     [BurstCompile]
-    public unsafe void Punch(PlayerAspect player)
+    public unsafe void Punch(PlayerAspect player, EntityCommandBuffer cmdBuffer)
     {
         var forward = player.IsFacingRight ? 1 : -1;
         
@@ -83,6 +87,7 @@ public partial struct PlayerFightingSystem : ISystem
             && entityManager.HasComponent<HealthComponent>(hit.Entity)
         ) {
             Debug.Log($"entity: {entityManager.GetName(hit.Entity)}");
+            cmdBuffer.AddComponent<TakeDamage>(hit.Entity);
         }
 
         // Set Animation Logic
