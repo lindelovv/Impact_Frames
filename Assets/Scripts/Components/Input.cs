@@ -21,20 +21,17 @@ public class InputData : MonoBehaviour
 [GhostComponent(PrefabType = GhostPrefabType.AllPredicted, OwnerSendType = SendToOwnerType.SendToNonOwner)]
 public struct InputComponentData : IInputComponentData
 {
-    // TODO: change to use InputEvent, *probably* native way to input buffer 
-    
     // Movement
-    [GhostField] public float2 RequestedMovement;
+    [GhostField] public Vec2Command RequestedMovement;
     
     // Jumping & DoubleJump
-    [GhostField] public bool RequestJump;
+    [GhostField] public BoolCommand RequestJump;
 
     // Punch & HeavyPunch
-    [GhostField] public bool RequestPunch;
+    [GhostField] public BoolCommand RequestPunch;
 
     // Kick & HeavyKick
-    [GhostField] public bool RequestKick;
-
+    [GhostField] public BoolCommand RequestKick;
 
     // Block
 
@@ -49,4 +46,18 @@ public struct InputComponentData : IInputComponentData
 
 
     // Animation Cancle
+}
+
+[GhostComponent]
+public struct Vec2Command : ICommandData
+{
+    [GhostField] public NetworkTick Tick { get; set; }
+    [GhostField] public float2 Value;
+}
+
+[GhostComponent]
+public struct BoolCommand : ICommandData
+{
+    [GhostField] public NetworkTick Tick { get; set; }
+    [GhostField] public bool Value;
 }

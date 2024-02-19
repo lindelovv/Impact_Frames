@@ -34,13 +34,13 @@ public partial struct PlayerFightingSystem : ISystem
         foreach (var player in SystemAPI.Query<PlayerAspect>())
         {
             //Input button logik för att köra punch
-            if (player.Input.RequestPunch /* && notInAnimation */)
+            if (player.Input.RequestPunch.Value /* && notInAnimation */)
             {
                 Punch(player, cmdBuffer);
             }
 
             //Input button logik för att köra kick
-            if (player.Input.RequestKick /* && notInAnimation */)
+            if (player.Input.RequestKick.Value /* && notInAnimation */)
             {
                 Kick(player);
             }

@@ -34,7 +34,7 @@ public partial struct UpdatePlayerStateSystem : ISystem
             );
             if (player.IsGrounded)
             {
-                player.IsJumping = player.Input.RequestJump;
+                player.IsJumping = player.Input.RequestJump.Value;
                 player.IsFalling = false;
             }
             else
@@ -42,20 +42,20 @@ public partial struct UpdatePlayerStateSystem : ISystem
                 player.IsFalling = player is { Velocity: { y: < 0f } };
             }
             
-            var isMoving = (player.Input.RequestedMovement != float2.zero);
+            var isMoving = (player.Input.RequestedMovement.Value != float2.zero);
             
             // Character rotation
             if (isMoving.x)
             {
                 player.IsMoving = true;
-                player.IsFacingRight = (player.Input.RequestedMovement.x > 0.0f);
+                player.IsFacingRight = (player.Input.RequestedMovement.Value.x > 0.0f);
             }
             else if (!isMoving.y)
             {
                 player.IsMoving = false;
             }
 
-            player.IsPunching = player.Input.RequestPunch; // TODO: change to stay longer
+            player.IsPunching = player.Input.RequestPunch.Value; // TODO: change to stay longer
         }
     }
 }

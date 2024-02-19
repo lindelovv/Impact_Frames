@@ -37,8 +37,7 @@ public partial struct AnimationInitSystem : ISystem
     }
 }
 
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup), OrderFirst = true),
- WorldSystemFilter(WorldSystemFilterFlags.ClientSimulation)]
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup), OrderFirst = true)]
 public partial struct AnimationUpdateSystem : ISystem
 {
     private readonly struct _parameters {
