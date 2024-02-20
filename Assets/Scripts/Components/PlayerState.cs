@@ -59,6 +59,10 @@ public struct PlayerStateComponent : IComponentData
     
     [GhostField] public bool isPunching;
     
+    [GhostField] public bool isBlocking;
+    
+    [GhostField] public bool isParrying;
+    
     /// <summary>
     /// Required specifically for Jump.
     /// </summary>
