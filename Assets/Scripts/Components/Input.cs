@@ -34,10 +34,7 @@ public struct InputComponentData : IInputComponentData
     [GhostField] public BoolCommand RequestKick;
 
     // Block
-
-    
-    // Parray
-
+    [GhostField] public BoolCommand RequestBlockParry;
 
     // Dash & AirDash
 
@@ -48,14 +45,12 @@ public struct InputComponentData : IInputComponentData
     // Animation Cancle
 }
 
-[GhostComponent]
 public struct Vec2Command : ICommandData
 {
     [GhostField] public NetworkTick Tick { get; set; }
-    [GhostField] public float2 Value;
+    [GhostField(Quantization=100)] public float2 Value;
 }
 
-[GhostComponent]
 public struct BoolCommand : ICommandData
 {
     [GhostField] public NetworkTick Tick { get; set; }

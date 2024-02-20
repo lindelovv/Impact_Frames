@@ -20,12 +20,10 @@ public partial struct DamageSystem : ISystem
                 .WithEntityAccess()
                 .WithAll<TakeDamage>()
         ) {
-            health.ValueRW.CurrentHealth--;
-            Debug.Log($"{state.EntityManager.GetName(entity)} Health: {health.ValueRO.CurrentHealth}");
-            
-            if (health.ValueRO.CurrentHealth <= 0) { cmdBuffer.DestroyEntity(entity); }
-
+            health.ValueRW.Current--;
+            Debug.Log($"{state.EntityManager.GetName(entity)} Health: {health.ValueRO.Current}");
             cmdBuffer.RemoveComponent<TakeDamage>(entity);
+            if (health.ValueRO.Current <= 0) { cmdBuffer.DestroyEntity(entity); }
         }
         cmdBuffer.Playback(state.EntityManager);
         cmdBuffer.Dispose();

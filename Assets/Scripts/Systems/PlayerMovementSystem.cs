@@ -88,6 +88,12 @@ public partial struct PlayerMovementSystem : ISystem
                 );
             }
             //Debug.DrawLine(player.Position, player.Position + (player.Velocity / 2), Color.cyan, 1);
+
+            // Apply impact
+            {
+                player.Velocity += new float3(state.EntityManager.GetComponentData<ApplyImpact>(player.Self).Amount, 0);
+                state.EntityManager.SetComponentData(player.Self, new ApplyImpact { Amount = float2.zero });
+            }
         }
     }
 }
