@@ -13,8 +13,8 @@ public class Health : MonoBehaviour
         {
             var entity = GetEntity(TransformUsageFlags.None);
             AddComponent(entity, new HealthComponent {
-                CurrentHealth = authoring.CurrentHealth,
-                MaxHealth = authoring.MaxHealth,
+                Current = authoring.CurrentHealth,
+                Max = authoring.MaxHealth,
             });
         }
     }
@@ -22,6 +22,6 @@ public class Health : MonoBehaviour
 
 public struct HealthComponent : IComponentData
 {
-    [GhostField] public float CurrentHealth;
-    [GhostField] public float MaxHealth;
+    [GhostField(Quantization=10)] public float Current;
+    [GhostField(Quantization=10)] public float Max;
 }

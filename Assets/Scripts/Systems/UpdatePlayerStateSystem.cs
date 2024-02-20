@@ -16,25 +16,43 @@ public partial struct UpdatePlayerStateSystem : ISystem
         state.RequireForUpdate<PlayerData>();
         state.RequireForUpdate<PlayerStateComponent>();
         state.RequireForUpdate<LocalTransform>();
+        state.RequireForUpdate<NetworkTime>();
     }
 
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
+        var serverTick = SystemAPI.GetSingleton<NetworkTime>().ServerTick;
+        
         foreach (
             var player
             in SystemAPI.Query<PlayerAspect>()
                 //.WithAll<WorldRenderBounds>()
         ) {
             // Set isGrounded to true if the ray has collision close under player
+            //var left = new float3(player.Position + new float3(-0.5f, -0.99f, 0));
+            //var right = new float3(player.Position + new float3(0.5f, -0.99f, 0));
+            //var slightDownRight = new float3(0.9f, -0.1f, 0);
+            //var slightDownLeft = new float3(-0.9f, -0.1f, 0);
+            //player.IsGrounded = (Physics.Raycast(
+            //    left,
+            //    slightDownRight,
+            //    1f
+            //) || (Physics.Raycast(
+            //    right,
+            //    slightDownLeft,
+            //    1f
+            //)));
+            //Debug.DrawLine(left, left + slightDownRight);
+            //Debug.DrawLine(right, right + slightDownLeft);
             player.IsGrounded = Physics.Raycast(
                 player.Position,
-                -Vector3.up,
+                Vector3.down,
                 1.5f
             );
             if (player.IsGrounded)
             {
-                player.IsJumping = player.Input.RequestJump;
+                player.IsJumping = player.Input.RequestJump.Value;
                 player.IsFalling = false;
             }
             else
@@ -42,20 +60,24 @@ public partial struct UpdatePlayerStateSystem : ISystem
                 player.IsFalling = player is { Velocity: { y: < 0f } };
             }
             
-            var isMoving = (player.Input.RequestedMovement != float2.zero);
+            var isMoving = (player.Input.RequestedMovement.Value != float2.zero);
             
             // Character rotation
             if (isMoving.x)
             {
                 player.IsMoving = true;
-                player.IsFacingRight = (player.Input.RequestedMovement.x > 0.0f);
+                player.IsFacingRight = (player.Input.RequestedMovement.Value.x > 0.0f);
             }
             else if (!isMoving.y)
             {
                 player.IsMoving = false;
             }
 
-            player.IsPunching = player.Input.RequestPunch; // TODO: change to stay longer
+            player.IsBlocking = player.Input.RequestBlockParry.Value;
+            if (!player.IsBlocking)
+            {
+                player.IsPunching = player.Input.RequestPunch.Value;
+            }
         }
     }
 }

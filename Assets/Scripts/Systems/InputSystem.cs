@@ -32,9 +32,19 @@ public partial class InputSystem : SystemBase
             in SystemAPI.Query<RefRW<InputComponentData>>()
                 .WithAll<GhostOwnerIsLocal>()
         ) {
-            inputData.ValueRW.RequestedMovement = _inputActions.Combat.Move.ReadValue<Vector2>();
-            inputData.ValueRW.RequestJump = _inputActions.Combat.Jump.IsInProgress();
-            inputData.ValueRW.RequestPunch = _inputActions.Combat.Punch.WasPressedThisFrame();
+            inputData.ValueRW.RequestedMovement.Value = _inputActions.Combat.Move.ReadValue<Vector2>();
+            inputData.ValueRW.RequestJump.Value = _inputActions.Combat.Jump.IsInProgress();
+            inputData.ValueRW.RequestPunch.Value = _inputActions.Combat.Punch.WasPressedThisFrame();
+            
+            // Block/Parry update logic
+            if (_inputActions.Combat.BlockParry.WasPressedThisFrame())
+            {
+                inputData.ValueRW.RequestBlockParry.Value = true;
+            }
+            else if(_inputActions.Combat.BlockParry.WasReleasedThisFrame())
+            {
+                inputData.ValueRW.RequestBlockParry.Value = false;
+            }
         }
     }
 }

@@ -2,13 +2,14 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.NetCode;
 using Unity.Physics;
 using UnityEngine;
 using BoxCollider = Unity.Physics.BoxCollider;
 using Collider = Unity.Physics.Collider;
-using RaycastHit = Unity.Physics.RaycastHit;
 
 [BurstCompile]
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
 public partial struct PlayerFightingSystem : ISystem
 {
     [BurstCompile]
@@ -18,50 +19,89 @@ public partial struct PlayerFightingSystem : ISystem
             .WithAll<InputComponentData>(); //inputComponent för att komma åt inputscriptets inputs
         state.RequireForUpdate(state.GetEntityQuery(builder));
         state.RequireForUpdate<PhysicsWorldSingleton>();
+        state.RequireForUpdate<NetworkTime>();
     }
 
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
+        var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
+        foreach (var player in SystemAPI.Query<PlayerAspect>())
+        {
+            if (player.IsBlocking)
+            {
+                Block(player);
+            } else {
+                //Input button logik för att köra punch
+                if (player.IsPunching /* && notInAnimation */)
+                {
+                    Punch(player, cmdBuffer, ref state);
+                }
+                //Input button logik för att köra kick
+                if (player.Input.RequestKick.Value /* && notInAnimation */)
+                {
+                    Kick(player);
+                }
+            }
+        }
+
+        cmdBuffer.Playback(state.EntityManager);
+        cmdBuffer.Dispose();
+        
         //state.Dependency = new FightJob {
         //    DeltaTime = SystemAPI.Time.DeltaTime,
         //    CollisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld,
         //}.ScheduleParallel(state.Dependency);
-        
-        foreach (var player in SystemAPI.Query<PlayerAspect>())
-        {
-            //Input button logik för att köra punch
-            if (player.Input.RequestPunch /* && notInAnimation */)
-            {
-                Punch(player);
-            }
-
-            //Input button logik för att köra kick
-            if (player.Input.RequestKick /* && notInAnimation */)
-            {
-                Kick(player);
-            }
-        }
     }
     
-    public void Punch(PlayerAspect player)
+    [BurstCompile]
+    private unsafe void Punch(PlayerAspect player, EntityCommandBuffer cmdBuffer, ref SystemState state)
     {
+        //Debug.Log("Punch");
         var forward = player.IsFacingRight ? 1 : -1;
         
-        RaycastHit hit = new RaycastHit();
-        bool hasHit = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld.CastRay(new RaycastInput {
-            Filter = CollisionFilter.Default,
-            Start = player.Position + (forward * new float3(0.9f, 0, 0)),
-            End = player.Position + (forward * new float3(1, 0, 0)),
-        }, out hit);
+        //RaycastHit rayHit = new RaycastHit();
+        //bool hasRayHit = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld.CastRay(new RaycastInput {
+        //    Filter = CollisionFilter.Default,
+        //    Start = player.Position + (forward * new float3(0.9f, 0, 0)),
+        //    End = player.Position + (forward * new float3(1, 0, 0)),
+        //}, out rayHit);
         
-        Debug.DrawLine(player.Position + (forward * new float3(0.9f, 0, 0)), player.Position + (forward * new float3(1, 0, 0)), Color.magenta, 1);
-        Debug.DrawLine(player.Position + (forward * new float3(0.95f, 0.05f, 0)), player.Position + (forward * new float3(0.95f, -0.05f, 0)), Color.magenta, 1);
+        //Debug.DrawLine(player.Position + (forward * new float3(0.9f, 0, 0)), player.Position + (forward * new float3(1, 0, 0)), Color.magenta, 1);
+        //Debug.DrawLine(player.Position + (forward * new float3(0.95f, 0.05f, 0)), player.Position + (forward * new float3(0.95f, -0.05f, 0)), Color.magenta, 1);
         
-        if (hasHit)
-        {
-            //var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            //Debug.Log($"hit { entityManager.GetName(hit.Entity) }");
+        ColliderCastHit hit = new ColliderCastHit();
+        bool hasHit = SystemAPI.GetSingleton<PhysicsWorldSingleton>()
+            .CollisionWorld.CastCollider(new ColliderCastInput {
+                Collider = (Collider*)BoxCollider.Create(new BoxGeometry {
+                    BevelRadius = 0f,
+                    Center = float3.zero,
+                    Orientation = quaternion.identity,
+                    Size = new float3(1,1,1)
+                }, filter: new CollisionFilter {
+                    BelongsTo = ~0u,
+                    CollidesWith = ~0u,
+                    GroupIndex = 0,
+                }).GetUnsafePtr(),
+                Start = player.Position + (forward * new float3(0.9f, 0, 0)),
+                End = player.Position + (forward * new float3(1, 0, 0)),
+                },
+            out hit);
+
+        var entityManager = state.EntityManager;
+        if (   hasHit 
+            && hit.Entity != player.Self 
+            && entityManager.HasComponent<HealthComponent>(hit.Entity)
+        ) {
+            // GetName works but is not supported in context
+            //Debug.Log($"entity: {entityManager.GetName(hit.Entity)}");
+            cmdBuffer.AddComponent<TakeDamage>(hit.Entity);
+            
+            cmdBuffer.SetComponent(hit.Entity, new ApplyImpact {
+                Amount = new float2(forward * player.PunchPushback),
+            });
+            //state.Dependency = new ApplyImpactJob { Impact = new float2(5f, 5f) }
+            //    .ScheduleParallel(state.Dependency);
         }
 
         // Set Animation Logic
@@ -69,13 +109,20 @@ public partial struct PlayerFightingSystem : ISystem
         // Set Sound Logic
     }
     
-    public void Kick(PlayerAspect player)
+    [BurstCompile]
+    private void Kick(PlayerAspect player)
     {
-        Debug.Log("Kick");
+        //Debug.Log("Kick");
 
         // Set Animation Logic
         // Set VFX Logic
         // Set Sound Logic
+    }
+
+    [BurstCompile]
+    private void Block(PlayerAspect player)
+    {
+        //Debug.Log("Block");
     }
 }
 
