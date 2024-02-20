@@ -36,7 +36,7 @@ public partial struct PlayerFightingSystem : ISystem
             //Input button logik för att köra punch
             if (player.Input.RequestPunch.Value /* && notInAnimation */)
             {
-                Punch(player, cmdBuffer);
+                Punch(player, cmdBuffer, ref state);
             }
 
             //Input button logik för att köra kick
@@ -51,7 +51,7 @@ public partial struct PlayerFightingSystem : ISystem
     }
     
     [BurstCompile]
-    public unsafe void Punch(PlayerAspect player, EntityCommandBuffer cmdBuffer)
+    public unsafe void Punch(PlayerAspect player, EntityCommandBuffer cmdBuffer, ref SystemState state)
     {
         var forward = player.IsFacingRight ? 1 : -1;
         
@@ -88,6 +88,9 @@ public partial struct PlayerFightingSystem : ISystem
         ) {
             Debug.Log($"entity: {entityManager.GetName(hit.Entity)}");
             cmdBuffer.AddComponent<TakeDamage>(hit.Entity);
+            
+            state.Dependency = new ApplyImpactJob { Impact = new float2(5f, 5f) }
+                .ScheduleParallel(state.Dependency);
         }
 
         // Set Animation Logic
