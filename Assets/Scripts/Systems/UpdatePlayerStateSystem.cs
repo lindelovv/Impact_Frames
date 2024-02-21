@@ -2,7 +2,6 @@ using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
-using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -45,11 +44,21 @@ public partial struct UpdatePlayerStateSystem : ISystem
             //)));
             //Debug.DrawLine(left, left + slightDownRight);
             //Debug.DrawLine(right, right + slightDownLeft);
-            player.IsGrounded = Physics.Raycast(
+            
+            player.IsGrounded = (Physics.Raycast(
                 player.Position,
                 Vector3.down,
                 1.5f
-            );
+            ) || Physics.Raycast(
+                player.Position + new float3(0.6f, 0, 0),
+                Vector3.down,
+                1.5f
+            ) || Physics.Raycast(
+                player.Position + new float3(-0.6f, 0, 0),
+                Vector3.down,
+                1.5f
+            ));
+            
             if (player.IsGrounded)
             {
                 player.IsJumping = player.Input.RequestJump.Value;
