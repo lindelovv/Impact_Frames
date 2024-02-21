@@ -23,7 +23,7 @@ public class PlayerState : MonoBehaviour
     public bool IsInRange;
     public bool IsOnCooldown;
     public bool isFacingRight;
-
+    
     private class Baker : Baker<PlayerState>
     {
         public override void Bake(PlayerState authoring)
@@ -51,6 +51,10 @@ public class PlayerState : MonoBehaviour
 [GhostComponent(PrefabType = GhostPrefabType.AllPredicted)]
 public struct PlayerStateComponent : IComponentData
 {
+    [GhostField]  public bool isKicking;
+
+    [GhostField] public bool isFallingFromHigh;  // When Raytracing from high
+
     [GhostField] public bool isMoving;
     
     [GhostField] public bool isFalling;
@@ -59,10 +63,12 @@ public struct PlayerStateComponent : IComponentData
     
     [GhostField] public bool isPunching;
     
-    [GhostField] public bool isBlocking;
+    [GhostField] public bool IsBlocking;
     
-    [GhostField] public bool isParrying;
-    
+    [GhostField] public bool IsParrying;
+
+    [GhostField] public bool IsAnimLocked;
+
     /// <summary>
     /// Required specifically for Jump.
     /// </summary>

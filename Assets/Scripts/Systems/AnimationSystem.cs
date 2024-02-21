@@ -53,6 +53,17 @@ public partial struct AnimationSyncSystem : ISystem
         public static readonly int IsJumping  = Animator.StringToHash("IsJumping");
         public static readonly int IsFalling  = Animator.StringToHash("IsFalling");
         public static readonly int IsPunching = Animator.StringToHash("IsPunching");
+        public static readonly int IsKicking = Animator.StringToHash("IsKicking");
+        public static readonly int IsFallingFromHigh = Animator.StringToHash("IsFallingFromHigh");
+        public static readonly int IsBlocking = Animator.StringToHash("IsBlocking");
+        public static readonly int IsParrying = Animator.StringToHash("IsParrying");
+        public static readonly int IsAnimLocked = Animator.StringToHash("IsAnimLocked");
+
+        
+
+
+
+
     };
 
     public void OnCreate(ref SystemState state)
@@ -86,6 +97,13 @@ public partial struct AnimationSyncSystem : ISystem
                 reference.Animator.SetBool(_parameters.IsFalling, playerState.isFalling);
                 reference.Animator.SetBool(_parameters.IsJumping, playerState.isJumping);
                 reference.Animator.SetBool(_parameters.IsPunching, playerState.isPunching);
+                reference.Animator.SetBool(_parameters.IsKicking, playerState.isKicking);
+                reference.Animator.SetBool(_parameters.IsFallingFromHigh, playerState.isFallingFromHigh);
+                reference.Animator.SetBool(_parameters.IsBlocking, playerState.IsBlocking);
+                reference.Animator.SetBool(_parameters.IsParrying, playerState.IsParrying);
+                reference.Animator.SetBool(_parameters.IsAnimLocked, playerState.IsAnimLocked);
+                
+
 
                 var animatorTransform = reference.Animator.transform;
                 animatorTransform.position = new float3(
