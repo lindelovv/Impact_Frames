@@ -16,7 +16,7 @@ public partial struct PlayerFightingSystem : ISystem
     public void OnCreate(ref SystemState state)
     {
         var builder = new EntityQueryBuilder(Allocator.Temp)
-            .WithAll<InputComponentData>(); //inputComponent för att komma åt inputscriptets inputs
+            .WithAll<InputComponentData>(); //inputComponent fï¿½r att komma ï¿½t inputscriptets inputs
         state.RequireForUpdate(state.GetEntityQuery(builder));
         state.RequireForUpdate<PhysicsWorldSingleton>();
         state.RequireForUpdate<NetworkTime>();
@@ -32,43 +32,30 @@ public partial struct PlayerFightingSystem : ISystem
             {
                 Block(player);
             } else {
-                //Input button logik för att köra punch
+                //Input button logik fï¿½r att kï¿½ra punch
                 if (player.IsPunching /* && notInAnimation */)
                 {
                     Punch(player, cmdBuffer, ref state);
                 }
-                //Input button logik för att köra kick
+                //Input button logik fï¿½r att kï¿½ra kick
                 if (player.Input.RequestKick.Value /* && notInAnimation */)
                 {
                     Kick(player);
                 }
             }
         }
-
         cmdBuffer.Playback(state.EntityManager);
         cmdBuffer.Dispose();
-        
-        //state.Dependency = new FightJob {
-        //    DeltaTime = SystemAPI.Time.DeltaTime,
-        //    CollisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld,
-        //}.ScheduleParallel(state.Dependency);
     }
     
     [BurstCompile]
     private unsafe void Punch(PlayerAspect player, EntityCommandBuffer cmdBuffer, ref SystemState state)
     {
-        //Debug.Log("Punch");
+        // Check forward direction
         var forward = player.IsFacingRight ? 1 : -1;
         
-        //RaycastHit rayHit = new RaycastHit();
-        //bool hasRayHit = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld.CastRay(new RaycastInput {
-        //    Filter = CollisionFilter.Default,
-        //    Start = player.Position + (forward * new float3(0.9f, 0, 0)),
-        //    End = player.Position + (forward * new float3(1, 0, 0)),
-        //}, out rayHit);
-        
-        //Debug.DrawLine(player.Position + (forward * new float3(0.9f, 0, 0)), player.Position + (forward * new float3(1, 0, 0)), Color.magenta, 1);
-        //Debug.DrawLine(player.Position + (forward * new float3(0.95f, 0.05f, 0)), player.Position + (forward * new float3(0.95f, -0.05f, 0)), Color.magenta, 1);
+        Debug.DrawLine(player.Position + (forward * new float3(0.9f, 0, 0)), player.Position + (forward * new float3(1, 0, 0)), Color.magenta, 1);
+        Debug.DrawLine(player.Position + (forward * new float3(0.95f, 0.05f, 0)), player.Position + (forward * new float3(0.95f, -0.05f, 0)), Color.magenta, 1);
         
         ColliderCastHit hit = new ColliderCastHit();
         bool hasHit = SystemAPI.GetSingleton<PhysicsWorldSingleton>()
@@ -93,15 +80,11 @@ public partial struct PlayerFightingSystem : ISystem
             && hit.Entity != player.Self 
             && entityManager.HasComponent<HealthComponent>(hit.Entity)
         ) {
-            // GetName works but is not supported in context
-            //Debug.Log($"entity: {entityManager.GetName(hit.Entity)}");
             cmdBuffer.AddComponent<TakeDamage>(hit.Entity);
             
             cmdBuffer.SetComponent(hit.Entity, new ApplyImpact {
                 Amount = new float2(forward * player.PunchPushback),
             });
-            //state.Dependency = new ApplyImpactJob { Impact = new float2(5f, 5f) }
-            //    .ScheduleParallel(state.Dependency);
         }
 
         // Set Animation Logic
@@ -136,16 +119,16 @@ public partial struct PlayerFightingSystem : ISystem
 //    public float DeltaTime;
 //    public CollisionWorld CollisionWorld;
 //    
-//    // Execute tillhör IJobEntity Interfacet
+//    // Execute tillhï¿½r IJobEntity Interfacet
 //    public void Execute(PlayerAspect player)
 //    {
-//        //Input button logik för att köra punch
+//        //Input button logik fï¿½r att kï¿½ra punch
 //        if (player.Input.RequestPunch /* && notInAnimation */)
 //        {
 //            Punch(player);
 //        }
 //
-//        //Input button logik för att köra kick
+//        //Input button logik fï¿½r att kï¿½ra kick
 //        if (player.Input.RequestKick /* && notInAnimation */)
 //        {
 //            //Kick(psc);
@@ -228,11 +211,11 @@ public partial struct PlayerFightingSystem : ISystem
 //
 //    private void CheckHit(PlayerStateComponent psc)
 //    {
-//        // Har jag träffat en fiendess hurtbox
+//        // Har jag trï¿½ffat en fiendess hurtbox
 //        //deal damage
-//        // räkna hur många gånger jag träffa (3)
+//        // rï¿½kna hur mï¿½nga gï¿½nger jag trï¿½ffa (3)
 //        //deal more damga
-//        // kalkylera på varje button klick
+//        // kalkylera pï¿½ varje button klick
 //    }
 //    
 //    private bool CanPlayerAttack(PlayerStateComponent psc)
