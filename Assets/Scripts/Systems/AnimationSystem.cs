@@ -42,8 +42,7 @@ public partial struct AnimationInitSyncSystem : ISystem
 }
 
 //______________________________________________________________________________________________________________________
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup), OrderFirst = true)]
-[WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
 public partial struct AnimationSyncSystem : ISystem
 {
     private readonly struct _parameters {
@@ -75,13 +74,13 @@ public partial struct AnimationSyncSystem : ISystem
                 var (transform, reference, playerState)
                 in SystemAPI.Query<LocalTransform, AnimationReferenceData, PlayerStateComponent>()
             ) {
-                reference.Animator.SetInteger(_parameters.Random, Random.Range(0, 3));
+                reference.Animator.SetInteger(_parameters.Random, Random.Range(0, 3)); // CHANGE DAMAGE TO ITS OWN RANDOM
                 //if (playerState.isPunching)
                 //{
                 //    Debug.Log(reference.Animator.GetInteger(_parameters.Random));
                 //}
 
-                reference.Animator.SetBool(_parameters.IsMoving, playerState.isMoving);
+                reference.Animator.SetBool(_parameters.IsMoving,   playerState.isMoving);
                 reference.Animator.SetBool(_parameters.IsGrounded, playerState.isGrounded);
                 reference.Animator.SetBool(_parameters.IsFalling, playerState.isFalling);
                 reference.Animator.SetBool(_parameters.IsJumping, playerState.isJumping);

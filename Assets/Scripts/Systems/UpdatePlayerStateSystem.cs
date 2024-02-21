@@ -67,6 +67,14 @@ public partial struct UpdatePlayerStateSystem : ISystem
             else
             {
                 player.IsFalling = player is { Velocity: { y: < 0f } };
+                if (Physics.Raycast(
+                            player.Position,
+                            Vector3.down,
+                            1.5f
+                )) {
+                    // Is falling from high
+                    // toggle on here and turn off somewhere else after landing?
+                }
             }
             
             var isMoving = (player.Input.RequestedMovement.Value != float2.zero);

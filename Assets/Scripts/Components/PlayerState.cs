@@ -42,7 +42,7 @@ public class PlayerState : MonoBehaviour
                 HasCompletedMusicalChallenge = authoring.HasCompletedMusicalChallenge,
                 IsInRange = authoring.IsInRange,
                 IsOnCooldown = authoring.IsOnCooldown,
-                isFacingRight = authoring.isFacingRight, 
+                isFacingRight = authoring.isFacingRight,
             });
         }
     }
