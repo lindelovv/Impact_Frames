@@ -44,21 +44,18 @@ public partial struct PlayerFightingSystem : ISystem
                 }
             }
         }
-
         cmdBuffer.Playback(state.EntityManager);
         cmdBuffer.Dispose();
-        
-        //state.Dependency = new FightJob {
-        //    DeltaTime = SystemAPI.Time.DeltaTime,
-        //    CollisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld,
-        //}.ScheduleParallel(state.Dependency);
     }
     
     [BurstCompile]
     private unsafe void Punch(PlayerAspect player, EntityCommandBuffer cmdBuffer, ref SystemState state)
     {
-        //Debug.Log("Punch");
+        // Check forward direction
         var forward = player.IsFacingRight ? 1 : -1;
+        
+        Debug.DrawLine(player.Position + (forward * new float3(0.9f, 0, 0)), player.Position + (forward * new float3(1, 0, 0)), Color.magenta, 1);
+        Debug.DrawLine(player.Position + (forward * new float3(0.95f, 0.05f, 0)), player.Position + (forward * new float3(0.95f, -0.05f, 0)), Color.magenta, 1);
         
         ColliderCastHit hit = new ColliderCastHit();
         bool hasHit = SystemAPI.GetSingleton<PhysicsWorldSingleton>()
@@ -83,15 +80,11 @@ public partial struct PlayerFightingSystem : ISystem
             && hit.Entity != player.Self 
             && entityManager.HasComponent<HealthComponent>(hit.Entity)
         ) {
-            // GetName works but is not supported in context
-            //Debug.Log($"entity: {entityManager.GetName(hit.Entity)}");
             cmdBuffer.AddComponent<TakeDamage>(hit.Entity);
             
             cmdBuffer.SetComponent(hit.Entity, new ApplyImpact {
                 Amount = new float2(forward * player.PunchPushback),
             });
-            //state.Dependency = new ApplyImpactJob { Impact = new float2(5f, 5f) }
-            //    .ScheduleParallel(state.Dependency);
         }
 
         // Set Animation Logic

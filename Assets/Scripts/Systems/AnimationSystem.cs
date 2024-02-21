@@ -42,8 +42,7 @@ public partial struct AnimationInitSyncSystem : ISystem
 }
 
 //______________________________________________________________________________________________________________________
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup), OrderFirst = true)]
-[WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
 public partial struct AnimationSyncSystem : ISystem
 {
     private readonly struct _parameters {
@@ -58,12 +57,6 @@ public partial struct AnimationSyncSystem : ISystem
         public static readonly int IsBlocking = Animator.StringToHash("IsBlocking");
         public static readonly int IsParrying = Animator.StringToHash("IsParrying");
         public static readonly int IsAnimLocked = Animator.StringToHash("IsAnimLocked");
-
-        
-
-
-
-
     };
 
     public void OnCreate(ref SystemState state)
@@ -86,13 +79,13 @@ public partial struct AnimationSyncSystem : ISystem
                 var (transform, reference, playerState)
                 in SystemAPI.Query<LocalTransform, AnimationReferenceData, PlayerStateComponent>()
             ) {
-                reference.Animator.SetInteger(_parameters.Random, Random.Range(0, 3));
+                reference.Animator.SetInteger(_parameters.Random, Random.Range(0, 3)); // CHANGE DAMAGE TO ITS OWN RANDOM
                 //if (playerState.isPunching)
                 //{
                 //    Debug.Log(reference.Animator.GetInteger(_parameters.Random));
                 //}
 
-                reference.Animator.SetBool(_parameters.IsMoving, playerState.isMoving);
+                reference.Animator.SetBool(_parameters.IsMoving,   playerState.isMoving);
                 reference.Animator.SetBool(_parameters.IsGrounded, playerState.isGrounded);
                 reference.Animator.SetBool(_parameters.IsFalling, playerState.isFalling);
                 reference.Animator.SetBool(_parameters.IsJumping, playerState.isJumping);
@@ -102,8 +95,6 @@ public partial struct AnimationSyncSystem : ISystem
                 reference.Animator.SetBool(_parameters.IsBlocking, playerState.IsBlocking);
                 reference.Animator.SetBool(_parameters.IsParrying, playerState.IsParrying);
                 reference.Animator.SetBool(_parameters.IsAnimLocked, playerState.IsAnimLocked);
-                
-
 
                 var animatorTransform = reference.Animator.transform;
                 animatorTransform.position = new float3(
@@ -113,7 +104,6 @@ public partial struct AnimationSyncSystem : ISystem
                 );
                 animatorTransform.rotation = transform.Rotation;
             }
-
             cmdBuffer.Playback(state.EntityManager);
             cmdBuffer.Dispose();
         }
