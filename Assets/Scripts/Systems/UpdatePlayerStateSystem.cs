@@ -26,6 +26,7 @@ public partial struct UpdatePlayerStateSystem : ISystem
         foreach (
             var player
             in SystemAPI.Query<PlayerAspect>()
+                .WithAll<Simulate>()
         ) {
             player.IsGrounded = (Physics.Raycast(
                 player.Position,
@@ -43,7 +44,7 @@ public partial struct UpdatePlayerStateSystem : ISystem
             
             if (player.IsGrounded)
             {
-                player.IsJumping = player.Input.RequestJump.Value;
+                player.IsJumping = player.Input.RequestJump.IsSet;
                 player.IsFalling = false;
             }
             else
@@ -58,24 +59,24 @@ public partial struct UpdatePlayerStateSystem : ISystem
                     // toggle on here and turn off somewhere else after landing?
                 }
             }
-            var isMoving = (player.Input.RequestedMovement.Value != float2.zero);
+            var isMoving = (player.Input.RequestedMovement != float2.zero);
             
             // Character rotation
             if (isMoving.x)
             {
                 player.IsMoving = true;
-                player.IsFacingRight = (player.Input.RequestedMovement.Value.x > 0.0f);
+                player.IsFacingRight = (player.Input.RequestedMovement.x > 0.0f);
             }
             else if (!isMoving.y)
             {
                 player.IsMoving = false;
             }
 
-            player.IsBlocking = player.Input.RequestBlockParry.Value;
+            player.IsBlocking = player.Input.RequestBlock;
             if (!player.IsBlocking)
             {
-                player.IsPunching = player.Input.RequestPunch.Value;
-                player.IsKicking = player.Input.RequestPunch.Value;
+                player.IsPunching = player.Input.RequestPunch.IsSet;
+                player.IsKicking = player.Input.RequestKick.IsSet;
             }
         }
     }

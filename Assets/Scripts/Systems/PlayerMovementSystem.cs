@@ -34,6 +34,7 @@ public partial struct PlayerMovementSystem : ISystem
         foreach (
             var player
             in SystemAPI.Query<PlayerAspect>()
+                .WithAll<Simulate>()
         ) {
             // Increase gravity if falling
             {
@@ -44,7 +45,7 @@ public partial struct PlayerMovementSystem : ISystem
             
             // Calculate & Add Horizontal Movement
             {
-                if (player.Input.RequestedMovement.Value.x == 0) // If not moving, change velocity towards 0
+                if (player.Input.RequestedMovement.x == 0) // If not moving, change velocity towards 0
                 {
                     player.Velocity = new float3(Util.moveTowards(
                         player.Velocity.x,
@@ -56,7 +57,7 @@ public partial struct PlayerMovementSystem : ISystem
                 {
                     player.Velocity = new float3(Util.moveTowards( // Else towards max speed
                         player.Velocity.x,
-                        player.Input.RequestedMovement.Value.x * player.MaxSpeed,
+                        player.Input.RequestedMovement.x * player.MaxSpeed,
                         player.Acceleration * SystemAPI.Time.DeltaTime
                     ), player.Velocity.y, 0);
                     
@@ -80,13 +81,16 @@ public partial struct PlayerMovementSystem : ISystem
 
             // Calculate & Add Jump / Vertical Movement
             {
-                player.Velocity += new float3(
-                    0, 
-                    (player is { Input: { RequestJump: { Value: true } }, IsGrounded: true }
-                        ? player.JumpHeight * SystemAPI.Time.DeltaTime 
-                        : 0.0f),
-                    0
-                );
+                if (player.Input.RequestJump.IsSet)
+                {
+                    player.Velocity += new float3(
+                        0,
+                        (player is { IsGrounded: true }
+                            ? player.JumpHeight * SystemAPI.Time.DeltaTime
+                            : 0.0f),
+                        0
+                    );
+                }
             }
             //Debug.DrawLine(player.Position, player.Position + (player.Velocity / 2), Color.cyan, 1);
 

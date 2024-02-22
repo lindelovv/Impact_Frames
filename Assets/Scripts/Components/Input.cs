@@ -22,19 +22,21 @@ public class InputData : MonoBehaviour
 public struct InputComponentData : IInputComponentData
 {
     // Movement
-    [GhostField] public Vec2Command RequestedMovement;
+    [GhostField] public float2 RequestedMovement;
     
     // Jumping & DoubleJump
-    [GhostField] public BoolCommand RequestJump;
+    [GhostField] public InputEvent RequestJump;
 
     // Punch & HeavyPunch
-    [GhostField] public BoolCommand RequestPunch;
+    [GhostField] public InputEvent RequestPunch;
 
     // Kick & HeavyKick
-    [GhostField] public BoolCommand RequestKick;
+    [GhostField] public InputEvent RequestKick;
 
     // Block
-    [GhostField] public BoolCommand RequestBlockParry;
+    [GhostField] public bool RequestBlock;
+    
+    [GhostField] public InputEvent RequestParry;
 
     // Dash & AirDash
 
@@ -43,16 +45,4 @@ public struct InputComponentData : IInputComponentData
 
 
     // Animation Cancle
-}
-
-public struct Vec2Command : ICommandData
-{
-    [GhostField] public NetworkTick Tick { get; set; }
-    [GhostField(Quantization=100)] public float2 Value;
-}
-
-public struct BoolCommand : ICommandData
-{
-    [GhostField] public NetworkTick Tick { get; set; }
-    [GhostField] public bool Value;
 }

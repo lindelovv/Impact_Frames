@@ -44,7 +44,7 @@ public partial struct AnimationInitSyncSystem : ISystem
 // only host can see players :))))
 //______________________________________________________________________________________________________________________
 [UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
-[WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation | WorldSystemFilterFlags.ClientSimulation)]
+[WorldSystemFilter(WorldSystemFilterFlags.All)]
 public partial struct AnimationSyncSystem : ISystem
 {
     private readonly struct _parameters {
@@ -81,6 +81,7 @@ public partial struct AnimationSyncSystem : ISystem
             foreach (
                 var (transform, reference, playerState)
                 in SystemAPI.Query<LocalTransform, AnimationReferenceData, PlayerStateComponent>()
+                    .WithAll<Simulate>()
             ) {
                 reference.Animator.SetInteger(_parameters.Random, Random.Range(0, 2)); // CHANGE DAMAGE TO ITS OWN RANDOM
                 //if (playerState.isPunching)
