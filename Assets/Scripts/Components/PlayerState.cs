@@ -83,10 +83,11 @@ public struct PlayerStateComponent : IComponentData
     /// </summary>
     [GhostField] public bool isMobile;
 
-    /// <summary>
-    /// Counting Hits and Kicks
-    /// </summary>
+    /// <summary> Counting Hits and Kicks </summary>
     [GhostField] public int HitCounter;
+    
+    /// <summary> Counting time since last attack </summary>
+    [GhostField] public float HitTime;
 
     /// <summary>
     /// Required Bunny Jump, Attacks 

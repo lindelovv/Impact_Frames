@@ -76,7 +76,6 @@ public partial struct UpdatePlayerStateSystem : ISystem
                     // toggle on here and turn off somewhere else after landing?
                 }
             }
-            
             var isMoving = (player.Input.RequestedMovement.Value != float2.zero);
             
             // Character rotation
@@ -94,7 +93,6 @@ public partial struct UpdatePlayerStateSystem : ISystem
             if (!player.IsBlocking)
             {
                 player.IsPunching = player.Input.RequestPunch.Value;
-                Debug.Log($"{ player.Input.RequestPunch.Value} + KNAPPTRYCK");
             }
         }
     }

@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 1553344042008314389}
   - component: {fileID: -3312887918091319252}
   - component: {fileID: 398884271225559408}
-  - component: {fileID: -639539125941874452}
   - component: {fileID: 6130173664912802069}
   m_Layer: 0
   m_Name: Player
@@ -66,6 +65,7 @@ MonoBehaviour:
   PunchPushback:
     x: 5
     y: 1
+  MaxComboDelay: 2
 --- !u!114 &6524130790032669571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,7 +81,6 @@ MonoBehaviour:
   isMoving: 0
   isGrounded: 0
   isMobile: 0
-  IsAnimationLocked: 0
   IsOnBeat: 0
   IsAttacked: 0
   IsHit: 0
@@ -186,27 +185,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.25, y: 2.5, z: 1.25}
   m_Center: {x: 0, y: 0.25, z: 0}
---- !u!114 &-639539125941874452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5530559309006933450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb54ea4f67dc17342bcd49954c53502d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DrawColliders: 0
-  DrawColliderEdges: 0
-  DrawColliderAabbs: 0
-  DrawBroadphase: 0
-  DrawMassProperties: 0
-  DrawContacts: 0
-  DrawCollisionEvents: 0
-  DrawTriggerEvents: 0
-  DrawJoints: 0
 --- !u!114 &6130173664912802069
 MonoBehaviour:
   m_ObjectHideFlags: 0

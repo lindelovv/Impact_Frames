@@ -46,18 +46,18 @@ public partial struct AnimationInitSyncSystem : ISystem
 public partial struct AnimationSyncSystem : ISystem
 {
     private readonly struct _parameters {
-        public static readonly int Random     = Animator.StringToHash("Random");
-        public static readonly int IsMoving   = Animator.StringToHash("IsMoving");
-        public static readonly int IsGrounded = Animator.StringToHash("IsGrounded");
-        public static readonly int IsJumping  = Animator.StringToHash("IsJumping");
-        public static readonly int IsFalling  = Animator.StringToHash("IsFalling");
-        public static readonly int IsPunching = Animator.StringToHash("IsPunching");
-        public static readonly int IsKicking = Animator.StringToHash("IsKicking");
+        public static readonly int Random            = Animator.StringToHash("Random");
+        public static readonly int IsMoving          = Animator.StringToHash("IsMoving");
+        public static readonly int IsGrounded        = Animator.StringToHash("IsGrounded");
+        public static readonly int IsJumping         = Animator.StringToHash("IsJumping");
+        public static readonly int IsFalling         = Animator.StringToHash("IsFalling");
+        public static readonly int IsPunching        = Animator.StringToHash("IsPunching");
+        public static readonly int IsKicking         = Animator.StringToHash("IsKicking");
         public static readonly int IsFallingFromHigh = Animator.StringToHash("IsFallingFromHigh");
-        public static readonly int IsBlocking = Animator.StringToHash("IsBlocking");
-        public static readonly int IsParrying = Animator.StringToHash("IsParrying");
-        public static readonly int IsAnimLocked = Animator.StringToHash("IsAnimLocked");
-        public static readonly int HitCounter = Animator.StringToHash("HitCounter");
+        public static readonly int IsBlocking        = Animator.StringToHash("IsBlocking");
+        public static readonly int IsParrying        = Animator.StringToHash("IsParrying");
+        public static readonly int IsAnimLocked      = Animator.StringToHash("IsAnimLocked");
+        public static readonly int HitCounter        = Animator.StringToHash("HitCounter");
     };
 
     public void OnCreate(ref SystemState state)
@@ -86,7 +86,7 @@ public partial struct AnimationSyncSystem : ISystem
                 //    Debug.Log(reference.Animator.GetInteger(_parameters.Random));
                 //}
 
-                reference.Animator.SetBool(_parameters.IsMoving,   playerState.isMoving);
+                reference.Animator.SetBool(_parameters.IsMoving, playerState.isMoving);
                 reference.Animator.SetBool(_parameters.IsGrounded, playerState.isGrounded);
                 reference.Animator.SetBool(_parameters.IsFalling, playerState.isFalling);
                 reference.Animator.SetBool(_parameters.IsJumping, playerState.isJumping);
@@ -97,8 +97,6 @@ public partial struct AnimationSyncSystem : ISystem
                 reference.Animator.SetBool(_parameters.IsParrying, playerState.IsParrying);
                 reference.Animator.SetBool(_parameters.IsAnimLocked, playerState.IsAnimLocked);
                 reference.Animator.SetInteger(_parameters.HitCounter, playerState.HitCounter);
-                
-
 
                 var animatorTransform = reference.Animator.transform;
                 animatorTransform.position = new float3(
