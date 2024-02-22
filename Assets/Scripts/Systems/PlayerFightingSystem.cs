@@ -4,17 +4,12 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Physics;
-using Unity.VisualScripting;
 using UnityEngine;
 using BoxCollider = Unity.Physics.BoxCollider;
 using Collider = Unity.Physics.Collider;
 
 [BurstCompile]
 [UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
-
-
-
-
 public partial struct PlayerFightingSystem : ISystem
 {
     [BurstCompile]
@@ -37,24 +32,32 @@ public partial struct PlayerFightingSystem : ISystem
             {
                 Block(player);
             } else {
-                //Input button logik f�r att k�ra punch
+                //Input button logik för att köra punch
                 if (player.IsPunching)
                 {
-                    player.HitCounter++;
-                    Debug.Log($"{player.HitCounter}");
+                    player.HitCounter = player.HitCounter == 4
+                        ? 0                                    // if 4th hit set to 0;
+                        : player.HitCounter + 1;               // else increment
+
+                    if (Time.time - player.HitTime > player.MaxComboDelay)
+                    {
+                        Debug.Log("Combo reset");
+                        player.HitCounter = 0;
+                    }
+                    player.HitTime = Time.time;
+                    
+                    //Debug.Log($"{player.HitCounter}");
                     if (player.HitCounter == 4)
                     {
                         PunchHeavy(player, cmdBuffer, ref state);
-                        player.HitCounter = 0;
-                        
-                        Debug.Log($"{player.HitCounter} + RESET TO ZERO");
+                        //Debug.Log($"{player.HitCounter} + RESET TO ZERO");
                     }
                     else
-                    Punch(player, cmdBuffer, ref state);
-                   
+                    {
+                        Punch(player, cmdBuffer, ref state);
+                    }
                 }
-
-                //Input button logik f�r att k�ra kick
+                //Input button logik för att köra kick
                 if (player.Input.RequestKick.Value )
                 {
                     Kick(player);
@@ -66,9 +69,12 @@ public partial struct PlayerFightingSystem : ISystem
     }
     
     [BurstCompile]
-    private unsafe void Punch(PlayerAspect player, EntityCommandBuffer cmdBuffer, ref SystemState state)
+    private void Punch(PlayerAspect player, EntityCommandBuffer cmdBuffer, ref SystemState state)
     {
-
+        //if (SystemAPI.GetSingleton<NetworkTime>().IsFinalPredictionTick)
+        //{
+        //    Debug.Log("Punch");
+        //}
         // Check forward direction
         var forward = player.IsFacingRight ? 1 : -1;
 
@@ -77,7 +83,6 @@ public partial struct PlayerFightingSystem : ISystem
         Debug.DrawLine(player.Position + (forward * new float3(0.95f, 0.05f, 0)), player.Position + (forward * new float3(0.95f, -0.05f, 0)), Color.magenta, 1);
 
         var (hit, hasHit) = CastCollider(player, forward);
-
 
         // Check Health and Appyl Damage
         var entityManager = state.EntityManager;
@@ -91,14 +96,15 @@ public partial struct PlayerFightingSystem : ISystem
                 Amount = new float2(forward * player.PunchPushback),
             });
         }
-
-       
     }
-
+    
     [BurstCompile]
-    private unsafe void PunchHeavy(PlayerAspect player, EntityCommandBuffer cmdBuffer, ref SystemState state)
+    private void PunchHeavy(PlayerAspect player, EntityCommandBuffer cmdBuffer, ref SystemState state)
     {
-
+        //if (SystemAPI.GetSingleton<NetworkTime>().IsFinalPredictionTick)
+        //{
+        //    Debug.Log("Heavy Punch");
+        //}
         // Check forward direction
         var forward = player.IsFacingRight ? 1 : -1;
 
@@ -107,7 +113,6 @@ public partial struct PlayerFightingSystem : ISystem
         Debug.DrawLine(player.Position + (forward * new float3(0.95f, 0.05f, 0)), player.Position + (forward * new float3(0.95f, -0.05f, 0)), Color.magenta, 1);
 
         var (hit, hasHit) = CastCollider(player, forward);
-
 
         // Check Health and Appyl Damage
         var entityManager = state.EntityManager;
@@ -123,10 +128,9 @@ public partial struct PlayerFightingSystem : ISystem
                 Amount = new float2(forward * player.PunchPushback),
             });
         }
-
-        
     }
-
+    
+    [BurstCompile]
     private unsafe (ColliderCastHit,bool) CastCollider(PlayerAspect player, int forward)
     {
         ColliderCastHit hit = new ColliderCastHit();
@@ -151,6 +155,7 @@ public partial struct PlayerFightingSystem : ISystem
             out hit);
         return (hit,hasHit);
     }
+    
 
     [BurstCompile]
     private void Kick(PlayerAspect player)
@@ -168,118 +173,3 @@ public partial struct PlayerFightingSystem : ISystem
         //Debug.Log("Block");
     }
 }
-
-//                                      //
-//      BELLOW CURRENTLY NOT USED       //
-//                                      //
-
-//[BurstCompile]
-//public partial struct FightJob : IJobEntity
-//{
-//    public float DeltaTime;
-//    public CollisionWorld CollisionWorld;
-//    
-//    // Execute tillh�r IJobEntity Interfacet
-//    public void Execute(PlayerAspect player)
-//    {
-//        //Input button logik f�r att k�ra punch
-//        if (player.Input.RequestPunch /* && notInAnimation */)
-//        {
-//            Punch(player);
-//        }
-//
-//        //Input button logik f�r att k�ra kick
-//        if (player.Input.RequestKick /* && notInAnimation */)
-//        {
-//            //Kick(psc);
-//        }
-//    }
-//    
-//    public void Punch(PlayerAspect player)
-//    {
-//        var forward = player.State.isFacingRight ? 1 : -1;
-//        
-//        RaycastHit hit = new RaycastHit();
-//        bool hasHit = CollisionWorld.CastRay(new RaycastInput {
-//            Filter = CollisionFilter.Default,
-//            Start = player.Position + (forward * new float3(0.9f, 0, 0)),
-//            End = player.Position + (forward * new float3(1, 0, 0)),
-//        }, out hit);
-//        
-//        Debug.DrawLine(player.Position + (forward * new float3(0.9f, 0, 0)), player.Position + (forward * new float3(1, 0, 0)), Color.magenta, 1);
-//        Debug.DrawLine(player.Position + (forward * new float3(0.95f, 0.05f, 0)), player.Position + (forward * new float3(0.95f, -0.05f, 0)), Color.magenta, 1);
-//        
-//        if (hasHit)
-//        {
-//            //var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-//            //Debug.Log($"hit { entityManager.GetName(hit.Entity) }");
-//        }
-//
-//        // Set Animation Logic
-//        // Set VFX Logic
-//        // Set Sound Logic
-//        //Debug.Log("punch");
-//        //var filter = new CollisionFilter {
-//        //    BelongsTo = ~0u,
-//        //    CollidesWith = ~0u,
-//        //    GroupIndex = 0,
-//        //};
-//        //BoxGeometry boxGeometry = new BoxGeometry {
-//        //    Center = float3.zero,
-//        //    Size = 5,
-//        //};
-//        //BlobAssetReference<Collider> boxCollider = BoxCollider.Create(boxGeometry, filter);
-//        //unsafe
-//        //{
-//        //    ColliderCastInput castInput = new ColliderCastInput {
-//        //        Collider = (Collider*)boxCollider.GetUnsafePtr(),
-//        //        Orientation = quaternion.identity,
-//        //        Start = player.Position,
-//        //        End = player.Position + new float3(10, 0, 0),
-//        //    };
-//        //    ColliderCastHit castHit = new ColliderCastHit {};
-//        //    bool bHit = CollisionWorld.CastCollider(castInput, out castHit);
-//        //    if (bHit) { Debug.Log("hit"); }
-//        //}
-//        
-//        //var castPosition = Util.ColliderCast( // Check for blocking hit
-//        //    CollisionWorld,
-//        //    new PhysicsCollider(), 
-//        //    player.Position, 
-//        //    player.Position + new float3(10, 0, 0)
-//        //);
-//        //CheckHit(psc);
-//        //UnityEngine.Debug.Log("Punched!");
-//
-//        // Set Animation Logic
-//        // Set VFX Logic
-//        // Set Sound Logic
-//    }
-//
-//    public void Kick(PlayerStateComponent psc)
-//    {
-//        if (CanPlayerAttack(psc))
-//        {
-//            CheckHit(psc);
-//            UnityEngine.Debug.Log("Kikecd!");
-//
-//            // Set Animation Logic
-//            // Set VFX Logic
-//            // Set Sound Logic
-//        }
-//    }
-//
-//    private void CheckHit(PlayerStateComponent psc)
-//    {
-//        // Har jag tr�ffat en fiendess hurtbox
-//        //deal damage
-//        // r�kna hur m�nga g�nger jag tr�ffa (3)
-//        //deal more damga
-//        // kalkylera p� varje button klick
-//    }
-//    
-//    private bool CanPlayerAttack(PlayerStateComponent psc)
-//    {
-//        return psc.isGrounded && !psc.IsAnimationLocked;
-//    }
-//}

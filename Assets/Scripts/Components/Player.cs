@@ -43,6 +43,9 @@ public class Player : MonoBehaviour
     [Tooltip("[float2] Strength and direction of punch pushback.")]
     public float2 PunchPushback;
     
+    [Tooltip("[float] Max time between attacks for it to count towards combo counter.")]
+    public float MaxComboDelay;
+    
     
     //_______________________________________________________________
     public class Baker : Baker<Player>
@@ -56,6 +59,7 @@ public class Player : MonoBehaviour
                 MaxSpeed      = authoring.MaxSpeed,
                 JumpHeight    = authoring.JumpHeight,
                 PunchPushback = authoring.PunchPushback,
+                MaxComboDelay = authoring.MaxComboDelay,
             });
             
             // Health component is it's own component in case of reuse,
@@ -97,6 +101,7 @@ public struct PlayerData : IComponentData
     [GhostField] public float MaxSpeed;
     [GhostField] public float JumpHeight;
     public float2 PunchPushback;
+    public float MaxComboDelay;
 }
 
 public readonly partial struct PlayerAspect : IAspect
@@ -138,4 +143,6 @@ public readonly partial struct PlayerAspect : IAspect
     public bool IsBlocking          { get => _state.ValueRO.IsBlocking;    set => _state.ValueRW.IsBlocking = value;    }
     public bool IsParrying          { get => _state.ValueRO.IsParrying;    set => _state.ValueRW.IsParrying = value;    }
     public int HitCounter           { get => _state.ValueRO.HitCounter;    set => _state.ValueRW.HitCounter = value;    }
+    public float HitTime            { get => _state.ValueRO.HitTime;       set => _state.ValueRW.HitTime = value;       }
+    public float MaxComboDelay      { get => _data.ValueRO.MaxComboDelay;  set => _data.ValueRW.MaxComboDelay = value;  }
 }
