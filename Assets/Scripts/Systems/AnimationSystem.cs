@@ -41,8 +41,10 @@ public partial struct AnimationInitSyncSystem : ISystem
     }
 }
 
+// only host can see players :))))
 //______________________________________________________________________________________________________________________
 [UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
+[WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation | WorldSystemFilterFlags.ClientSimulation)]
 public partial struct AnimationSyncSystem : ISystem
 {
     private readonly struct _parameters {
@@ -85,14 +87,13 @@ public partial struct AnimationSyncSystem : ISystem
                 //{
                 //    Debug.Log(reference.Animator.GetInteger(_parameters.Random));
                 //}
-
-                reference.Animator.SetBool(_parameters.IsMoving, playerState.isMoving);
-                reference.Animator.SetBool(_parameters.IsGrounded, playerState.isGrounded);
-                reference.Animator.SetBool(_parameters.IsFalling, playerState.isFalling);
-                reference.Animator.SetBool(_parameters.IsJumping, playerState.isJumping);
-                reference.Animator.SetBool(_parameters.IsPunching, playerState.isPunching);
-                reference.Animator.SetBool(_parameters.IsKicking, playerState.isKicking);
-                reference.Animator.SetBool(_parameters.IsFallingFromHigh, playerState.isFallingFromHigh);
+                reference.Animator.SetBool(_parameters.IsMoving, playerState.IsMoving);
+                reference.Animator.SetBool(_parameters.IsGrounded, playerState.IsGrounded);
+                reference.Animator.SetBool(_parameters.IsFalling, playerState.IsFalling);
+                reference.Animator.SetBool(_parameters.IsJumping, playerState.IsJumping);
+                reference.Animator.SetBool(_parameters.IsPunching, playerState.IsPunching);
+                reference.Animator.SetBool(_parameters.IsKicking, playerState.IsKicking);
+                reference.Animator.SetBool(_parameters.IsFallingFromHigh, playerState.IsFallingFromHigh);
                 reference.Animator.SetBool(_parameters.IsBlocking, playerState.IsBlocking);
                 reference.Animator.SetBool(_parameters.IsParrying, playerState.IsParrying);
                 reference.Animator.SetBool(_parameters.IsAnimLocked, playerState.IsAnimLocked);
