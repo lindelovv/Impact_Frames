@@ -23,7 +23,16 @@ public partial struct DamageSystem : ISystem
             health.ValueRW.Current--;
             Debug.Log($"{state.EntityManager.GetName(entity)} Health: {health.ValueRO.Current}");
             cmdBuffer.RemoveComponent<TakeDamage>(entity);
-            if (health.ValueRO.Current <= 0) { cmdBuffer.DestroyEntity(entity); }
+            if (state.EntityManager.HasComponent<NetworkId>(entity))
+            {
+                var connectionId = state.EntityManager.GetComponentData<NetworkId>(entity).Value;
+                UIManager.instance.UpdateHealth(health.ValueRW.Current, connectionId);
+
+                if (health.ValueRO.Current <= 0)
+                {
+                    UIManager.instance.DecreaseLife(connectionId);
+                }
+            }
         }
         cmdBuffer.Playback(state.EntityManager);
         cmdBuffer.Dispose();

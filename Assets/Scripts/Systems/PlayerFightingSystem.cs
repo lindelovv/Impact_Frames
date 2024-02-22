@@ -101,7 +101,7 @@ public partial struct PlayerFightingSystem : ISystem
         ) {
             cmdBuffer.AddComponent<TakeDamage>(hit.Entity);
             
-            cmdBuffer.SetComponent(hit.Entity, new ApplyImpact {
+            cmdBuffer.AddComponent(hit.Entity, new ApplyImpact {
                 Amount = new float2(forward * player.PunchPushback),
             });
         }
@@ -127,7 +127,7 @@ public partial struct PlayerFightingSystem : ISystem
         {
             cmdBuffer.AddComponent<TakeDamage>(hit.Entity);
 
-            cmdBuffer.SetComponent(hit.Entity, new ApplyImpact
+            cmdBuffer.AddComponent(hit.Entity, new ApplyImpact
             {
                 Amount = new float2((forward * player.PunchPushback) * 2),
             });
@@ -153,7 +153,7 @@ public partial struct PlayerFightingSystem : ISystem
         ) {
             cmdBuffer.AddComponent<TakeDamage>(hit.Entity);
             
-            cmdBuffer.SetComponent(hit.Entity, new ApplyImpact {
+            cmdBuffer.AddComponent(hit.Entity, new ApplyImpact {
                 Amount = new float2(forward * player.PunchPushback),
             });
         }
@@ -178,7 +178,7 @@ public partial struct PlayerFightingSystem : ISystem
         ) {
             cmdBuffer.AddComponent<TakeDamage>(hit.Entity);
             
-            cmdBuffer.SetComponent(hit.Entity, new ApplyImpact {
+            cmdBuffer.AddComponent(hit.Entity, new ApplyImpact {
                 Amount = new float2(forward * player.PunchPushback),
             });
         }
