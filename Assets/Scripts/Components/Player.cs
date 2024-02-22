@@ -137,4 +137,5 @@ public readonly partial struct PlayerAspect : IAspect
     public bool IsPunching          { get => _state.ValueRO.isPunching;    set => _state.ValueRW.isPunching = value;    }
     public bool IsBlocking          { get => _state.ValueRO.IsBlocking;    set => _state.ValueRW.IsBlocking = value;    }
     public bool IsParrying          { get => _state.ValueRO.IsParrying;    set => _state.ValueRW.IsParrying = value;    }
+    public int HitCounter           { get => _state.ValueRO.HitCounter;    set => _state.ValueRW.HitCounter = value;    }
 }
