@@ -14,7 +14,7 @@ public class PlayerState : MonoBehaviour
     public bool isMoving;
     public bool isGrounded;
     public bool isMobile;
-    public bool IsAnimationLocked;
+    //public int HitCounter;
     public bool IsOnBeat;
     public bool IsAttacked;
     public bool IsHit;
@@ -34,7 +34,7 @@ public class PlayerState : MonoBehaviour
                 isMoving = authoring.isMoving,
                 isGrounded = authoring.isGrounded,
                 isMobile = authoring.isMobile,
-                IsAnimationLocked = authoring.IsAnimationLocked,
+                //HitCounter = authoring.HitCounter,
                 IsOnBeat = authoring.IsOnBeat,
                 IsAttacked = authoring.IsAttacked,
                 IsHit = authoring.IsHit,
@@ -67,7 +67,11 @@ public struct PlayerStateComponent : IComponentData
     
     [GhostField] public bool IsParrying;
 
+    /// <summary>
+    /// Required for Movement, Jump, Block, Grab, Dash, and Air Dash
+    /// </summary>
     [GhostField] public bool IsAnimLocked;
+    
 
     /// <summary>
     /// Required specifically for Jump.
@@ -80,9 +84,9 @@ public struct PlayerStateComponent : IComponentData
     [GhostField] public bool isMobile;
 
     /// <summary>
-    /// Required for Movement, Jump, Block, Grab, Dash, and Air Dash
+    /// Counting Hits and Kicks
     /// </summary>
-    [GhostField] public bool IsAnimationLocked;
+    [GhostField] public int HitCounter;
 
     /// <summary>
     /// Required Bunny Jump, Attacks 

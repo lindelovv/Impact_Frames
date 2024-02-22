@@ -94,6 +94,7 @@ public partial struct UpdatePlayerStateSystem : ISystem
             if (!player.IsBlocking)
             {
                 player.IsPunching = player.Input.RequestPunch.Value;
+                Debug.Log($"{ player.Input.RequestPunch.Value} + KNAPPTRYCK");
             }
         }
     }

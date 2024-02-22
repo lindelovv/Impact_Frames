@@ -57,6 +57,7 @@ public partial struct AnimationSyncSystem : ISystem
         public static readonly int IsBlocking = Animator.StringToHash("IsBlocking");
         public static readonly int IsParrying = Animator.StringToHash("IsParrying");
         public static readonly int IsAnimLocked = Animator.StringToHash("IsAnimLocked");
+        public static readonly int HitCounter = Animator.StringToHash("HitCounter");
     };
 
     public void OnCreate(ref SystemState state)
@@ -79,7 +80,7 @@ public partial struct AnimationSyncSystem : ISystem
                 var (transform, reference, playerState)
                 in SystemAPI.Query<LocalTransform, AnimationReferenceData, PlayerStateComponent>()
             ) {
-                reference.Animator.SetInteger(_parameters.Random, Random.Range(0, 3)); // CHANGE DAMAGE TO ITS OWN RANDOM
+                reference.Animator.SetInteger(_parameters.Random, Random.Range(0, 2)); // CHANGE DAMAGE TO ITS OWN RANDOM
                 //if (playerState.isPunching)
                 //{
                 //    Debug.Log(reference.Animator.GetInteger(_parameters.Random));
@@ -95,6 +96,9 @@ public partial struct AnimationSyncSystem : ISystem
                 reference.Animator.SetBool(_parameters.IsBlocking, playerState.IsBlocking);
                 reference.Animator.SetBool(_parameters.IsParrying, playerState.IsParrying);
                 reference.Animator.SetBool(_parameters.IsAnimLocked, playerState.IsAnimLocked);
+                reference.Animator.SetInteger(_parameters.HitCounter, playerState.HitCounter);
+                
+
 
                 var animatorTransform = reference.Animator.transform;
                 animatorTransform.position = new float3(
