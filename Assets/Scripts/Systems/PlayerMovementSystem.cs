@@ -30,6 +30,7 @@ public partial struct PlayerMovementSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
+        var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
         foreach (
             var player
             in SystemAPI.Query<PlayerAspect>()
@@ -40,7 +41,7 @@ public partial struct PlayerMovementSystem : ISystem
                     ? 5 
                     : 1;
             }
-
+            
             // Calculate & Add Horizontal Movement
             {
                 if (player.Input.RequestedMovement.Value.x == 0) // If not moving, change velocity towards 0
@@ -51,7 +52,7 @@ public partial struct PlayerMovementSystem : ISystem
                         player.Damping * SystemAPI.Time.DeltaTime
                     ), player.Velocity.y, 0);
                 }
-                else
+                else if (!player.IsBlocking)
                 {
                     player.Velocity = new float3(Util.moveTowards( // Else towards max speed
                         player.Velocity.x,
@@ -91,9 +92,14 @@ public partial struct PlayerMovementSystem : ISystem
 
             // Apply impact
             {
-                player.Velocity += new float3(state.EntityManager.GetComponentData<ApplyImpact>(player.Self).Amount, 0);
-                state.EntityManager.SetComponentData(player.Self, new ApplyImpact { Amount = float2.zero });
+                if (state.EntityManager.HasComponent<ApplyImpact>(player.Self))
+                {
+                    player.Velocity += new float3(state.EntityManager.GetComponentData<ApplyImpact>(player.Self).Amount, 0);
+                    cmdBuffer.RemoveComponent<ApplyImpact>(player.Self);
+                }
             }
         }
+        cmdBuffer.Playback(state.EntityManager);
+        cmdBuffer.Dispose();
     }
 }

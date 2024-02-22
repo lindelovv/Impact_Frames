@@ -26,25 +26,7 @@ public partial struct UpdatePlayerStateSystem : ISystem
         foreach (
             var player
             in SystemAPI.Query<PlayerAspect>()
-                //.WithAll<WorldRenderBounds>()
         ) {
-            // Set isGrounded to true if the ray has collision close under player
-            //var left = new float3(player.Position + new float3(-0.5f, -0.99f, 0));
-            //var right = new float3(player.Position + new float3(0.5f, -0.99f, 0));
-            //var slightDownRight = new float3(0.9f, -0.1f, 0);
-            //var slightDownLeft = new float3(-0.9f, -0.1f, 0);
-            //player.IsGrounded = (Physics.Raycast(
-            //    left,
-            //    slightDownRight,
-            //    1f
-            //) || (Physics.Raycast(
-            //    right,
-            //    slightDownLeft,
-            //    1f
-            //)));
-            //Debug.DrawLine(left, left + slightDownRight);
-            //Debug.DrawLine(right, right + slightDownLeft);
-            
             player.IsGrounded = (Physics.Raycast(
                 player.Position,
                 Vector3.down,
@@ -93,6 +75,7 @@ public partial struct UpdatePlayerStateSystem : ISystem
             if (!player.IsBlocking)
             {
                 player.IsPunching = player.Input.RequestPunch.Value;
+                player.IsKicking = player.Input.RequestPunch.Value;
             }
         }
     }

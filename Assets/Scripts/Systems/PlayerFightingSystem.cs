@@ -41,16 +41,13 @@ public partial struct PlayerFightingSystem : ISystem
 
                     if (Time.time - player.HitTime > player.MaxComboDelay)
                     {
-                        Debug.Log("Combo reset");
                         player.HitCounter = 0;
                     }
                     player.HitTime = Time.time;
                     
-                    //Debug.Log($"{player.HitCounter}");
                     if (player.HitCounter == 4)
                     {
                         PunchHeavy(player, cmdBuffer, ref state);
-                        //Debug.Log($"{player.HitCounter} + RESET TO ZERO");
                     }
                     else
                     {
@@ -58,9 +55,26 @@ public partial struct PlayerFightingSystem : ISystem
                     }
                 }
                 //Input button logik för att köra kick
-                if (player.Input.RequestKick.Value )
+                else if (player.IsKicking)
                 {
-                    Kick(player);
+                    player.HitCounter = player.HitCounter == 4
+                        ? 0                                    // if 4th hit set to 0;
+                        : player.HitCounter + 1;               // else increment
+
+                    if (Time.time - player.HitTime > player.MaxComboDelay)
+                    {
+                        player.HitCounter = 0;
+                    }
+                    player.HitTime = Time.time;
+                    
+                    if (player.HitCounter == 4)
+                    {
+                        KickHeavy(player, cmdBuffer, ref state);
+                    }
+                    else
+                    {
+                        Kick(player, cmdBuffer, ref state);
+                    }
                 }
             }
         }
@@ -71,11 +85,6 @@ public partial struct PlayerFightingSystem : ISystem
     [BurstCompile]
     private void Punch(PlayerAspect player, EntityCommandBuffer cmdBuffer, ref SystemState state)
     {
-        //if (SystemAPI.GetSingleton<NetworkTime>().IsFinalPredictionTick)
-        //{
-        //    Debug.Log("Punch");
-        //}
-        // Check forward direction
         var forward = player.IsFacingRight ? 1 : -1;
 
         //Debug Draws Cross for Hitboxes
@@ -92,7 +101,7 @@ public partial struct PlayerFightingSystem : ISystem
         ) {
             cmdBuffer.AddComponent<TakeDamage>(hit.Entity);
             
-            cmdBuffer.SetComponent(hit.Entity, new ApplyImpact {
+            cmdBuffer.AddComponent(hit.Entity, new ApplyImpact {
                 Amount = new float2(forward * player.PunchPushback),
             });
         }
@@ -101,11 +110,6 @@ public partial struct PlayerFightingSystem : ISystem
     [BurstCompile]
     private void PunchHeavy(PlayerAspect player, EntityCommandBuffer cmdBuffer, ref SystemState state)
     {
-        //if (SystemAPI.GetSingleton<NetworkTime>().IsFinalPredictionTick)
-        //{
-        //    Debug.Log("Heavy Punch");
-        //}
-        // Check forward direction
         var forward = player.IsFacingRight ? 1 : -1;
 
         //Debug Draws Cross for Hitboxes
@@ -123,8 +127,58 @@ public partial struct PlayerFightingSystem : ISystem
         {
             cmdBuffer.AddComponent<TakeDamage>(hit.Entity);
 
-            cmdBuffer.SetComponent(hit.Entity, new ApplyImpact
+            cmdBuffer.AddComponent(hit.Entity, new ApplyImpact
             {
+                Amount = new float2((forward * player.PunchPushback) * 2),
+            });
+        }
+    }
+
+    [BurstCompile]
+    private void Kick(PlayerAspect player, EntityCommandBuffer cmdBuffer, ref SystemState state)
+    {
+        var forward = player.IsFacingRight ? 1 : -1;
+
+        //Debug Draws Cross for Hitboxes
+        Debug.DrawLine(player.Position + (forward * new float3(0.9f, 0, 0)), player.Position + (forward * new float3(1, 0, 0)), Color.magenta, 1);
+        Debug.DrawLine(player.Position + (forward * new float3(0.95f, 0.05f, 0)), player.Position + (forward * new float3(0.95f, -0.05f, 0)), Color.magenta, 1);
+
+        var (hit, hasHit) = CastCollider(player, forward);
+
+        // Check Health and Appyl Damage
+        var entityManager = state.EntityManager;
+        if (   hasHit 
+            && hit.Entity != player.Self 
+            && entityManager.HasComponent<HealthComponent>(hit.Entity)
+        ) {
+            cmdBuffer.AddComponent<TakeDamage>(hit.Entity);
+            
+            cmdBuffer.AddComponent(hit.Entity, new ApplyImpact {
+                Amount = new float2(forward * player.PunchPushback),
+            });
+        }
+    }
+    
+    [BurstCompile]
+    private void KickHeavy(PlayerAspect player, EntityCommandBuffer cmdBuffer, ref SystemState state)
+    {
+        var forward = player.IsFacingRight ? 1 : -1;
+
+        //Debug Draws Cross for Hitboxes
+        Debug.DrawLine(player.Position + (forward * new float3(0.9f, 0, 0)), player.Position + (forward * new float3(1, 0, 0)), Color.magenta, 1);
+        Debug.DrawLine(player.Position + (forward * new float3(0.95f, 0.05f, 0)), player.Position + (forward * new float3(0.95f, -0.05f, 0)), Color.magenta, 1);
+
+        var (hit, hasHit) = CastCollider(player, forward);
+
+        // Check Health and Appyl Damage
+        var entityManager = state.EntityManager;
+        if (   hasHit 
+            && hit.Entity != player.Self 
+            && entityManager.HasComponent<HealthComponent>(hit.Entity)
+        ) {
+            cmdBuffer.AddComponent<TakeDamage>(hit.Entity);
+            
+            cmdBuffer.AddComponent(hit.Entity, new ApplyImpact {
                 Amount = new float2(forward * player.PunchPushback),
             });
         }
@@ -153,18 +207,7 @@ public partial struct PlayerFightingSystem : ISystem
                 End = player.Position + (forward * new float3(1, 0, 0)),
             },
             out hit);
-        return (hit,hasHit);
-    }
-    
-
-    [BurstCompile]
-    private void Kick(PlayerAspect player)
-    {
-        //Debug.Log("Kick");
-
-        // Set Animation Logic
-        // Set VFX Logic
-        // Set Sound Logic
+        return (hit, hasHit);
     }
 
     [BurstCompile]

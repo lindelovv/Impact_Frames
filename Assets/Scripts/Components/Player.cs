@@ -134,12 +134,13 @@ public readonly partial struct PlayerAspect : IAspect
     public float MaxHealth          { get => _health.ValueRO.Max;          set => _health.ValueRW.Max = value;          }
     public float2 PunchPushback     { get => _data.ValueRO.PunchPushback;  set => _data.ValueRW.PunchPushback = value;  }
     public InputComponentData Input { get => _input.ValueRO;               set => _input.ValueRW = value;               }
-    public bool IsMoving            { get => _state.ValueRO.isMoving;      set => _state.ValueRW.isMoving = value;      }          
-    public bool IsGrounded          { get => _state.ValueRO.isGrounded;    set => _state.ValueRW.isGrounded = value;    }
-    public bool IsFacingRight       { get => _state.ValueRO.isFacingRight; set => _state.ValueRW.isFacingRight = value; }
-    public bool IsFalling           { get => _state.ValueRO.isFalling;     set => _state.ValueRW.isFalling = value;     }
-    public bool IsJumping           { get => _state.ValueRO.isJumping;     set => _state.ValueRW.isJumping = value;     }
-    public bool IsPunching          { get => _state.ValueRO.isPunching;    set => _state.ValueRW.isPunching = value;    }
+    public bool IsMoving            { get => _state.ValueRO.IsMoving;      set => _state.ValueRW.IsMoving = value;      }          
+    public bool IsGrounded          { get => _state.ValueRO.IsGrounded;    set => _state.ValueRW.IsGrounded = value;    }
+    public bool IsFacingRight       { get => _state.ValueRO.IsFacingRight; set => _state.ValueRW.IsFacingRight = value; }
+    public bool IsFalling           { get => _state.ValueRO.IsFalling;     set => _state.ValueRW.IsFalling = value;     }
+    public bool IsJumping           { get => _state.ValueRO.IsJumping;     set => _state.ValueRW.IsJumping = value;     }
+    public bool IsPunching          { get => _state.ValueRO.IsPunching;    set => _state.ValueRW.IsPunching = value;    }
+    public bool IsKicking           { get => _state.ValueRO.IsKicking;     set => _state.ValueRW.IsKicking = value;     }
     public bool IsBlocking          { get => _state.ValueRO.IsBlocking;    set => _state.ValueRW.IsBlocking = value;    }
     public bool IsParrying          { get => _state.ValueRO.IsParrying;    set => _state.ValueRW.IsParrying = value;    }
     public int HitCounter           { get => _state.ValueRO.HitCounter;    set => _state.ValueRW.HitCounter = value;    }
