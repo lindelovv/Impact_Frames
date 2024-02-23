@@ -259,7 +259,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 71967068}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09853763, y: 0.00000004804194, z: -0.0000000047570903, w: 0.99513334}
+  m_LocalRotation: {x: 0.09853763, y: 0.000000023899531, z: -0.0000000023665203, w: 0.99513334}
   m_LocalPosition: {x: -7.59, y: -2.9699998, z: 0.10999966}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -483,7 +483,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &318765208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,8 +496,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9062e3bfc3f4b83429a1ab9a138df423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _autoplayTheme: 0
-  _autoplayTrack: 0
+  _autoplayTheme: 1
+  _autoplayTrack: 1
 --- !u!114 &318765209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -510,14 +510,62 @@ MonoBehaviour:
   m_Script: {fileID: 1440558463, guid: 00fae447618ae4f46a24f98a30b7fa59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectPath: 
-  _projectName: 
+  _projectPath: E:/Code/Impact_Frames/Assets/StreamingAssets/Reactional\TestBundle
+  _projectName: TestBundle
   defaultTheme: 
   defaultTrack: 
   defaultSection: 
-  themes: []
-  tracks: []
-  bundles: []
+  themes:
+  - name: Guitar, Electric stingers
+    trackID: -1
+    trackHash: 82d4b63b65a1a8acb5275a24f0c19280e5b70f417c71cb9981ac72b5207cb261
+    trackName: Guitar, Electric stingers
+    trackArtist: 
+    trackAlbum: 
+    trackGenre: 
+    trackCover: 
+    trackBPM: 
+    bundleID: TestBundle
+  tracks:
+  - name: ALIBI-Amazing Grace-Guitar_Sparse Rhythm Mix
+    trackID: -1
+    trackHash: 478aadc876a1359dbfea70e24035db730996a0863d991aa5783aace0b730f1f5
+    trackName: ALIBI-Amazing Grace-Guitar_Sparse Rhythm Mix
+    trackArtist: ' '
+    trackAlbum: ' '
+    trackGenre: ' '
+    trackCover: 
+    trackBPM: ' '
+    bundleID: TestBundle
+  bundles:
+  - name: TestBundle
+    path: E:/Code/Impact_Frames/Assets/StreamingAssets/Reactional\TestBundle
+    sections:
+    - name: Section #1
+      themes:
+      - name: Guitar, Electric stingers
+        trackID: -1
+        trackHash: 82d4b63b65a1a8acb5275a24f0c19280e5b70f417c71cb9981ac72b5207cb261
+        trackName: Guitar, Electric stingers
+        trackArtist: 
+        trackAlbum: 
+        trackGenre: 
+        trackCover: 
+        trackBPM: 
+        bundleID: TestBundle
+      playlists:
+      - name: Default
+        tracks:
+        - name: ALIBI-Amazing Grace-Guitar_Sparse Rhythm Mix
+          trackID: -1
+          trackHash: 478aadc876a1359dbfea70e24035db730996a0863d991aa5783aace0b730f1f5
+          trackName: ALIBI-Amazing Grace-Guitar_Sparse Rhythm Mix
+          trackArtist: ' '
+          trackAlbum: ' '
+          trackGenre: ' '
+          trackCover: 
+          trackBPM: ' '
+          bundleID: TestBundle
   lookahead: 0
   selectedTheme: 0
   selectedTrack: 0
@@ -1671,7 +1719,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09853763, y: 0.00000004804194, z: -0.0000000047570903, w: 0.99513334}
+  m_LocalRotation: {x: 0.09853763, y: 0.000000023899531, z: -0.0000000023665203, w: 0.99513334}
   m_LocalPosition: {x: -7.59, y: -2.9699998, z: 0.10999966}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

@@ -1,11 +1,6 @@
-using System.Text;
 using Unity.Entities;
 using Unity.NetCode;
-using Unity.VisualScripting;
 using UnityEngine;
-using static Unity.Collections.AllocatorManager;
-using static UnityEngine.AudioSettings;
-using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerState : MonoBehaviour
 {
@@ -17,7 +12,6 @@ public class PlayerState : MonoBehaviour
     //public int HitCounter;
     public bool IsOnBeat;
     public bool IsAttacked;
-    public bool IsHit;
     public bool HasFullComboMeterEnergy;
     public bool HasCompletedMusicalChallenge;
     public bool IsInRange;
@@ -37,7 +31,6 @@ public class PlayerState : MonoBehaviour
                 //HitCounter = authoring.HitCounter,
                 IsOnBeat = authoring.IsOnBeat,
                 IsAttacked = authoring.IsAttacked,
-                IsHit = authoring.IsHit,
                 HasFullComboMeterEnergy = authoring.HasFullComboMeterEnergy,
                 HasCompletedMusicalChallenge = authoring.HasCompletedMusicalChallenge,
                 IsInRange = authoring.IsInRange,

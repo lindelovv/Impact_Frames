@@ -80,13 +80,18 @@ public partial struct PlayerMovementSystem : ISystem
 
             // Calculate & Add Jump / Vertical Movement
             {
-                player.Velocity += new float3(
-                    0, 
-                    (player is { Input: { RequestJump: { Value: true } }, IsGrounded: true }
-                        ? player.JumpHeight * SystemAPI.Time.DeltaTime 
-                        : 0.0f),
-                    0
-                );
+                if (player.Input.RequestJump.Value)
+                {
+                    player.Velocity += new float3(
+                        0,
+                        (player is { IsGrounded: true } or { IsOnBeat: true }
+                            ? player is { IsFalling: true } 
+                                ? -player.Velocity.y + player.JumpHeight * SystemAPI.Time.DeltaTime 
+                                : player.JumpHeight * SystemAPI.Time.DeltaTime
+                            : 0.0f),
+                        0
+                    );
+                }
             }
             //Debug.DrawLine(player.Position, player.Position + (player.Velocity / 2), Color.cyan, 1);
 
