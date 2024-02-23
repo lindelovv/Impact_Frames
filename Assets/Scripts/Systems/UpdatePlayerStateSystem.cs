@@ -75,7 +75,7 @@ public partial struct UpdatePlayerStateSystem : ISystem
             if (!player.IsBlocking)
             {
                 player.IsPunching = player.Input.RequestPunch.Value;
-                player.IsKicking = player.Input.RequestPunch.Value;
+                player.IsKicking = player.Input.RequestKick.Value;
             }
         }
     }

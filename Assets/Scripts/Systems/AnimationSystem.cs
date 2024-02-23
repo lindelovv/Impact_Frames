@@ -44,7 +44,8 @@ public partial struct AnimationInitSyncSystem : ISystem
 // only host can see players :))))
 //______________________________________________________________________________________________________________________
 [UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
-[WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation | WorldSystemFilterFlags.ClientSimulation)]
+[UpdateAfter(typeof(TransformSystemGroup))]
+[WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
 public partial struct AnimationSyncSystem : ISystem
 {
     private readonly struct _parameters {
@@ -60,6 +61,7 @@ public partial struct AnimationSyncSystem : ISystem
         public static readonly int IsParrying        = Animator.StringToHash("IsParrying");
         public static readonly int IsAnimLocked      = Animator.StringToHash("IsAnimLocked");
         public static readonly int HitCounter        = Animator.StringToHash("HitCounter");
+        public static readonly int IsHit             = Animator.StringToHash("IsHit");
     };
 
     public void OnCreate(ref SystemState state)
@@ -80,24 +82,30 @@ public partial struct AnimationSyncSystem : ISystem
             
             foreach (
                 var (transform, reference, playerState)
-                in SystemAPI.Query<LocalTransform, AnimationReferenceData, PlayerStateComponent>()
+                in SystemAPI.Query<LocalTransform, AnimationReferenceData, RefRW<PlayerStateComponent>>()
             ) {
                 reference.Animator.SetInteger(_parameters.Random, Random.Range(0, 2)); // CHANGE DAMAGE TO ITS OWN RANDOM
                 //if (playerState.isPunching)
                 //{
                 //    Debug.Log(reference.Animator.GetInteger(_parameters.Random));
                 //}
-                reference.Animator.SetBool(_parameters.IsMoving, playerState.IsMoving);
-                reference.Animator.SetBool(_parameters.IsGrounded, playerState.IsGrounded);
-                reference.Animator.SetBool(_parameters.IsFalling, playerState.IsFalling);
-                reference.Animator.SetBool(_parameters.IsJumping, playerState.IsJumping);
-                reference.Animator.SetBool(_parameters.IsPunching, playerState.IsPunching);
-                reference.Animator.SetBool(_parameters.IsKicking, playerState.IsKicking);
-                reference.Animator.SetBool(_parameters.IsFallingFromHigh, playerState.IsFallingFromHigh);
-                reference.Animator.SetBool(_parameters.IsBlocking, playerState.IsBlocking);
-                reference.Animator.SetBool(_parameters.IsParrying, playerState.IsParrying);
-                reference.Animator.SetBool(_parameters.IsAnimLocked, playerState.IsAnimLocked);
-                reference.Animator.SetInteger(_parameters.HitCounter, playerState.HitCounter);
+                reference.Animator.SetBool(_parameters.IsMoving,          playerState.ValueRO.IsMoving);
+                reference.Animator.SetBool(_parameters.IsGrounded,        playerState.ValueRO.IsGrounded);
+                reference.Animator.SetBool(_parameters.IsFalling,         playerState.ValueRO.IsFalling);
+                reference.Animator.SetBool(_parameters.IsJumping,         playerState.ValueRO.IsJumping);
+                reference.Animator.SetBool(_parameters.IsPunching,        playerState.ValueRO.IsPunching);
+                reference.Animator.SetBool(_parameters.IsKicking,         playerState.ValueRO.IsKicking);
+                reference.Animator.SetBool(_parameters.IsFallingFromHigh, playerState.ValueRO.IsFallingFromHigh);
+                reference.Animator.SetBool(_parameters.IsBlocking,        playerState.ValueRO.IsBlocking);
+                reference.Animator.SetBool(_parameters.IsParrying,        playerState.ValueRO.IsParrying);
+                reference.Animator.SetBool(_parameters.IsAnimLocked,      playerState.ValueRO.IsAnimLocked);
+                reference.Animator.SetBool(_parameters.IsHit,             playerState.ValueRO.IsHit);
+                reference.Animator.SetInteger(_parameters.HitCounter,     playerState.ValueRO.HitCounter);
+
+                if (playerState.ValueRO.IsHit)
+                {
+                    playerState.ValueRW.IsHit = false;
+                }
 
                 var animatorTransform = reference.Animator.transform;
                 animatorTransform.position = new float3(

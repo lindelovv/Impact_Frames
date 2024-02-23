@@ -92,6 +92,17 @@
                 },
                 {
                     "name": "",
+                    "id": "357b1a9b-066b-4506-afdf-75fd38929858",
+                    "path": "<Keyboard>/j",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Punch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "1c93a62c-d2d5-405c-9f83-c6c6c7eadbbd",
                     "path": "<Mouse>/backButton",
                     "interactions": "",
@@ -103,8 +114,30 @@
                 },
                 {
                     "name": "",
+                    "id": "905a86a8-5661-4806-9e86-acb5988a1ea8",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Kick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f65d4d29-c143-4465-a0c1-8ca1bb2747ef",
                     "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Block/Parry",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "014ba4df-b160-4a8e-a9bd-efa3e5e26de6",
+                    "path": "<Keyboard>/h",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

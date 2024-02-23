@@ -1,3 +1,4 @@
+using System.Threading;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.NetCode;
@@ -15,14 +16,16 @@ public partial struct DamageSystem : ISystem
     {
         var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
         foreach (
-            var (health, entity)
-            in SystemAPI.Query<RefRW<HealthComponent>>()
+            var (health, playerState, entity)
+            in SystemAPI.Query<RefRW<HealthComponent>, RefRW<PlayerStateComponent>>()
                 .WithEntityAccess()
                 .WithAll<TakeDamage>()
         ) {
             health.ValueRW.Current--;
             Debug.Log($"{state.EntityManager.GetName(entity)} Health: {health.ValueRO.Current}");
             cmdBuffer.RemoveComponent<TakeDamage>(entity);
+            playerState.ValueRW.IsHit = true;
+            
             if (state.EntityManager.HasComponent<NetworkId>(entity))
             {
                 var connectionId = state.EntityManager.GetComponentData<NetworkId>(entity).Value;
