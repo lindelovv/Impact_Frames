@@ -1,7 +1,7 @@
 ﻿using Unity.Entities;
 using Unity.Physics;
 
-public struct TriggerEvent : IBufferElementData, ISimulationEvent<TriggerEvent>
+public struct CustomTriggerEvent : IBufferElementData, ISimulationEvent<CustomTriggerEvent>
 {
     public Entity EntityA { get; }
     public Entity EntityB { get; }
@@ -10,7 +10,7 @@ public struct TriggerEvent : IBufferElementData, ISimulationEvent<TriggerEvent>
     public ColliderKey ColliderKeyA { get; }
     public ColliderKey ColliderKeyB { get; }
     
-    public TriggerEvent(TriggerEvent triggerEvent)
+    public CustomTriggerEvent(TriggerEvent triggerEvent)
     {
         EntityA = triggerEvent.EntityA;
         EntityB = triggerEvent.EntityB;
@@ -20,6 +20,6 @@ public struct TriggerEvent : IBufferElementData, ISimulationEvent<TriggerEvent>
         ColliderKeyB = triggerEvent.ColliderKeyB;
     }
     
-    public int CompareTo(TriggerEvent other)
+    public int CompareTo(CustomTriggerEvent other)
         => ISimulationEventUtilities.CompareEvents(this, other);
 }

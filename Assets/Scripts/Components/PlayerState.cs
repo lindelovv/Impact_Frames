@@ -59,6 +59,8 @@ public struct PlayerStateComponent : IComponentData
     [GhostField] public bool IsBlocking;
     
     [GhostField] public bool IsParrying;
+    
+    [GhostField] public bool IsDashing;
 
     /// <summary> Required for Movement, Jump, Block, Grab, Dash, and Air Dash </summary>
     [GhostField] public bool IsAnimLocked;

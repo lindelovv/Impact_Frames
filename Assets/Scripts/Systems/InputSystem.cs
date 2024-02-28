@@ -1,9 +1,10 @@
 using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [UpdateInGroup(typeof(GhostInputSystemGroup))]
+[WorldSystemFilter(WorldSystemFilterFlags.ClientSimulation)]
+//[AlwaysSynchronizeSystem]
 public partial class InputSystem : SystemBase
 {
     private IA_PlayerControls _inputActions;
@@ -32,19 +33,21 @@ public partial class InputSystem : SystemBase
             in SystemAPI.Query<RefRW<InputComponentData>>()
                 .WithAll<GhostOwnerIsLocal>()
         ) {
-            inputData.ValueRW.RequestedMovement.Value = _inputActions.Combat.Move.ReadValue<Vector2>();
-            inputData.ValueRW.RequestJump.Value = _inputActions.Combat.Jump.IsInProgress();
-            inputData.ValueRW.RequestPunch.Value = _inputActions.Combat.Punch.WasPressedThisFrame();
-            inputData.ValueRW.RequestKick.Value = _inputActions.Combat.Kick.WasPressedThisFrame();
+            inputData.ValueRW.RequestedMovement = _inputActions.Combat.Move.ReadValue<Vector2>();
+            
+            inputData.ValueRW.RequestJump = _inputActions.Combat.Jump.WasPressedThisFrame();
+            inputData.ValueRW.RequestPunch = _inputActions.Combat.Punch.WasPressedThisFrame();
+            inputData.ValueRW.RequestKick = _inputActions.Combat.Kick.WasPressedThisFrame();
+            inputData.ValueRW.RequestDash = _inputActions.Combat.Dash.WasPressedThisFrame();
             
             // Block/Parry update logic
             if (_inputActions.Combat.BlockParry.WasPressedThisFrame())
             {
-                inputData.ValueRW.RequestBlockParry.Value = true;
+                inputData.ValueRW.RequestBlockParry = true;
             }
             else if(_inputActions.Combat.BlockParry.WasReleasedThisFrame())
             {
-                inputData.ValueRW.RequestBlockParry.Value = false;
+                inputData.ValueRW.RequestBlockParry = false;
             }
         }
     }

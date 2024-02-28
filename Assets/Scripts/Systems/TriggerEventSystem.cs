@@ -13,51 +13,41 @@ public partial struct TriggerEventSystem : ISystem
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate<CollisionEventImpulse>();
         state.RequireForUpdate<SimulationSingleton>();
     }
 
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        state.Dependency = new CollisionEventJob {
-            CollisionEventImpulseData = SystemAPI.GetComponentLookup<CollisionEventImpulse>(),
-            PhysicsVelocityData = SystemAPI.GetComponentLookup<PhysicsVelocity>(),
-        }.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
+        var cmdBuffer = new EntityCommandBuffer(Allocator.TempJob);
+        foreach (
+            var (fallingObjectData, entity)
+            in SystemAPI.Query<FallingObjectData>()
+                .WithEntityAccess()
+        ) {
+            state.Dependency = new CollisionEventJob {
+                FallingObjectData = SystemAPI.GetComponentLookup<FallingObjectData>(),
+                Entity = entity,
+                CmdBuffer = cmdBuffer,
+            }.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
+            state.Dependency.Complete();
+        }
+        cmdBuffer.Playback(state.EntityManager);
+        cmdBuffer.Dispose();
     }
 
     [BurstCompile]
-    struct CollisionEventJob : ICollisionEventsJob
+    struct CollisionEventJob : ITriggerEventsJob
     {
-        [ReadOnly] public ComponentLookup<CollisionEventImpulse> CollisionEventImpulseData;
-        public ComponentLookup<PhysicsVelocity> PhysicsVelocityData;
-        
-        public void Execute(CollisionEvent collisionEvent)
+        public ComponentLookup<FallingObjectData> FallingObjectData;
+        public Entity Entity;
+        public EntityCommandBuffer CmdBuffer;
+
+        public void Execute(TriggerEvent triggerEvent)
         {
-            Entity entityA = collisionEvent.EntityA;
-            Entity entityB = collisionEvent.EntityB;
-
-            bool isBodyADynamic = PhysicsVelocityData.HasComponent(entityA);
-            bool isBodyBDynamic = PhysicsVelocityData.HasComponent(entityB);
-
-            bool isBodyARepulser = CollisionEventImpulseData.HasComponent(entityA);
-            bool isBodyBRepulser = CollisionEventImpulseData.HasComponent(entityB);
-
-            if (isBodyARepulser && isBodyBDynamic)
-            {
-                var impulseComponent = CollisionEventImpulseData[entityA];
-                var velocityComponent = PhysicsVelocityData[entityB];
-                velocityComponent.Linear = impulseComponent.Impulse;
-                PhysicsVelocityData[entityB] = velocityComponent;
-            }
-
-            if (isBodyBRepulser && isBodyADynamic)
-            {
-                var impulseComponent = CollisionEventImpulseData[entityB];
-                var velocityComponent = PhysicsVelocityData[entityA];
-                velocityComponent.Linear = impulseComponent.Impulse;
-                PhysicsVelocityData[entityA] = velocityComponent;
-            }
+            Debug.Log("test");
+            CmdBuffer.AddComponent<PhysicsVelocity>(Entity);
+            CmdBuffer.AddComponent<PhysicsMass>(Entity);
         }
     }
 }

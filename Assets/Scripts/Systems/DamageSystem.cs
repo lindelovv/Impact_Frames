@@ -16,12 +16,12 @@ public partial struct DamageSystem : ISystem
     {
         var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
         foreach (
-            var (health, playerState, entity)
-            in SystemAPI.Query<RefRW<HealthComponent>, RefRW<PlayerStateComponent>>()
+            var (health, playerState, damage, entity)
+            in SystemAPI.Query<RefRW<HealthComponent>, RefRW<PlayerStateComponent>, TakeDamage>()
                 .WithEntityAccess()
                 .WithAll<TakeDamage>()
         ) {
-            health.ValueRW.Current--;
+            health.ValueRW.Current -= damage.Amount;
             Debug.Log($"{state.EntityManager.GetName(entity)} Health: {health.ValueRO.Current}");
             cmdBuffer.RemoveComponent<TakeDamage>(entity);
             playerState.ValueRW.IsHit = true;
@@ -42,4 +42,7 @@ public partial struct DamageSystem : ISystem
     }
 }
 
-public struct TakeDamage : IComponentData {}
+public struct TakeDamage : IComponentData
+{
+    public float Amount;
+}
