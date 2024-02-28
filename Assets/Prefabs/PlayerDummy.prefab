@@ -84,7 +84,6 @@ MonoBehaviour:
   isMobile: 0
   IsOnBeat: 0
   IsAttacked: 0
-  IsHit: 0
   HasFullComboMeterEnergy: 0
   HasCompletedMusicalChallenge: 0
   IsInRange: 0
