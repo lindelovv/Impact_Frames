@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.NetCode;
@@ -10,9 +11,9 @@ public class FallingObject : MonoBehaviour
 
     private void Start()
     {
-        fallingObject = GetComponent<GameObject>();
         coord = GetComponent<Transform>();
     }
+    
     void Fall()
     {
         Quaternion spawnrotation = Quaternion.Euler(0, 0, 0);
@@ -40,5 +41,13 @@ public class FallingObject : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision other)
+    {
+        Debug.Log("ColEnter");
+    }
 
+    private void OnCollisionStay(Collision other)
+    {
+        Debug.Log("ColStay");
+    }
 }
