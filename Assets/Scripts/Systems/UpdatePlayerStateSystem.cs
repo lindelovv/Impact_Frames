@@ -26,6 +26,7 @@ public partial struct UpdatePlayerStateSystem : ISystem
         foreach (
             var player
             in SystemAPI.Query<PlayerAspect>()
+                .WithAll<Simulate>()
         ) {
             player.IsGrounded = (Physics.Raycast(
                 player.Position,
@@ -43,39 +44,43 @@ public partial struct UpdatePlayerStateSystem : ISystem
             
             if (player.IsGrounded)
             {
-                player.IsJumping = player.Input.RequestJump.Value;
+                player.IsJumping = player.Input.RequestJump;
                 player.IsFalling = false;
             }
             else
             {
                 player.IsFalling = player is { Velocity: { y: < 0f } };
-                if (Physics.Raycast(
-                            player.Position,
-                            Vector3.down,
-                            1.5f
-                )) {
-                    // Is falling from high
-                    // toggle on here and turn off somewhere else after landing?
-                }
+                //if (Physics.Raycast(
+                //            player.Position,
+                //            Vector3.down,
+                //            1.5f
+                //)) {
+                //    // Is falling from high
+                //    // toggle on here and turn off somewhere else after landing?
+                //}
             }
-            var isMoving = (player.Input.RequestedMovement.Value != float2.zero);
-            
-            // Character rotation
-            if (isMoving.x)
+            player.IsDashing = player.Input.RequestDash;
+            if (!player.IsDashing)
             {
-                player.IsMoving = true;
-                player.IsFacingRight = (player.Input.RequestedMovement.Value.x > 0.0f);
-            }
-            else if (!isMoving.y)
-            {
-                player.IsMoving = false;
-            }
+                var isMoving = (player.Input.RequestedMovement != float2.zero);
 
-            player.IsBlocking = player.Input.RequestBlockParry.Value;
-            if (!player.IsBlocking)
-            {
-                player.IsPunching = player.Input.RequestPunch.Value;
-                player.IsKicking = player.Input.RequestKick.Value;
+                // Character rotation
+                if (isMoving.x)
+                {
+                    player.IsMoving = true;
+                    player.IsFacingRight = (player.Input.RequestedMovement.x > 0.0f);
+                }
+                else if (!isMoving.y)
+                {
+                    player.IsMoving = false;
+                }
+
+                player.IsBlocking = player.Input.RequestBlockParry;
+                if (!player.IsBlocking)
+                {
+                    player.IsPunching = player.Input.RequestPunch;
+                    player.IsKicking = player.Input.RequestKick;
+                }
             }
         }
     }
