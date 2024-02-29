@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Lamp
   - CameraTarget
+  - Dummy
   layers:
   - Default
   - TransparentFX
