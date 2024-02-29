@@ -75,6 +75,9 @@ public class Player : MonoBehaviour
                 Max     = authoring.MaxHealth,
             });
 
+            AddComponent(entity, new PlayerId {
+                Value = 0,
+            });
             if (!authoring.IsDummy)
             {
                 // Needed to query collisions

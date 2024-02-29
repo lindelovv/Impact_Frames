@@ -1,4 +1,5 @@
-﻿using Unity.Collections;
+﻿using System;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
@@ -43,6 +44,7 @@ public partial class SpawnPlayerSystem : SystemBase
 
                 commandBuffer.AddComponent(player, new ConnectionOwner { Entity = connectionEntity });
                 commandBuffer.SetComponent(player, spawnPoint);
+                commandBuffer.SetComponent(player, new PlayerId { Value = (Int16)networkId.Value });
             }
         ).Run();
         commandBuffer.Playback(EntityManager);

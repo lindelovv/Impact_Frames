@@ -16,8 +16,8 @@ public partial struct DamageSystem : ISystem
     {
         var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
         foreach (
-            var (health, playerState, damage, entity)
-            in SystemAPI.Query<RefRW<HealthComponent>, RefRW<PlayerStateComponent>, TakeDamage>()
+            var (health, playerState, damage, id, entity)
+            in SystemAPI.Query<RefRW<HealthComponent>, RefRW<PlayerStateComponent>, TakeDamage, PlayerId>()
                 .WithEntityAccess()
                 .WithAll<TakeDamage>()
         ) {
@@ -25,15 +25,14 @@ public partial struct DamageSystem : ISystem
             Debug.Log($"{state.EntityManager.GetName(entity)} Health: {health.ValueRO.Current}");
             cmdBuffer.RemoveComponent<TakeDamage>(entity);
             playerState.ValueRW.IsHit = true;
-            
-            if (state.EntityManager.HasComponent<NetworkId>(entity))
-            {
-                var connectionId = state.EntityManager.GetComponentData<NetworkId>(entity).Value;
-                UIManager.instance.UpdateHealth(health.ValueRW.Current, connectionId);
 
+            if (id.Value != 0)
+            {
+                // Update UI
+                UIManager.instance.UpdateHealth(health.ValueRW.Current, id.Value);
                 if (health.ValueRO.Current <= 0)
                 {
-                    UIManager.instance.DecreaseLife(connectionId);
+                    UIManager.instance.DecreaseLife(id.Value);
                 }
             }
         }
