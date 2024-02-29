@@ -5,10 +5,10 @@ using Unity.Transforms;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public struct SyncVFX : IComponentData {}
+public struct SyncBlockVFX : IComponentData {}
 
 //______________________________________________________________________________________________________________________
-public partial struct VFXInitSystem : ISystem
+public partial struct VFXBlockInitSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
     {
@@ -21,14 +21,13 @@ public partial struct VFXInitSystem : ISystem
 
         foreach (
             var (vfxGameObject, entity)
-            in SystemAPI.Query<VFXGameObject>()
-                .WithNone<VFXReferenceData>()
+            in SystemAPI.Query<VFXBlockGameObject>()
+                .WithNone<VFXBlockReferenceData>()
                 .WithEntityAccess()
         ) {
             var gameObject = Object.Instantiate(vfxGameObject.Prefab);
-            var animationReference = new VFXReferenceData {
+            var animationReference = new VFXBlockReferenceData {
                 VFX = gameObject.GetComponent<VisualEffect>(),
-                NameHash = vfxGameObject.NameHash,
             };
             cmdBuffer.AddComponent(entity, animationReference);
         }
@@ -39,37 +38,31 @@ public partial struct VFXInitSystem : ISystem
 
 //______________________________________________________________________________________________________________________
 [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
-public partial struct VFXSystem : ISystem
+public partial struct VFXBlockSystem : ISystem
 {
-    private readonly struct _parameters {
-        public static readonly int Block = Animator.StringToHash("Block");
-    }
-
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<NetworkTime>();
-        state.RequireForUpdate<VFXReferenceData>();
+        state.RequireForUpdate<VFXBlockReferenceData>();
     }
 
     public void OnUpdate(ref SystemState state)
     {
         foreach (
             var (reference, playerState, transform)
-            in SystemAPI.Query<VFXReferenceData, PlayerStateComponent, LocalTransform>()
+            in SystemAPI.Query<VFXBlockReferenceData, PlayerStateComponent, LocalTransform>()
         ) {
             reference.VFX.transform.position = transform.Position;
             
-            if (reference.NameHash == _parameters.Block)
+            if (playerState.IsBlocking /*&& !reference.VFX.HasAnySystemAwake()*/)
             {
-                if (playerState.IsBlocking /*&& !reference.VFX.HasAnySystemAwake()*/)
-                {
-                    reference.VFX.enabled = true;
-                }
-                else // if(reference.VFX.isActiveAndEnabled)
-                {
-                    reference.VFX.enabled = false;
-                }
+                reference.VFX.enabled = true;
             }
+            else // if(reference.VFX.isActiveAndEnabled)
+            {
+                reference.VFX.enabled = false;
+            }
+            
         }
     }
 }

@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: -3312887918091319252}
   - component: {fileID: 6130173664912802069}
   - component: {fileID: -317430035401528337}
+  - component: {fileID: 6095826172294186699}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -209,6 +210,7 @@ MonoBehaviour:
     x: 5
     y: 1
   MaxComboDelay: 2
+  IsDummy: 0
 --- !u!114 &6524130790032669571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,8 +322,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 5530559309006933450}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 118945c9c74b48a399c19ff656271c54, type: 3}
+  m_Script: {fileID: 11500000, guid: 560a9847916a77d40888b2996d7b43ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Block
-  BlockPrefab: {fileID: 3806523540211558309, guid: be20ddc208682854895b1c0eab3f1020, type: 3}
+  Prefab: {fileID: 3806523540211558309, guid: be20ddc208682854895b1c0eab3f1020, type: 3}
+--- !u!114 &6095826172294186699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5530559309006933450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f6e2511454f406cb4b2bc647bc072f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Prefab: {fileID: 1825772372584047608, guid: 11ed419926cd8ee46a4cf79489163fa4, type: 3}

@@ -25,6 +25,8 @@ public partial struct PlayerMovementSystem : ISystem
         // Components in RequireForUpdate are all types we need to run system (the query above and the physics world)
         state.RequireForUpdate(state.GetEntityQuery(builder));
         state.RequireForUpdate<PhysicsWorldSingleton>();
+        
+        state.RequireForUpdate<NetworkTime>();
     }
 
     [BurstCompile]
@@ -36,8 +38,7 @@ public partial struct PlayerMovementSystem : ISystem
             foreach (
                 var player
                 in SystemAPI.Query<PlayerAspect>()
-            )
-            {
+            ) {
                 // Increase gravity if falling
                 {
                     player.GravityFactor = player is { IsGrounded: false, Velocity: { y: <= 1.0f } }
@@ -98,10 +99,9 @@ public partial struct PlayerMovementSystem : ISystem
 
                 // Apply impact
                 {
-                    if (state.EntityManager.HasComponent<ApplyImpact>(player.Self))
-                    {
-                        player.Velocity +=
-                            new float3(state.EntityManager.GetComponentData<ApplyImpact>(player.Self).Amount, 0);
+                    if (state.EntityManager.HasComponent<ApplyImpact>(player.Self) 
+                    ) {
+                        player.Velocity += new float3(state.EntityManager.GetComponentData<ApplyImpact>(player.Self).Amount, 0);
                         cmdBuffer.RemoveComponent<ApplyImpact>(player.Self);
                     }
                 }

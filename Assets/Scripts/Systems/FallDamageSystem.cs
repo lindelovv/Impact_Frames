@@ -45,6 +45,9 @@ public partial struct FallDamageSystem : ISystem
                 cmdBuffer.RemoveComponent<Falling>(player.Self);
                 continue;
             }
+            
+            player.IsFallingHigh = Time.time - state.EntityManager.GetComponentData<Falling>(player.Self).StartTime > .7f;
+            
             if (player.IsGrounded)
             {
                 var damage = Time.time - state.EntityManager.GetComponentData<Falling>(player.Self).StartTime;
@@ -53,11 +56,11 @@ public partial struct FallDamageSystem : ISystem
                     cmdBuffer.RemoveComponent<Falling>(player.Self);
                     continue;
                 }
-                cmdBuffer.AddComponent(player.Self, new TakeDamage
-                {
+                cmdBuffer.AddComponent(player.Self, new TakeDamage {
                     Amount = math.clamp(damage, 0, 10),
                 });
                 cmdBuffer.RemoveComponent<Falling>(player.Self);
+                player.IsFallingHigh = false;
             }
         }
         cmdBuffer.Playback(state.EntityManager);
