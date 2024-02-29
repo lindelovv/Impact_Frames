@@ -46,6 +46,11 @@ public class Player : MonoBehaviour
     [Tooltip("[float] Max time between attacks for it to count towards combo counter.")]
     public float MaxComboDelay;
     
+    //_______________________________________________________________
+    [Header("Misc")] 
+    
+    [Tooltip("[bool] Disables movement and impulses.")]
+    public bool IsDummy;
     
     //_______________________________________________________________
     public class Baker : Baker<Player>
@@ -69,27 +74,34 @@ public class Player : MonoBehaviour
                 Current = authoring.CurrentHealth,
                 Max     = authoring.MaxHealth,
             });
-            
-            // Needed to query collisions
-            AddComponent(entity, new PhysicsVelocity {
-                Linear = authoring.StartingVelocity,
-            });
-            AddComponent(entity, new PhysicsDamping {
-                Linear  = authoring.Damping,
-                Angular = 9999999,
-            });
-            AddComponent(entity, new PhysicsMass {
-                Transform              = RigidTransform.identity,
-                InverseMass            = 1,
-                InverseInertia         = 0,
-                AngularExpansionFactor = 0,
-            });
-            AddComponent<PhysicsGravityFactor>(entity);
-            
-            // Might switch this out later to add/remove as needed instead
-            AddComponent(entity, new ApplyImpact {
-                Amount = 0f,
-            });
+
+            if (!authoring.IsDummy)
+            {
+                // Needed to query collisions
+                AddComponent(entity, new PhysicsVelocity
+                {
+                    Linear = authoring.StartingVelocity,
+                });
+                AddComponent(entity, new PhysicsDamping
+                {
+                    Linear = authoring.Damping,
+                    Angular = 9999999,
+                });
+                AddComponent(entity, new PhysicsMass
+                {
+                    Transform = RigidTransform.identity,
+                    InverseMass = 1,
+                    InverseInertia = 0,
+                    AngularExpansionFactor = 0,
+                });
+                AddComponent<PhysicsGravityFactor>(entity);
+
+                // Might switch this out later to add/remove as needed instead
+                AddComponent(entity, new ApplyImpact
+                {
+                    Amount = 0f,
+                });
+            }
         }
     }
 }
@@ -102,6 +114,7 @@ public struct PlayerData : IComponentData
     [GhostField] public float JumpHeight;
     public float2 PunchPushback;
     public float MaxComboDelay;
+    [GhostField] public bool IsDummy;
 }
 
 public readonly partial struct PlayerAspect : IAspect
@@ -121,7 +134,8 @@ public readonly partial struct PlayerAspect : IAspect
     private readonly RefRW<LocalTransform> _transform;
     
     // Shorthand names for the component data variables (use these for access)
-        public float3 Position      { get => _transform.ValueRO.Position;  set => _transform.ValueRW.Position = value;  }
+    public bool IsDummy             { get => _data.ValueRO.IsDummy;        set => _data.ValueRW.IsDummy = value;        }
+    public float3 Position          { get => _transform.ValueRO.Position;  set => _transform.ValueRW.Position = value;  }
     public quaternion Rotation      { get => _transform.ValueRO.Rotation;  set => _transform.ValueRW.Rotation = value;  }
     public PhysicsCollider Collider { get => _collider.ValueRO;            set => _collider.ValueRW = value;            }
     public float3 Velocity          { get => _velocity.ValueRO.Linear;     set => _velocity.ValueRW.Linear = value;     }
@@ -138,6 +152,7 @@ public readonly partial struct PlayerAspect : IAspect
     public bool IsGrounded          { get => _state.ValueRO.IsGrounded;    set => _state.ValueRW.IsGrounded = value;    }
     public bool IsFacingRight       { get => _state.ValueRO.IsFacingRight; set => _state.ValueRW.IsFacingRight = value; }
     public bool IsFalling           { get => _state.ValueRO.IsFalling;     set => _state.ValueRW.IsFalling = value;     }
+    public bool IsFallingHigh       { get => _state.ValueRO.IsFallingHigh; set => _state.ValueRW.IsFallingHigh = value; }
     public bool IsJumping           { get => _state.ValueRO.IsJumping;     set => _state.ValueRW.IsJumping = value;     }
     public bool IsPunching          { get => _state.ValueRO.IsPunching;    set => _state.ValueRW.IsPunching = value;    }
     public bool IsKicking           { get => _state.ValueRO.IsKicking;     set => _state.ValueRW.IsKicking = value;     }

@@ -2,12 +2,11 @@
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Physics;
-using Unity.Physics.Systems;
 using UnityEngine;
 
 [RequireMatchingQueriesForUpdate]
 [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-[UpdateAfter(typeof(PhysicsSystemGroup))]
+//[UpdateAfter(typeof(PhysicsSystemGroup))]
 public partial struct TriggerEventSystem : ISystem
 {
     [BurstCompile]

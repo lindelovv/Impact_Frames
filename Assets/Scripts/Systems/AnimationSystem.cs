@@ -44,7 +44,6 @@ public partial struct AnimationInitSyncSystem : ISystem
 // only host can see players :))))
 //______________________________________________________________________________________________________________________
 [UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
-[UpdateAfter(typeof(TransformSystemGroup))]
 [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
 public partial struct AnimationSyncSystem : ISystem
 {
@@ -95,7 +94,7 @@ public partial struct AnimationSyncSystem : ISystem
                 reference.Animator.SetBool(_parameters.IsJumping,         playerState.ValueRO.IsJumping);
                 reference.Animator.SetBool(_parameters.IsPunching,        playerState.ValueRO.IsPunching);
                 reference.Animator.SetBool(_parameters.IsKicking,         playerState.ValueRO.IsKicking);
-                reference.Animator.SetBool(_parameters.IsFallingFromHigh, playerState.ValueRO.IsFallingFromHigh);
+                reference.Animator.SetBool(_parameters.IsFallingFromHigh, playerState.ValueRO.IsFallingHigh);
                 reference.Animator.SetBool(_parameters.IsBlocking,        playerState.ValueRO.IsBlocking);
                 reference.Animator.SetBool(_parameters.IsParrying,        playerState.ValueRO.IsParrying);
                 reference.Animator.SetBool(_parameters.IsAnimLocked,      playerState.ValueRO.IsAnimLocked);

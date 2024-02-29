@@ -44,7 +44,7 @@ public class PlayerState : MonoBehaviour
 [GhostComponent(PrefabType = GhostPrefabType.AllPredicted)]
 public struct PlayerStateComponent : IComponentData
 {
-    [GhostField] public bool IsFallingFromHigh;  // When Raytracing from high
+    [GhostField] public bool IsFallingHigh;  // When Raytracing from high
 
     [GhostField] public bool IsMoving;
     

@@ -12,13 +12,12 @@ GameObject:
   - component: {fileID: 157595006982165000}
   - component: {fileID: 6524130790032669571}
   - component: {fileID: -1779064826349053475}
-  - component: {fileID: 7026778184379402400}
   - component: {fileID: 1244181283632142093}
   - component: {fileID: 1553344042008314389}
   - component: {fileID: -3312887918091319252}
   - component: {fileID: 398884271225559408}
-  - component: {fileID: -639539125941874452}
   - component: {fileID: 6130173664912802069}
+  - component: {fileID: 1905571665012368345}
   m_Layer: 0
   m_Name: PlayerDummy
   m_TagString: Dummy
@@ -67,6 +66,7 @@ MonoBehaviour:
     x: 5
     y: 1
   MaxComboDelay: 0
+  IsDummy: 1
 --- !u!114 &6524130790032669571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,14 +104,6 @@ MonoBehaviour:
   RequestedMove:
     x: 0
     y: 0
---- !u!33 &7026778184379402400
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5530559309006933450}
-  m_Mesh: {fileID: 70948873267775455, guid: 2fb653f5124bd8c42a7ba3fe8b48057e, type: 3}
 --- !u!114 &1244181283632142093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,27 +177,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.25, y: 2.5, z: 1.25}
   m_Center: {x: 0, y: 0.25, z: 0}
---- !u!114 &-639539125941874452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5530559309006933450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb54ea4f67dc17342bcd49954c53502d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DrawColliders: 0
-  DrawColliderEdges: 0
-  DrawColliderAabbs: 0
-  DrawBroadphase: 0
-  DrawMassProperties: 0
-  DrawContacts: 0
-  DrawCollisionEvents: 0
-  DrawTriggerEvents: 0
-  DrawJoints: 0
 --- !u!114 &6130173664912802069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,3 +190,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: {fileID: 2056336029179781686, guid: 30119775f5bf0354384cd99953f58f12, type: 3}
+--- !u!114 &1905571665012368345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5530559309006933450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a2ddf6fb94c407cbbdb45e4f9b1e501, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
