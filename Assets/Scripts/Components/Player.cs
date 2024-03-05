@@ -36,6 +36,9 @@ public class Player : MonoBehaviour
     
     [Tooltip("[float3] Override starting velocity. Normally should be {0,0,0}.")]
     public float3 StartingVelocity;
+
+    public bool OverrideGravity;
+    public float Gravity;
     
     //_______________________________________________________________
     [Header("Attacks")] 
@@ -65,6 +68,8 @@ public class Player : MonoBehaviour
                 JumpHeight    = authoring.JumpHeight,
                 PunchPushback = authoring.PunchPushback,
                 MaxComboDelay = authoring.MaxComboDelay,
+                OverrideGravity = authoring.OverrideGravity,
+                CustomGravity = authoring.Gravity,
             });
             
             // Health component is it's own component in case of reuse,
@@ -80,7 +85,7 @@ public class Player : MonoBehaviour
             });
             if (!authoring.IsDummy)
             {
-                // Needed to query collisions
+                //// Needed to query collisions
                 AddComponent(entity, new PhysicsVelocity
                 {
                     Linear = authoring.StartingVelocity,
@@ -118,6 +123,8 @@ public struct PlayerData : IComponentData
     public float2 PunchPushback;
     public float MaxComboDelay;
     [GhostField] public bool IsDummy;
+    [GhostField] public bool OverrideGravity;
+    [GhostField] public float CustomGravity;
 }
 
 public readonly partial struct PlayerAspect : IAspect
@@ -137,6 +144,7 @@ public readonly partial struct PlayerAspect : IAspect
     private readonly RefRW<LocalTransform> _transform;
     
     // Shorthand names for the component data variables (use these for access)
+    public PlayerData Data          { get => _data.ValueRO;                set => _data.ValueRW = value;                }
     public bool IsDummy             { get => _data.ValueRO.IsDummy;        set => _data.ValueRW.IsDummy = value;        }
     public float3 Position          { get => _transform.ValueRO.Position;  set => _transform.ValueRW.Position = value;  }
     public quaternion Rotation      { get => _transform.ValueRO.Rotation;  set => _transform.ValueRW.Rotation = value;  }

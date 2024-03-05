@@ -41,9 +41,16 @@ public partial struct PlayerMovementSystem : ISystem
             ) {
                 // Increase gravity if falling
                 {
-                    player.GravityFactor = player is { IsGrounded: false, Velocity: { y: <= 1.0f } }
-                        ? 5
-                        : 1;
+                    if (!player.Data.OverrideGravity)
+                    {
+                        player.GravityFactor = player is { IsGrounded: false, Velocity: { y: <= 1.0f } }
+                            ? 5
+                            : 1;
+                    }
+                    else
+                    {
+                        player.GravityFactor = player.Data.CustomGravity;
+                    }
                 }
 
                 // Calculate & Add Horizontal Movement

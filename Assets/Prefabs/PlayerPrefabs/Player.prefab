@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 6130173664912802069}
   - component: {fileID: -317430035401528337}
   - component: {fileID: 6095826172294186699}
+  - component: {fileID: 3902094259571194686}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -56,7 +57,7 @@ MonoBehaviour:
   m_ShapeType: 1
   m_PrimitiveCenter:
     x: 0
-    y: 0.25
+    y: 1.235
     z: 0
   m_PrimitiveSize:
     x: 1.25
@@ -206,6 +207,8 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
+  OverrideGravity: 0
+  Gravity: 2
   PunchPushback:
     x: 5
     y: 1
@@ -339,3 +342,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: {fileID: 1825772372584047608, guid: 11ed419926cd8ee46a4cf79489163fa4, type: 3}
+--- !u!114 &3902094259571194686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5530559309006933450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 725f443b46fd3448e9c957fb78798883, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ServerPrefab: {fileID: 0}
+  ClientPrefab: {fileID: 2056336029179781686, guid: 30119775f5bf0354384cd99953f58f12, type: 3}

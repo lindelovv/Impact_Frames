@@ -109,7 +109,7 @@ public partial struct AnimationSyncSystem : ISystem
                 var animatorTransform = reference.Animator.transform;
                 animatorTransform.position = new float3(
                     transform.Position.x,
-                    transform.Position.y - 1f,
+                    transform.Position.y,
                     transform.Position.z
                 );
                 animatorTransform.rotation = transform.Rotation;
