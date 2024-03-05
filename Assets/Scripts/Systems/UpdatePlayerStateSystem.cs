@@ -32,6 +32,9 @@ public partial struct UpdatePlayerStateSystem : ISystem
                 player.Position,
                 Vector3.down,
                 1.5f
+
+                
+
             ) || Physics.Raycast(
                 player.Position + new float3(0.6f, 0, 0),
                 Vector3.down,
@@ -41,11 +44,15 @@ public partial struct UpdatePlayerStateSystem : ISystem
                 Vector3.down,
                 1.5f
             ));
-            
+
+            player.fGroundedRemember -= Time.deltaTime; // JumpBuffering 
+
             if (player.IsGrounded)
             {
                 player.IsJumping = player.Input.RequestJump;
                 player.IsFalling = false;
+                player.fGroundedRemember = player.fGroundedRememberTime;  // Set Jump Buffering 0,2f
+            
             }
             else
             {

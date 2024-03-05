@@ -30,8 +30,15 @@ public partial struct PlayerMovementSystem : ISystem
     }
 
     [BurstCompile]
+    
     public void OnUpdate(ref SystemState state)
     {
+
+
+
+       
+
+
         if (SystemAPI.GetSingleton<NetworkTime>().IsFinalPredictionTick)
         {
             var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
@@ -48,9 +55,11 @@ public partial struct PlayerMovementSystem : ISystem
 
                 // Calculate & Add Horizontal Movement
                 {
+                   
+                    
                     if (player.IsDashing)
                     {
-                        player.Velocity = new float3(player.IsFacingRight ? 20f : -20f, player.Velocity.y, 0);
+                        player.Velocity = new float3(player.IsFacingRight ? 25f : -25f, 3f, 0);
                     }
 
                     if (player.Input.RequestedMovement.x == 0) // If not moving, change velocity towards 0
@@ -67,6 +76,7 @@ public partial struct PlayerMovementSystem : ISystem
                             player.Velocity.x,
                             player.Input.RequestedMovement.x * player.MaxSpeed,
                             player.Acceleration * SystemAPI.Time.DeltaTime
+                            //player.Acceleration *= Mathf.Pow(1f- player.Damping, Time.deltaTime *10f
                         ), player.Velocity.y, 0);
                     }
                 }
@@ -82,17 +92,42 @@ public partial struct PlayerMovementSystem : ISystem
 
                 // Calculate & Add Jump / Vertical Movement
                 {
+                    player.JumpPressRemember -= Time.deltaTime;
+                    Debug.Log(player.JumpPressRemember);
+
+
                     if (player.Input.RequestJump)
                     {
+                        player.JumpPressRemember = player.JumpPressTimer; // Timer set to 0.2
+
+
                         player.Velocity += new float3(
                             0,
-                            (player is { IsGrounded: true } or { IsOnBeat: true }
+                            (player is { IsGrounded: true } //or { IsOnBeat: true }
                                 ? player is { IsFalling: true }
                                     ? -player.Velocity.y + player.JumpHeight * SystemAPI.Time.DeltaTime
                                     : player.JumpHeight * SystemAPI.Time.DeltaTime
                                 : 0.0f),
                             0
                         );
+                    }
+                    // Check if you have Coyote or Groundbuffer
+                    if (player.JumpPressRemember > 0 && player.fGroundedRemember > 0) {
+                        Debug.Log("HOPPPPPAAAR MED COYOTE ELLER GROUNDBUFFER");
+                        player.JumpPressRemember = 0;
+                        player.JumpPressTimer = 0;
+
+                        // Adding a new Jumpforce for that state
+                        player.Velocity += new float3(  
+                           0,
+                           (player is { IsGrounded: true } //or { IsOnBeat: true }
+                               ? player is { IsFalling: true }
+                                   ? -player.Velocity.y + player.JumpHeight * SystemAPI.Time.DeltaTime
+                                   : player.JumpHeight * SystemAPI.Time.DeltaTime
+                               : 0.0f),
+                           0
+                        );
+
                     }
                 }
                 //Debug.DrawLine(player.Position, player.Position + (player.Velocity / 2), Color.cyan, 1);
