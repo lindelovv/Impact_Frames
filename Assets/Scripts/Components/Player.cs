@@ -1,7 +1,5 @@
-using Unity.Burst;
 using UnityEngine;
 using Unity.Entities;
-using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Physics;
@@ -144,7 +142,6 @@ public readonly partial struct PlayerAspect : IAspect
     private readonly RefRW<PhysicsDamping> _damping;
     private readonly RefRW<PhysicsGravityFactor> _gravityFactor;
     private readonly RefRW<LocalTransform> _transform;
-    private readonly RefRW<Action> _action;
     
     // Shorthand names for the component data variables (use these for access)
     public PlayerData Data          { get => _data.ValueRO;                set => _data.ValueRW = value;                }
@@ -174,8 +171,8 @@ public readonly partial struct PlayerAspect : IAspect
     public bool IsParrying          { get => _state.ValueRO.IsParrying;    set => _state.ValueRW.IsParrying = value;    }
     public bool IsDashing           { get => _state.ValueRO.IsDashing;     set => _state.ValueRW.IsDashing = value;     }
     public bool IsOnBeat            { get => _state.ValueRO.IsOnBeat;      set => _state.ValueRW.IsOnBeat = value;      }
+    public bool IsAnimLocked        { get => _state.ValueRO.IsAnimLocked;  set => _state.ValueRW.IsAnimLocked = value;  }
     public int HitCounter           { get => _state.ValueRO.HitCounter;    set => _state.ValueRW.HitCounter = value;    }
     public float HitTime            { get => _state.ValueRO.HitTime;       set => _state.ValueRW.HitTime = value;       }
     public float MaxComboDelay      { get => _data.ValueRO.MaxComboDelay;  set => _data.ValueRW.MaxComboDelay = value;  }
-    public Action CurrentAction     { get => _action.ValueRO;              set => _action.ValueRW = value;              }
 }

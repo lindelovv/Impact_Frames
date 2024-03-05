@@ -2,7 +2,7 @@
 <project version="4">
   <component name="Encoding" addBOMForNewFiles="with BOM under Windows, with no BOM otherwise">
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Systems/InputSystem.cs" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/Assets/Scripts/Systems/PlayerFightingSystem.cs" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/Systems/PlayerFighting.cs" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Systems/PlayerMovementSystem.cs" charset="windows-1252" />
   </component>
 </project>

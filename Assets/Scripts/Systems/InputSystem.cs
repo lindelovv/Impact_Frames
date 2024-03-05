@@ -1,6 +1,7 @@
 using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [UpdateInGroup(typeof(GhostInputSystemGroup))]
 [WorldSystemFilter(WorldSystemFilterFlags.ClientSimulation)]
@@ -34,21 +35,22 @@ public partial class InputSystem : SystemBase
                 .WithAll<GhostOwnerIsLocal>()
         ) {
             inputData.ValueRW.RequestedMovement = _inputActions.Combat.Move.ReadValue<Vector2>();
+
             
-            inputData.ValueRW.RequestJump = _inputActions.Combat.Jump.WasPressedThisFrame();
-            inputData.ValueRW.RequestPunch = _inputActions.Combat.Punch.WasPressedThisFrame();
-            inputData.ValueRW.RequestKick = _inputActions.Combat.Kick.WasPressedThisFrame();
-            inputData.ValueRW.RequestDash = _inputActions.Combat.Dash.WasPressedThisFrame();
+            IsButtonHeld(_inputActions.Combat.Jump,       ref inputData.ValueRW.RequestJump);
+            IsButtonHeld(_inputActions.Combat.Punch,      ref inputData.ValueRW.RequestPunch);
+            IsButtonHeld(_inputActions.Combat.Kick,       ref inputData.ValueRW.RequestKick);
+            IsButtonHeld(_inputActions.Combat.Dash,       ref inputData.ValueRW.RequestDash);
+            IsButtonHeld(_inputActions.Combat.BlockParry, ref inputData.ValueRW.RequestBlock);
             
-            // Block/Parry update logic
-            if (_inputActions.Combat.BlockParry.WasPressedThisFrame())
-            {
-                inputData.ValueRW.RequestBlockParry = true;
-            }
-            else if(_inputActions.Combat.BlockParry.WasReleasedThisFrame())
-            {
-                inputData.ValueRW.RequestBlockParry = false;
-            }
+            inputData.ValueRW.RequestParry = _inputActions.Combat.BlockParry.WasPressedThisFrame();
+            Debug.Log($"Jump: {inputData.ValueRO.RequestJump}");
         }
+    }
+
+    void IsButtonHeld(InputAction button, ref bool request)
+    {
+        if (button.WasPressedThisFrame())       { request = true;  }
+        else if (button.WasReleasedThisFrame()) { request = false; }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
@@ -34,7 +35,10 @@ public struct InputComponentData : IInputComponentData
     [GhostField] public bool RequestKick;
 
     // Block
-    [GhostField] public bool RequestBlockParry;
+    [GhostField] public bool RequestBlock;
+    
+    // Parry
+    [GhostField] public bool RequestParry;
 
     // Dash & AirDash
     [GhostField] public bool RequestDash;

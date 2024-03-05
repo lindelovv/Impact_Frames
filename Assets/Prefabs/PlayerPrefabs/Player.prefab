@@ -200,7 +200,7 @@ MonoBehaviour:
   MaxHealth: 10
   Speed: 30
   MaxSpeed: 60
-  JumpHeight: 1200
+  JumpHeight: 20
   Damping: 2
   StartingVelocity:
     x: 0
@@ -328,7 +328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: {fileID: 1825772372584047608, guid: 11ed419926cd8ee46a4cf79489163fa4, type: 3}
---- !u!114 &-4808418915244863480
+--- !u!114 &1089262296336203538
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
