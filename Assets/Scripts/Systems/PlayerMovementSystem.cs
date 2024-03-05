@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.Burst;
 using Unity.Collections;
@@ -6,7 +7,6 @@ using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Physics;
 using Unity.Transforms;
-using UnityEditor;
 using UnityEngine;
 
 [BurstCompile]
@@ -91,15 +91,10 @@ public partial struct PlayerMovementSystem : ISystem
                 {
                     if (player.Input.RequestJump)
                     {
-                        player.Velocity += new float3(
-                            0,
-                            (player is { IsGrounded: true } or { IsOnBeat: true }
-                                ? player is { IsFalling: true }
-                                    ? -player.Velocity.y + player.JumpHeight * SystemAPI.Time.DeltaTime
-                                    : player.JumpHeight * SystemAPI.Time.DeltaTime
-                                : 0.0f),
-                            0
-                        );
+                        state.Dependency = new JumpJob { 
+                            DeltaTime = Time.deltaTime,
+                            State = ActionState.Active,
+                        }.ScheduleParallel(state.Dependency);
                     }
                 }
                 //Debug.DrawLine(player.Position, player.Position + (player.Velocity / 2), Color.cyan, 1);
@@ -117,5 +112,42 @@ public partial struct PlayerMovementSystem : ISystem
             cmdBuffer.Playback(state.EntityManager);
             cmdBuffer.Dispose();
         }
+    }
+}
+
+public partial struct JumpJob : IJobEntity
+{
+    public float DeltaTime;
+    public ActionState State;
+    
+    void Execute(PhysicsVelocity velocity, PlayerStateComponent state, Player player)
+    {
+        switch (State)
+        {
+            case ActionState.Startup:
+            {
+                state.IsAnimLocked = true;
+                break;
+            }
+            case ActionState.Active:
+            {
+                velocity.Linear += new float3(
+                    0,
+                    (state is { IsGrounded: true } or { IsOnBeat: true }
+                        ? state is { IsFalling: true }
+                            ? -velocity.Linear.y + player.JumpHeight * DeltaTime
+                            : player.JumpHeight * DeltaTime
+                        : 0.0f),
+                    0
+                );
+                break;
+            }
+            case ActionState.Recovery:
+            {
+                state.IsAnimLocked = false;
+                break;
+            }
+        }
+        
     }
 }

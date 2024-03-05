@@ -10,7 +10,7 @@ public struct InitAnimations : IComponentData {}
 public struct SyncAnimations : IComponentData {}
 
 //______________________________________________________________________________________________________________________
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup), OrderFirst = true)]
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
 public partial struct AnimationInitSyncSystem : ISystem
 {
     public void OnCreate(ref SystemState state)

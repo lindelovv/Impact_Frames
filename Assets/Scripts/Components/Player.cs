@@ -1,5 +1,7 @@
+using Unity.Burst;
 using UnityEngine;
 using Unity.Entities;
+using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Physics;
@@ -58,7 +60,7 @@ public class Player : MonoBehaviour
     //_______________________________________________________________
     public class Baker : Baker<Player>
     {
-        public override void Bake(Player authoring)
+        public unsafe override void Bake(Player authoring)
         {
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
             
@@ -142,6 +144,7 @@ public readonly partial struct PlayerAspect : IAspect
     private readonly RefRW<PhysicsDamping> _damping;
     private readonly RefRW<PhysicsGravityFactor> _gravityFactor;
     private readonly RefRW<LocalTransform> _transform;
+    private readonly RefRW<Action> _action;
     
     // Shorthand names for the component data variables (use these for access)
     public PlayerData Data          { get => _data.ValueRO;                set => _data.ValueRW = value;                }
@@ -174,5 +177,5 @@ public readonly partial struct PlayerAspect : IAspect
     public int HitCounter           { get => _state.ValueRO.HitCounter;    set => _state.ValueRW.HitCounter = value;    }
     public float HitTime            { get => _state.ValueRO.HitTime;       set => _state.ValueRW.HitTime = value;       }
     public float MaxComboDelay      { get => _data.ValueRO.MaxComboDelay;  set => _data.ValueRW.MaxComboDelay = value;  }
-    
+    public Action CurrentAction     { get => _action.ValueRO;              set => _action.ValueRW = value;              }
 }

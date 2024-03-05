@@ -34,17 +34,17 @@ public partial class SpawnPlayerSystem : SystemBase
             {
                 Debug.Log($"Spawning player for connection {networkId.Value}");
                 var player = commandBuffer.Instantiate(prefab);
-                
-                commandBuffer.SetComponent(player, new GhostOwner { NetworkId = networkId.Value });
 
-                commandBuffer.AddComponent<PlayerSpawned>(connectionEntity);
-                commandBuffer.AddComponent<InitAnimations>(connectionEntity);
+                commandBuffer.SetComponent(player, new GhostOwner { NetworkId = networkId.Value });
 
                 commandBuffer.AppendToBuffer(connectionEntity, new LinkedEntityGroup {Value = player});
 
                 commandBuffer.AddComponent(player, new ConnectionOwner { Entity = connectionEntity });
                 commandBuffer.SetComponent(player, spawnPoint);
                 commandBuffer.SetComponent(player, new PlayerId { Value = (Int16)networkId.Value });
+                
+                commandBuffer.AddComponent<PlayerSpawned>(connectionEntity);
+                commandBuffer.AddComponent<InitAnimations>(connectionEntity);
             }
         ).Run();
         commandBuffer.Playback(EntityManager);

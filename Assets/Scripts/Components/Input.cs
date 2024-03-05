@@ -41,6 +41,5 @@ public struct InputComponentData : IInputComponentData
 
     // Special Attack
 
-
     // Animation Cancle
 }
