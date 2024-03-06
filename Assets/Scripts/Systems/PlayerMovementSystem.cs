@@ -70,22 +70,6 @@ public partial struct PlayerMovementSystem : ISystem
                     0f
                 );
             }
-                    // Check if you have Coyote or Groundbuffer
-                    if (player.JumpPressRemember > 0 && player.fGroundedRemember > 0) {
-                        Debug.Log("HOPPPPPAAAR MED COYOTE ELLER GROUNDBUFFER");
-                        player.JumpPressRemember = 0;
-                        player.JumpPressTimer = 0;
-
-                        // Adding a new Jumpforce for that state
-                           0,
-                        player.Velocity += new float3(  
-                           (player is { IsGrounded: true } //or { IsOnBeat: true }
-                               ? player is { IsFalling: true }
-                                   : player.JumpHeight * SystemAPI.Time.DeltaTime
-                                   ? -player.Velocity.y + player.JumpHeight * SystemAPI.Time.DeltaTime
-                               : 0.0f),
-                           0
-                        );
 
             // Apply impact
             {
