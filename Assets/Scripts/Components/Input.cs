@@ -46,4 +46,7 @@ public struct InputComponentData : IInputComponentData
     // Special Attack
 
     // Animation Cancle
+    
+    //
+    [GhostField] public bool RequestReset;
 }

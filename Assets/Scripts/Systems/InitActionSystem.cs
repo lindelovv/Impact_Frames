@@ -1,7 +1,6 @@
 ﻿using Unity.Collections;
 using Unity.Entities;
 using Unity.NetCode;
-using Unity.Physics;
 using UnityEngine;
 
 [UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
@@ -22,6 +21,10 @@ public partial struct InitActionSystem : ISystem
             var player 
             in SystemAPI.Query<PlayerAspect>()
         ) {
+            if (player.Input.RequestReset)
+            {
+                cmdBuffer.AddComponent<Respawn>(player.Self);
+            }
             //Debug.Log($"AnimLock: {player.IsAnimLocked}");
             if (!player.IsAnimLocked)
             {
@@ -43,8 +46,8 @@ public partial struct InitActionSystem : ISystem
                     {
                         Name = ActionName.Dash,
                         StartTime = 0,
-                        ActiveTime = 0,
-                        RecoverTime = .4f,
+                        ActiveTime = .4f,
+                        RecoverTime = .8f,
                     });
                     cmdBuffer.AddComponent<DoAction>(player.Self);
                     continue;
@@ -72,9 +75,9 @@ public partial struct InitActionSystem : ISystem
                             cmdBuffer.AddComponent(player.Self, new Action
                             {
                                 Name = ActionName.HeavyPunch,
-                                StartTime = 0,
+                                StartTime = .2f,
                                 ActiveTime = .2f,
-                                RecoverTime = .4f,
+                                RecoverTime = .2f,
                             });
                             cmdBuffer.AddComponent<DoAction>(player.Self);
                             continue;
@@ -84,9 +87,9 @@ public partial struct InitActionSystem : ISystem
                             cmdBuffer.AddComponent(player.Self, new Action
                             {
                                 Name = ActionName.Punch,
-                                StartTime = 0,
+                                StartTime = .2f,
                                 ActiveTime = .2f,
-                                RecoverTime = .4f,
+                                RecoverTime = .2f,
                             });
                             cmdBuffer.AddComponent<DoAction>(player.Self);
                             continue;
@@ -110,9 +113,9 @@ public partial struct InitActionSystem : ISystem
                             cmdBuffer.AddComponent(player.Self, new Action
                             {
                                 Name = ActionName.HeavyKick,
-                                StartTime = 0,
+                                StartTime = .2f,
                                 ActiveTime = .2f,
-                                RecoverTime = .4f,
+                                RecoverTime = .2f,
                             });
                             cmdBuffer.AddComponent<DoAction>(player.Self);
                             continue;
@@ -122,9 +125,9 @@ public partial struct InitActionSystem : ISystem
                             cmdBuffer.AddComponent(player.Self, new Action
                             {
                                 Name = ActionName.Kick,
-                                StartTime = 0,
+                                StartTime = .2f,
                                 ActiveTime = .2f,
-                                RecoverTime = .4f,
+                                RecoverTime = .2f,
                             });
                             cmdBuffer.AddComponent<DoAction>(player.Self);
                             continue;

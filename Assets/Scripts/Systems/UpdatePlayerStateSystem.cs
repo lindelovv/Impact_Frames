@@ -21,8 +21,6 @@ public partial struct UpdatePlayerStateSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        var serverTick = SystemAPI.GetSingleton<NetworkTime>().ServerTick;
-        
         foreach (
             var player
             in SystemAPI.Query<PlayerAspect>()

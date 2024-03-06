@@ -4,7 +4,6 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Physics;
-using UnityEngine;
 
 [BurstCompile]
 [UpdateAfter(typeof(ActionTimerSystem))]
@@ -26,198 +25,79 @@ public partial struct PerformActionSystem : ISystem
             in SystemAPI.Query<PlayerAspect, Action>()
                 .WithAll<DoAction>()
         ) {
-            if (action.State == ActionState.Finished )
+            switch (action.State)
             {
-                player.IsAnimLocked = false;
-                cmdBuffer.RemoveComponent<DoAction>(player.Self);
-                continue;
-            } 
-            var collisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
-            switch (action.Name)
-            {
-                //______________________________________________________________________________________________________
-                case ActionName.Jump:
+                case ActionState.Startup:
                 {
-                    switch (action.State)
-                    {
-                        //________________________
-                        case ActionState.Startup:
-                        {
-                            player.IsAnimLocked = true;
-                            break;
-                        }
-                        //________________________
-                        case ActionState.Active:
-                        {
-                             player.Velocity += new float3(
-                                 0,
-                                 (player is { IsGrounded: true } //or { IsOnBeat: true }
-                                     ? player.JumpHeight
-                                     : 0.0f),
-                                 0
-                             );
-                             cmdBuffer.RemoveComponent<DoAction>(player.Self);
-                             break;
-                        }
-                        //________________________
-                        case ActionState.Recovery:
-                        {
-                            break;
-                        }
-                    }
-                    break;
+                    player.IsAnimLocked = true;
+                    cmdBuffer.RemoveComponent<DoAction>(player.Self);
+                    continue;
                 }
-                //______________________________________________________________________________________________________
-                case ActionName.Dash:
+                case ActionState.Finished:
                 {
-                    switch (action.State)
+                    player.IsAnimLocked = false;
+                    cmdBuffer.RemoveComponent<DoAction>(player.Self);
+                    continue;
+                }
+                case ActionState.Active:
+                {
+                    var collisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
+                    switch (action.Name)
                     {
-                        //________________________
-                        case ActionState.Startup:
+                        //______________________________________________________________________________________________
+                        case ActionName.Jump:
                         {
-                            player.IsAnimLocked = true;
+                            player.Velocity += new float3(
+                                0,
+                                (player is { IsGrounded: true } //or { IsOnBeat: true } // find what causes this to play
+                                    ? player.JumpHeight                                 // multiple times with IsOnBeat
+                                    : 0.0f),
+                                0
+                            );
+                            cmdBuffer.RemoveComponent<DoAction>(player.Self);
                             break;
                         }
-                        //________________________
-                        case ActionState.Active:
+                        //______________________________________________________________________________________________
+                        case ActionName.Dash:
                         {
                             player.Velocity = new float3(player.IsFacingRight ? 20f : -20f, player.Velocity.y, 0);
                             break;
                         }
-                        //________________________
-                        case ActionState.Recovery:
+                        //______________________________________________________________________________________________
+                        case ActionName.Punch:
                         {
+                            PlayerFighting.Punch(player, cmdBuffer, ref state, ref collisionWorld);
                             break;
                         }
-                    }
-                    break;
-                }
-                //______________________________________________________________________________________________________
-                case ActionName.Punch:
-                {
-                    switch (action.State)
-                    {
-                        //________________________
-                        case ActionState.Startup:
+                        //______________________________________________________________________________________________
+                        case ActionName.HeavyPunch:
                         {
-                            player.IsAnimLocked = true;
+                            PlayerFighting.PunchHeavy(player, cmdBuffer, ref state, ref collisionWorld);
                             break;
                         }
-                        //________________________
-                        case ActionState.Active:
+                        //______________________________________________________________________________________________
+                        case ActionName.Kick:
                         {
-                            //PlayerFighting.Punch(player, cmdBuffer, ref state, ref collisionWorld);
-                            break;
-                        }
-                        //________________________
-                        case ActionState.Recovery:
-                        {
-                            break;
-                        }
-                    }
-                    break;
-                }
-                //______________________________________________________________________________________________________
-                case ActionName.HeavyPunch:
-                {
-                    switch (action.State)
-                    {
-                        //________________________
-                        case ActionState.Startup:
-                        {
-                            player.IsAnimLocked = true;
-                            break;
-                        }
-                        //________________________
-                        case ActionState.Active:
-                        { 
-                            //PlayerFighting.PunchHeavy(player, cmdBuffer, ref state, ref collisionWorld);
-                            break;
-                        }
-                        //________________________
-                        case ActionState.Recovery:
-                        {
-                            break;
-                        }
-                    }
-                    break;
-                }
-                //______________________________________________________________________________________________________
-                case ActionName.Kick:
-                {
-                    switch (action.State)
-                    {
-                        //________________________
-                        case ActionState.Startup:
-                        {
-                            player.IsAnimLocked = true;
-                            break;
-                        }
-                        //________________________
-                        case ActionState.Active:
-                        { 
                             PlayerFighting.Kick(player, cmdBuffer, ref state, ref collisionWorld);
                             break;
                         }
-                        //________________________
-                        case ActionState.Recovery:
+                        //______________________________________________________________________________________________
+                        case ActionName.HeavyKick:
                         {
-                            break;
-                        }
-                    }
-                    break;
-                }
-                //______________________________________________________________________________________________________
-                case ActionName.HeavyKick:
-                {
-                    switch (action.State)
-                    {
-                        //________________________
-                        case ActionState.Startup:
-                        {
-                            player.IsAnimLocked = true;
-                            break;
-                        }
-                        //________________________
-                        case ActionState.Active:
-                        { 
                             PlayerFighting.KickHeavy(player, cmdBuffer, ref state, ref collisionWorld);
                             break;
                         }
-                        //________________________
-                        case ActionState.Recovery:
+                        //______________________________________________________________________________________________
+                        case ActionName.Parry:
                         {
+                            // TODO
                             break;
                         }
                     }
-                    break;
-                }
-                //______________________________________________________________________________________________________
-                case ActionName.Parry:
-                {
-                    switch (action.State)
-                    {
-                        //________________________
-                        case ActionState.Startup:
-                        {
-                            player.IsAnimLocked = true;
-                            break;
-                        }
-                        //________________________
-                        case ActionState.Active:
-                        {
-                            break;
-                        }
-                        //________________________
-                        case ActionState.Recovery:
-                        {
-                            break;
-                        }
-                    }
+                    cmdBuffer.RemoveComponent<DoAction>(player.Self);
                     break;
                 }
             }
-            cmdBuffer.RemoveComponent<DoAction>(player.Self);
         }
         cmdBuffer.Playback(state.EntityManager);
         cmdBuffer.Dispose();

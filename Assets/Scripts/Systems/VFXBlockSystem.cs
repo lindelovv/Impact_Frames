@@ -1,5 +1,6 @@
 ﻿using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Transforms;
 using UnityEngine;
@@ -52,7 +53,11 @@ public partial struct VFXBlockSystem : ISystem
             var (reference, playerState, transform)
             in SystemAPI.Query<VFXBlockReferenceData, PlayerStateComponent, LocalTransform>()
         ) {
-            reference.VFX.transform.position = transform.Position;
+            reference.VFX.transform.position = new float3(
+                transform.Position.x,
+                transform.Position.y + 1,
+                transform.Position.z
+            );
             
             if (playerState.IsBlocking /*&& !reference.VFX.HasAnySystemAwake()*/)
             {
