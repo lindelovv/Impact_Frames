@@ -27,7 +27,21 @@ public class Player : MonoBehaviour
     
     [Tooltip("[float] How high the player can jump.")]
     public float JumpHeight;
-    
+
+    // Philips variabler
+
+    [Tooltip("[float] Jump Remember")]
+    public float JumpPressRemember;
+
+    [Tooltip("[float] Delta time sience last klicked set to 0.2f")]
+    public float JumpPressTimer = 0.2f;
+
+    [Tooltip("[float] Ground Remember")]
+    public float GroundedRemember;
+
+    [Tooltip("[float] Delta time sience last grounded set to 0.25f")]
+    public float GroundedRememberTime = 0.25f;
+
     //_______________________________________________________________
     [Header("Physics")] 
     
@@ -104,6 +118,11 @@ public class Player : MonoBehaviour
                 hkStartTime   = authoring.HeavyKickTime.x,
                 hkActiveTime  = authoring.HeavyKickTime.y,
                 hkRecoverTime = authoring.HeavyKickTime.z,
+                JumpPressRemember = authoring.JumpPressRemember,
+                JumpPressTimer = authoring.JumpPressTimer,
+                fGroundedRemember = authoring.GroundedRemember,
+                fGroundedRememberTime = authoring.GroundedRememberTime,
+
             });
             
             // Health component is it's own component in case of reuse,
@@ -184,6 +203,12 @@ public struct PlayerData : IComponentData
     public float hkActiveTime;
     public float hkRecoverTime;
 
+    
+    public float JumpPressRemember;
+    public float JumpPressTimer;
+    public float fGroundedRemember;
+    public float fGroundedRememberTime;
+
 }
 
 public readonly partial struct PlayerAspect : IAspect
@@ -234,4 +259,13 @@ public readonly partial struct PlayerAspect : IAspect
     public int HitCounter           { get => _state.ValueRO.HitCounter;    set => _state.ValueRW.HitCounter = value;    }
     public float HitTime            { get => _state.ValueRO.HitTime;       set => _state.ValueRW.HitTime = value;       }
     public float MaxComboDelay      { get => _data.ValueRO.MaxComboDelay;  set => _data.ValueRW.MaxComboDelay = value;  }
+   
+    public float JumpPressRemember { get => _data.ValueRO.JumpPressRemember; set => _data.ValueRW.JumpPressRemember = value; }
+
+    public float JumpPressTimer { get => _data.ValueRO.JumpPressTimer; set => _data.ValueRW.JumpPressTimer = value; }
+
+    public float fGroundedRemember { get => _data.ValueRO.fGroundedRemember; set => _data.ValueRW.fGroundedRemember = value; }
+
+    public float fGroundedRememberTime { get => _data.ValueRO.fGroundedRememberTime; set => _data.ValueRW.fGroundedRememberTime = value; }
+
 }

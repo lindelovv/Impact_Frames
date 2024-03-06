@@ -30,8 +30,9 @@ public partial class InputSystem : SystemBase
     protected override void OnUpdate()
     {
         foreach (
-            var inputData
-            in SystemAPI.Query<RefRW<InputComponentData>>()
+            var (inputData, player)
+
+            in SystemAPI.Query<RefRW<InputComponentData>, RefRW<PlayerData>>()
                 .WithAll<GhostOwnerIsLocal>()
         ) {
             inputData.ValueRW.RequestedMovement = _inputActions.Combat.Move.ReadValue<Vector2>();
@@ -42,6 +43,11 @@ public partial class InputSystem : SystemBase
             IsButtonHeld(_inputActions.Combat.Kick,       ref inputData.ValueRW.RequestKick );
             IsButtonHeld(_inputActions.Combat.Dash,       ref inputData.ValueRW.RequestDash );
             IsButtonHeld(_inputActions.Combat.BlockParry, ref inputData.ValueRW.RequestBlock);
+            
+            if(_inputActions.Combat.Jump.WasPressedThisFrame() ) {
+                // Setting coyote timeer and remember last time you were grounded
+               // player.ValueRW.JumpPressRemember = player.ValueRW.JumpPressTimer;  
+            }
             
             inputData.ValueRW.RequestParry = _inputActions.Combat.BlockParry.WasPressedThisFrame();
         }

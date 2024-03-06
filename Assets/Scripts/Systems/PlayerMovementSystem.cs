@@ -27,6 +27,7 @@ public partial struct PlayerMovementSystem : ISystem
     }
 
     [BurstCompile]
+    
     public void OnUpdate(ref SystemState state)
     {
         var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
