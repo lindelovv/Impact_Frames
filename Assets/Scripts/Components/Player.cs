@@ -50,6 +50,16 @@ public class Player : MonoBehaviour
     public float MaxComboDelay;
     
     //_______________________________________________________________
+    [Header("Actions\t\t\t\tX = Startup    Y = Active       Z = Recover")] 
+    
+    public float3 JumpTime;
+    public float3 DashTime;
+    public float3 PunchTime;
+    public float3 HeavyPunchTime;
+    public float3 KickTime;
+    public float3 HeavyKickTime;
+    
+    //_______________________________________________________________
     [Header("Misc")] 
     
     [Tooltip("[bool] Disables movement and impulses.")]
@@ -58,7 +68,7 @@ public class Player : MonoBehaviour
     //_______________________________________________________________
     public class Baker : Baker<Player>
     {
-        public unsafe override void Bake(Player authoring)
+        public override void Bake(Player authoring)
         {
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
             
@@ -70,6 +80,30 @@ public class Player : MonoBehaviour
                 MaxComboDelay = authoring.MaxComboDelay,
                 OverrideGravity = authoring.OverrideGravity,
                 CustomGravity = authoring.Gravity,
+                // Jump time
+                jStartTime    = authoring.JumpTime.x,
+                jActiveTime   = authoring.JumpTime.y,
+                jRecoverTime  = authoring.JumpTime.z,
+                // Dash time
+                dStartTime    = authoring.DashTime.x,
+                dActiveTime   = authoring.DashTime.y,
+                dRecoverTime  = authoring.DashTime.z,
+                // Punch time
+                pStartTime    = authoring.PunchTime.x,
+                pActiveTime   = authoring.PunchTime.y,
+                pRecoverTime  = authoring.PunchTime.z,
+                // Heavy Punch time
+                hpStartTime   = authoring.HeavyPunchTime.x,
+                hpActiveTime  = authoring.HeavyPunchTime.y,
+                hpRecoverTime = authoring.HeavyPunchTime.z,
+                // Jump time
+                kStartTime    = authoring.KickTime.x,
+                kActiveTime   = authoring.KickTime.y,
+                kRecoverTime  = authoring.KickTime.z,
+                // Jump time
+                hkStartTime   = authoring.HeavyKickTime.x,
+                hkActiveTime  = authoring.HeavyKickTime.y,
+                hkRecoverTime = authoring.HeavyKickTime.z,
             });
             
             // Health component is it's own component in case of reuse,
@@ -123,8 +157,6 @@ public struct PlayerData : IComponentData
     public float2 PunchPushback;
     public float MaxComboDelay;
     [GhostField] public bool IsDummy;
-    [GhostField] public bool OverrideGravity;
-    [GhostField] public float CustomGravity;
 }
 
 public readonly partial struct PlayerAspect : IAspect
@@ -146,6 +178,7 @@ public readonly partial struct PlayerAspect : IAspect
     // Shorthand names for the component data variables (use these for access)
     public PlayerData Data          { get => _data.ValueRO;                set => _data.ValueRW = value;                }
     public bool IsDummy             { get => _data.ValueRO.IsDummy;        set => _data.ValueRW.IsDummy = value;        }
+    public PlayerData Data          { get => _data.ValueRO;                set => _data.ValueRW = value;                }
     public float3 Position          { get => _transform.ValueRO.Position;  set => _transform.ValueRW.Position = value;  }
     public quaternion Rotation      { get => _transform.ValueRO.Rotation;  set => _transform.ValueRW.Rotation = value;  }
     public PhysicsCollider Collider { get => _collider.ValueRO;            set => _collider.ValueRW = value;            }

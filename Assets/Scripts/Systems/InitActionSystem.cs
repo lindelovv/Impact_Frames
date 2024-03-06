@@ -33,9 +33,9 @@ public partial struct InitActionSystem : ISystem
                     cmdBuffer.AddComponent(player.Self, new Action
                     {
                         Name = ActionName.Jump,
-                        StartTime = 0,
-                        ActiveTime = 0,
-                        RecoverTime = .2f,
+                        StartTime   = player.Data.jStartTime,
+                        ActiveTime  = player.Data.jActiveTime,
+                        RecoverTime = player.Data.jRecoverTime,
                     });
                     cmdBuffer.AddComponent<DoAction>(player.Self);
                     continue;
@@ -45,9 +45,9 @@ public partial struct InitActionSystem : ISystem
                     cmdBuffer.AddComponent(player.Self, new Action
                     {
                         Name = ActionName.Dash,
-                        StartTime = 0,
-                        ActiveTime = .4f,
-                        RecoverTime = .8f,
+                        StartTime   = player.Data.dStartTime,
+                        ActiveTime  = player.Data.dActiveTime,
+                        RecoverTime = player.Data.dRecoverTime,
                     });
                     cmdBuffer.AddComponent<DoAction>(player.Self);
                     continue;
@@ -75,9 +75,9 @@ public partial struct InitActionSystem : ISystem
                             cmdBuffer.AddComponent(player.Self, new Action
                             {
                                 Name = ActionName.HeavyPunch,
-                                StartTime = .2f,
-                                ActiveTime = .2f,
-                                RecoverTime = .2f,
+                                StartTime   = player.Data.hpStartTime,
+                                ActiveTime  = player.Data.hpActiveTime,
+                                RecoverTime = player.Data.hpRecoverTime,
                             });
                             cmdBuffer.AddComponent<DoAction>(player.Self);
                             continue;
@@ -87,9 +87,9 @@ public partial struct InitActionSystem : ISystem
                             cmdBuffer.AddComponent(player.Self, new Action
                             {
                                 Name = ActionName.Punch,
-                                StartTime = .2f,
-                                ActiveTime = .2f,
-                                RecoverTime = .2f,
+                                StartTime   = player.Data.pStartTime,
+                                ActiveTime  = player.Data.pActiveTime,
+                                RecoverTime = player.Data.pRecoverTime,
                             });
                             cmdBuffer.AddComponent<DoAction>(player.Self);
                             continue;
@@ -113,9 +113,9 @@ public partial struct InitActionSystem : ISystem
                             cmdBuffer.AddComponent(player.Self, new Action
                             {
                                 Name = ActionName.HeavyKick,
-                                StartTime = .2f,
-                                ActiveTime = .2f,
-                                RecoverTime = .2f,
+                                StartTime   = player.Data.hkStartTime,
+                                ActiveTime  = player.Data.hkActiveTime,
+                                RecoverTime = player.Data.hkRecoverTime,
                             });
                             cmdBuffer.AddComponent<DoAction>(player.Self);
                             continue;
@@ -125,9 +125,9 @@ public partial struct InitActionSystem : ISystem
                             cmdBuffer.AddComponent(player.Self, new Action
                             {
                                 Name = ActionName.Kick,
-                                StartTime = .2f,
-                                ActiveTime = .2f,
-                                RecoverTime = .2f,
+                                StartTime   = player.Data.kStartTime,
+                                ActiveTime  = player.Data.kActiveTime,
+                                RecoverTime = player.Data.kRecoverTime,
                             });
                             cmdBuffer.AddComponent<DoAction>(player.Self);
                             continue;

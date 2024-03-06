@@ -212,6 +212,30 @@ MonoBehaviour:
     x: 5
     y: 1
   MaxComboDelay: 2
+  JumpTime:
+    x: 0
+    y: 0
+    z: 0.2
+  DashTime:
+    x: 0
+    y: 0.4
+    z: 0.8
+  PunchTime:
+    x: 0.2
+    y: 0.2
+    z: 0.2
+  HeavyPunchTime:
+    x: 0.2
+    y: 0.2
+    z: 0.2
+  KickTime:
+    x: 0.2
+    y: 0.2
+    z: 0.2
+  HeavyKickTime:
+    x: 0.2
+    y: 0.2
+    z: 0.2
   IsDummy: 0
 --- !u!114 &6524130790032669571
 MonoBehaviour:
