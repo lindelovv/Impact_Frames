@@ -35,7 +35,6 @@ public partial class InputSystem : SystemBase
                 .WithAll<GhostOwnerIsLocal>()
         ) {
             inputData.ValueRW.RequestedMovement = _inputActions.Combat.Move.ReadValue<Vector2>();
-
             
             IsButtonHeld(_inputActions.Combat.Jump,       ref inputData.ValueRW.RequestJump);
             IsButtonHeld(_inputActions.Combat.Punch,      ref inputData.ValueRW.RequestPunch);
@@ -44,7 +43,6 @@ public partial class InputSystem : SystemBase
             IsButtonHeld(_inputActions.Combat.BlockParry, ref inputData.ValueRW.RequestBlock);
             
             inputData.ValueRW.RequestParry = _inputActions.Combat.BlockParry.WasPressedThisFrame();
-            Debug.Log($"Jump: {inputData.ValueRO.RequestJump}");
         }
     }
 

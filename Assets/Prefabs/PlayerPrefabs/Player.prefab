@@ -200,7 +200,7 @@ MonoBehaviour:
   MaxHealth: 10
   Speed: 30
   MaxSpeed: 60
-  JumpHeight: 20
+  JumpHeight: 8
   Damping: 2
   StartingVelocity:
     x: 0

@@ -2,11 +2,13 @@
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.NetCode;
 using Unity.Physics;
 using UnityEngine;
 
 [BurstCompile]
 [UpdateAfter(typeof(ActionTimerSystem))]
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
 public partial struct PerformActionSystem : ISystem
 {
     [BurstCompile]
@@ -24,7 +26,6 @@ public partial struct PerformActionSystem : ISystem
             in SystemAPI.Query<PlayerAspect, Action>()
                 .WithAll<DoAction>()
         ) {
-            Debug.Log($"Action: {action.Name}, State: {action.State}");
             if (action.State == ActionState.Finished )
             {
                 player.IsAnimLocked = false;
@@ -48,17 +49,15 @@ public partial struct PerformActionSystem : ISystem
                         //________________________
                         case ActionState.Active:
                         {
-                             player.Velocity = new float3(
-                                 player.Velocity.x,
+                             player.Velocity += new float3(
+                                 0,
                                  (player is { IsGrounded: true } //or { IsOnBeat: true }
-                                     ? player is { IsFalling: true }
-                                         ? -player.Velocity.y + player.JumpHeight
-                                         : player.JumpHeight
+                                     ? player.JumpHeight
                                      : 0.0f),
                                  0
                              );
-                             Debug.Log($"{player.Velocity}");
-                            break;
+                             cmdBuffer.RemoveComponent<DoAction>(player.Self);
+                             break;
                         }
                         //________________________
                         case ActionState.Recovery:
@@ -107,7 +106,7 @@ public partial struct PerformActionSystem : ISystem
                         //________________________
                         case ActionState.Active:
                         {
-                            PlayerFighting.Punch(player, cmdBuffer, ref state, ref collisionWorld);
+                            //PlayerFighting.Punch(player, cmdBuffer, ref state, ref collisionWorld);
                             break;
                         }
                         //________________________
@@ -132,7 +131,7 @@ public partial struct PerformActionSystem : ISystem
                         //________________________
                         case ActionState.Active:
                         { 
-                            PlayerFighting.PunchHeavy(player, cmdBuffer, ref state, ref collisionWorld);
+                            //PlayerFighting.PunchHeavy(player, cmdBuffer, ref state, ref collisionWorld);
                             break;
                         }
                         //________________________
@@ -222,31 +221,5 @@ public partial struct PerformActionSystem : ISystem
         }
         cmdBuffer.Playback(state.EntityManager);
         cmdBuffer.Dispose();
-    }
-    
-    [BurstCompile]
-    private unsafe (ColliderCastHit,bool) CastCollider(PlayerAspect player, int forward)
-    {
-        ColliderCastHit hit = new ColliderCastHit();
-        bool hasHit = SystemAPI.GetSingleton<PhysicsWorldSingleton>()
-            .CollisionWorld.CastCollider(new ColliderCastInput
-            {
-                Collider = (Unity.Physics.Collider*) Unity.Physics.BoxCollider.Create(new BoxGeometry
-                {
-                    BevelRadius = 0f,
-                    Center = float3.zero,
-                    Orientation = quaternion.identity,
-                    Size = new float3(1, 1, 1)
-                }, filter: new CollisionFilter
-                {
-                    BelongsTo = ~0u,
-                    CollidesWith = ~0u,
-                    GroupIndex = 0,
-                }).GetUnsafePtr(),
-                Start = player.Position + (forward * new float3(0.9f, 0, 0)),
-                End = player.Position + (forward * new float3(1, 0, 0)),
-            },
-            out hit);
-        return (hit, hasHit);
     }
 }

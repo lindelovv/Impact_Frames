@@ -1,7 +1,9 @@
 ﻿using Unity.Collections;
 using Unity.Entities;
+using Unity.NetCode;
 using UnityEngine;
 
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
 public partial struct ActionTimerSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
@@ -15,7 +17,9 @@ public partial struct ActionTimerSystem : ISystem
         foreach (
             var (action, entity)
             in SystemAPI.Query<RefRW<Action>>().WithEntityAccess()
-        ) {
+        )
+        {
+            //Debug.Log($"Action: {action.ValueRO.Name}, State: {action.ValueRO.State}");
             switch (action.ValueRO.State)
             { 
                 //_________________________

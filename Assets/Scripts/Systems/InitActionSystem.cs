@@ -4,6 +4,7 @@ using Unity.NetCode;
 using Unity.Physics;
 using UnityEngine;
 
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
 public partial struct InitActionSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
@@ -26,7 +27,6 @@ public partial struct InitActionSystem : ISystem
             {
                 if (player.Input.RequestJump)
                 {
-                    Debug.Log("jump");
                     cmdBuffer.AddComponent(player.Self, new Action
                     {
                         Name = ActionName.Jump,
@@ -133,5 +133,7 @@ public partial struct InitActionSystem : ISystem
                 }
             }
         }
+        cmdBuffer.Playback(state.EntityManager);
+        cmdBuffer.Dispose();
     }
 }

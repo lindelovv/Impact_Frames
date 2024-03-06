@@ -11,57 +11,57 @@ using Collider = Unity.Physics.Collider;
 [BurstCompile]
 public struct PlayerFighting
 {
-    [BurstCompile]
-    public static void Punch(PlayerAspect player, EntityCommandBuffer cmdBuffer, ref SystemState state, ref CollisionWorld collisionWorld)
-    {
-        var forward = player.IsFacingRight ? 1 : -1;
+    //[BurstCompile]
+    //public static void Punch(PlayerAspect player, EntityCommandBuffer cmdBuffer, ref SystemState state, ref CollisionWorld collisionWorld)
+    //{
+    //    var forward = player.IsFacingRight ? 1 : -1;
 
-        //Debug Draws Cross for Hitboxes
-        Debug.DrawLine(player.Position + (forward * new float3(0.9f, 0, 0)), player.Position + (forward * new float3(1, 0, 0)), Color.magenta, 1);
-        Debug.DrawLine(player.Position + (forward * new float3(0.95f, 0.05f, 0)), player.Position + (forward * new float3(0.95f, -0.05f, 0)), Color.magenta, 1);
+    //    //Debug Draws Cross for Hitboxes
+    //    Debug.DrawLine(player.Position + (forward * new float3(0.9f, 0, 0)), player.Position + (forward * new float3(1, 0, 0)), Color.magenta, 1);
+    //    Debug.DrawLine(player.Position + (forward * new float3(0.95f, 0.05f, 0)), player.Position + (forward * new float3(0.95f, -0.05f, 0)), Color.magenta, 1);
 
-        var (hit, hasHit) = CastCollider(player, forward, collisionWorld);
+    //    var (entity, hasHit) = CastCollider(player, forward, collisionWorld);
 
-        // Check Health and Appyl Damage
-        var entityManager = state.EntityManager;
-        if (   hasHit 
-            && hit.Entity != player.Self 
-            && entityManager.HasComponent<HealthComponent>(hit.Entity)
-        ) {
-            cmdBuffer.AddComponent<TakeDamage>(hit.Entity);
-            
-            cmdBuffer.AddComponent(hit.Entity, new ApplyImpact {
-                Amount = new float2(forward * player.PunchPushback),
-            });
-        }
-    }
-    
-    [BurstCompile]
-    public static void PunchHeavy(PlayerAspect player, EntityCommandBuffer cmdBuffer, ref SystemState state, ref CollisionWorld collisionWorld)
-    {
-        var forward = player.IsFacingRight ? 1 : -1;
+    //    // Check Health and Appyl Damage
+    //    var entityManager = state.EntityManager;
+    //    if (   hasHit 
+    //        && entity != player.Self 
+    //        && entityManager.HasComponent<HealthComponent>(entity)
+    //    ) {
+    //        cmdBuffer.AddComponent<TakeDamage>(entity);
+    //        
+    //        cmdBuffer.AddComponent(entity, new ApplyImpact {
+    //            Amount = new float2(forward * player.PunchPushback),
+    //        });
+    //    }
+    //}
+    //
+    //[BurstCompile]
+    //public static void PunchHeavy(PlayerAspect player, EntityCommandBuffer cmdBuffer, ref SystemState state, ref CollisionWorld collisionWorld)
+    //{
+    //    var forward = player.IsFacingRight ? 1 : -1;
 
-        //Debug Draws Cross for Hitboxes
-        Debug.DrawLine(player.Position + (forward * new float3(0.9f, 0, 0)), player.Position + (forward * new float3(1, 0, 0)), Color.magenta, 1);
-        Debug.DrawLine(player.Position + (forward * new float3(0.95f, 0.05f, 0)), player.Position + (forward * new float3(0.95f, -0.05f, 0)), Color.magenta, 1);
+    //    //Debug Draws Cross for Hitboxes
+    //    Debug.DrawLine(player.Position + (forward * new float3(0.9f, 0, 0)), player.Position + (forward * new float3(1, 0, 0)), Color.magenta, 1);
+    //    Debug.DrawLine(player.Position + (forward * new float3(0.95f, 0.05f, 0)), player.Position + (forward * new float3(0.95f, -0.05f, 0)), Color.magenta, 1);
 
-        var (hit, hasHit) = CastCollider(player, forward, collisionWorld);
+    //    var (entity, hasHit) = CastCollider(player, forward, collisionWorld);
 
-        // Check Health and Appyl Damage
-        var entityManager = state.EntityManager;
-        if (hasHit
-            && hit.Entity != player.Self
-            && entityManager.HasComponent<HealthComponent>(hit.Entity)
-        )
-        {
-            cmdBuffer.AddComponent<TakeDamage>(hit.Entity);
+    //    // Check Health and Appyl Damage
+    //    var entityManager = state.EntityManager;
+    //    if (hasHit
+    //        && entity != player.Self
+    //        && entityManager.HasComponent<HealthComponent>(entity)
+    //    )
+    //    {
+    //        cmdBuffer.AddComponent<TakeDamage>(entity);
 
-            cmdBuffer.AddComponent(hit.Entity, new ApplyImpact
-            {
-                Amount = new float2((forward * player.PunchPushback) * 2),
-            });
-        }
-    }
+    //        cmdBuffer.AddComponent(entity, new ApplyImpact
+    //        {
+    //            Amount = new float2((forward * player.PunchPushback) * 2),
+    //        });
+    //    }
+    //}
 
     [BurstCompile]
     public static void Kick(PlayerAspect player, EntityCommandBuffer cmdBuffer, ref SystemState state, ref CollisionWorld collisionWorld)
@@ -72,17 +72,19 @@ public struct PlayerFighting
         Debug.DrawLine(player.Position + (forward * new float3(0.9f, 0, 0)), player.Position + (forward * new float3(1, 0, 0)), Color.magenta, 1);
         Debug.DrawLine(player.Position + (forward * new float3(0.95f, 0.05f, 0)), player.Position + (forward * new float3(0.95f, -0.05f, 0)), Color.magenta, 1);
 
-        var (hit, hasHit) = CastCollider(player, forward, collisionWorld);
+        bool hasHit;
+        Entity entity;
+        CastCollider(player, forward, collisionWorld, out entity, out hasHit);
 
         // Check Health and Appyl Damage
         var entityManager = state.EntityManager;
         if (   hasHit 
-            && hit.Entity != player.Self 
-            && entityManager.HasComponent<HealthComponent>(hit.Entity)
+            && entity != player.Self 
+            && entityManager.HasComponent<HealthComponent>(entity)
         ) {
-            cmdBuffer.AddComponent<TakeDamage>(hit.Entity);
+            cmdBuffer.AddComponent<TakeDamage>(entity);
             
-            cmdBuffer.AddComponent(hit.Entity, new ApplyImpact {
+            cmdBuffer.AddComponent(entity, new ApplyImpact {
                 Amount = new float2(forward * player.PunchPushback),
             });
         }
@@ -97,27 +99,29 @@ public struct PlayerFighting
         Debug.DrawLine(player.Position + (forward * new float3(0.9f, 0, 0)), player.Position + (forward * new float3(1, 0, 0)), Color.magenta, 1);
         Debug.DrawLine(player.Position + (forward * new float3(0.95f, 0.05f, 0)), player.Position + (forward * new float3(0.95f, -0.05f, 0)), Color.magenta, 1);
 
-        var (hit, hasHit) = CastCollider(player, forward, collisionWorld);
+        bool hasHit;
+        Entity entity;
+        CastCollider(player, forward, collisionWorld, out entity, out hasHit);
 
         // Check Health and Appyl Damage
         var entityManager = state.EntityManager;
         if (   hasHit 
-            && hit.Entity != player.Self 
-            && entityManager.HasComponent<HealthComponent>(hit.Entity)
+            && entity != player.Self 
+            && entityManager.HasComponent<HealthComponent>(entity)
         ) {
-            cmdBuffer.AddComponent<TakeDamage>(hit.Entity);
+            cmdBuffer.AddComponent<TakeDamage>(entity);
             
-            cmdBuffer.AddComponent(hit.Entity, new ApplyImpact {
+            cmdBuffer.AddComponent(entity, new ApplyImpact {
                 Amount = new float2(forward * player.PunchPushback),
             });
         }
     }
     
     [BurstCompile]
-    private static unsafe (ColliderCastHit,bool) CastCollider(PlayerAspect player, int forward, CollisionWorld collisionWorld)
+    private static unsafe void CastCollider(PlayerAspect player, int forward, CollisionWorld collisionWorld, out Entity entity, out bool hasHit)
     {
         ColliderCastHit hit = new ColliderCastHit();
-        bool hasHit = collisionWorld.CastCollider(new ColliderCastInput
+        hasHit = collisionWorld.CastCollider(new ColliderCastInput
             {
                 Collider = (Collider*)BoxCollider.Create(new BoxGeometry
                 {
@@ -135,7 +139,7 @@ public struct PlayerFighting
                 End = player.Position + (forward * new float3(1, 0, 0)),
             },
             out hit);
-        return (hit, hasHit);
+        entity = hit.Entity;
     }
 
     [BurstCompile]
