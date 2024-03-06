@@ -3,7 +3,7 @@ using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
 
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
+[UpdateAfter(typeof(UpdatePlayerStateSystem))]
 public partial struct ActionTimerSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
@@ -30,6 +30,7 @@ public partial struct ActionTimerSystem : ISystem
                         action.ValueRW.State++;
                         cmdBuffer.AddComponent<DoAction>(entity);
                     }
+                    
                     break;
                 }
                 //_________________________
@@ -40,6 +41,7 @@ public partial struct ActionTimerSystem : ISystem
                         action.ValueRW.State++;
                         cmdBuffer.AddComponent<DoAction>(entity);
                     }
+                    
                     break;
                 }
                 //_________________________
@@ -50,6 +52,7 @@ public partial struct ActionTimerSystem : ISystem
                         action.ValueRW.State++;
                         cmdBuffer.AddComponent<DoAction>(entity);
                     }
+                    
                     break;
                 }
                 //_________________________

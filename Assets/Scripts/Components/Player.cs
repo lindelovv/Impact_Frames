@@ -30,17 +30,8 @@ public class Player : MonoBehaviour
 
     // Philips variabler
 
-    [Tooltip("[float] Jump Remember")]
-    public float JumpPressRemember;
-
-    [Tooltip("[float] Delta time sience last klicked set to 0.2f")]
-    public float JumpPressTimer = 0.2f;
-
-    [Tooltip("[float] Ground Remember")]
-    public float GroundedRemember;
-
     [Tooltip("[float] Delta time sience last grounded set to 0.25f")]
-    public float GroundedRememberTime = 0.25f;
+    public float CayoteTime = 0.25f;
 
     //_______________________________________________________________
     [Header("Physics")] 
@@ -94,6 +85,7 @@ public class Player : MonoBehaviour
                 MaxComboDelay = authoring.MaxComboDelay,
                 OverrideGravity = authoring.OverrideGravity,
                 CustomGravity = authoring.Gravity,
+                CayoteTime    = authoring.CayoteTime,
                 // Jump time
                 jStartTime    = authoring.JumpTime.x,
                 jActiveTime   = authoring.JumpTime.y,
@@ -118,11 +110,6 @@ public class Player : MonoBehaviour
                 hkStartTime   = authoring.HeavyKickTime.x,
                 hkActiveTime  = authoring.HeavyKickTime.y,
                 hkRecoverTime = authoring.HeavyKickTime.z,
-                JumpPressRemember = authoring.JumpPressRemember,
-                JumpPressTimer = authoring.JumpPressTimer,
-                fGroundedRemember = authoring.GroundedRemember,
-                fGroundedRememberTime = authoring.GroundedRememberTime,
-
             });
             
             // Health component is it's own component in case of reuse,
@@ -168,47 +155,44 @@ public class Player : MonoBehaviour
 }
 
 // Player-unique data
+[GhostComponent(PrefabType = GhostPrefabType.AllPredicted)]
 public struct PlayerData : IComponentData
 {
     [GhostField] public float MovementSpeed;
     [GhostField] public float MaxSpeed;
     [GhostField] public float JumpHeight;
-    public float2 PunchPushback;
-    public float MaxComboDelay;
+    [GhostField] public float2 PunchPushback;
+    [GhostField] public float MaxComboDelay;
     [GhostField] public bool IsDummy;
     [GhostField] public bool OverrideGravity;
     [GhostField] public float CustomGravity;
-    // Jump time
-    public float jStartTime;
-    public float jActiveTime;
-    public float jRecoverTime;
-    // Dash time
-    public float dStartTime;
-    public float dActiveTime;
-    public float dRecoverTime;
-    // Punch time
-    public float pStartTime;
-    public float pActiveTime;
-    public float pRecoverTime;
-    // Heavy Punch
-    public float hpStartTime;
-    public float hpActiveTime;
-    public float hpRecoverTime;
-    // Jump time
-    public float kStartTime;
-    public float kActiveTime;
-    public float kRecoverTime;
-    // Jump time
-    public float hkStartTime;
-    public float hkActiveTime;
-    public float hkRecoverTime;
-
+    [GhostField] public float CayoteTime;
+    [GhostField] public float CayoteTimer;
     
-    public float JumpPressRemember;
-    public float JumpPressTimer;
-    public float fGroundedRemember;
-    public float fGroundedRememberTime;
-
+    // Jump time
+    [GhostField] public float jStartTime;
+    [GhostField] public float jActiveTime;
+    [GhostField] public float jRecoverTime;
+    // Dash time
+    [GhostField] public float dStartTime;
+    [GhostField] public float dActiveTime;
+    [GhostField] public float dRecoverTime;
+    // Punch time
+    [GhostField] public float pStartTime;
+    [GhostField] public float pActiveTime;
+    [GhostField] public float pRecoverTime;
+    // Heavy Punch
+    [GhostField] public float hpStartTime;
+    [GhostField] public float hpActiveTime;
+    [GhostField] public float hpRecoverTime;
+    // Jump time
+    [GhostField] public float kStartTime;
+    [GhostField] public float kActiveTime;
+    [GhostField] public float kRecoverTime;
+    // Jump time
+    [GhostField] public float hkStartTime;
+    [GhostField] public float hkActiveTime;
+    [GhostField] public float hkRecoverTime;
 }
 
 public readonly partial struct PlayerAspect : IAspect
@@ -229,20 +213,32 @@ public readonly partial struct PlayerAspect : IAspect
     
     // Shorthand names for the component data variables (use these for access)
     public PlayerData Data          { get => _data.ValueRO;                set => _data.ValueRW = value;                }
-    public bool IsDummy             { get => _data.ValueRO.IsDummy;        set => _data.ValueRW.IsDummy = value;        }
+    
+    // Transform
     public float3 Position          { get => _transform.ValueRO.Position;  set => _transform.ValueRW.Position = value;  }
     public quaternion Rotation      { get => _transform.ValueRO.Rotation;  set => _transform.ValueRW.Rotation = value;  }
+    
+    // Physics
     public PhysicsCollider Collider { get => _collider.ValueRO;            set => _collider.ValueRW = value;            }
+    
+    // Movement
     public float3 Velocity          { get => _velocity.ValueRO.Linear;     set => _velocity.ValueRW.Linear = value;     }
     public float Damping            { get => _damping.ValueRO.Linear;      set => _damping.ValueRW.Linear = value;      }
     public float GravityFactor      { get => _gravityFactor.ValueRO.Value; set => _gravityFactor.ValueRW.Value = value; }
     public float Acceleration       { get => _data.ValueRO.MovementSpeed;  set => _data.ValueRW.MovementSpeed = value;  }
     public float MaxSpeed           { get => _data.ValueRO.MaxSpeed;       set => _data.ValueRW.MaxSpeed = value;       }
     public float JumpHeight         { get => _data.ValueRO.JumpHeight;     set => _data.ValueRW.JumpHeight = value;     }
+    public float CayoteTime         { get => _data.ValueRO.CayoteTime;     set => _data.ValueRW.CayoteTime = value;     }
+    public float CayoteTimer        { get => _data.ValueRO.CayoteTimer;    set => _data.ValueRW.CayoteTimer = value;    }
+    
+    // Input
+    public InputComponentData Input { get => _input.ValueRO;               set => _input.ValueRW = value;               }
+    
+    // Health
     public float CurrentHealth      { get => _health.ValueRO.Current;      set => _health.ValueRW.Current = value;      }
     public float MaxHealth          { get => _health.ValueRO.Max;          set => _health.ValueRW.Max = value;          }
-    public float2 PunchPushback     { get => _data.ValueRO.PunchPushback;  set => _data.ValueRW.PunchPushback = value;  }
-    public InputComponentData Input { get => _input.ValueRO;               set => _input.ValueRW = value;               }
+    
+    // State variables
     public bool IsMoving            { get => _state.ValueRO.IsMoving;      set => _state.ValueRW.IsMoving = value;      }          
     public bool IsGrounded          { get => _state.ValueRO.IsGrounded;    set => _state.ValueRW.IsGrounded = value;    }
     public bool IsFacingRight       { get => _state.ValueRO.IsFacingRight; set => _state.ValueRW.IsFacingRight = value; }
@@ -256,16 +252,13 @@ public readonly partial struct PlayerAspect : IAspect
     public bool IsDashing           { get => _state.ValueRO.IsDashing;     set => _state.ValueRW.IsDashing = value;     }
     public bool IsOnBeat            { get => _state.ValueRO.IsOnBeat;      set => _state.ValueRW.IsOnBeat = value;      }
     public bool IsAnimLocked        { get => _state.ValueRO.IsAnimLocked;  set => _state.ValueRW.IsAnimLocked = value;  }
+    
+    // Fighting/Combo stats
     public int HitCounter           { get => _state.ValueRO.HitCounter;    set => _state.ValueRW.HitCounter = value;    }
     public float HitTime            { get => _state.ValueRO.HitTime;       set => _state.ValueRW.HitTime = value;       }
     public float MaxComboDelay      { get => _data.ValueRO.MaxComboDelay;  set => _data.ValueRW.MaxComboDelay = value;  }
-   
-    public float JumpPressRemember { get => _data.ValueRO.JumpPressRemember; set => _data.ValueRW.JumpPressRemember = value; }
-
-    public float JumpPressTimer { get => _data.ValueRO.JumpPressTimer; set => _data.ValueRW.JumpPressTimer = value; }
-
-    public float fGroundedRemember { get => _data.ValueRO.fGroundedRemember; set => _data.ValueRW.fGroundedRemember = value; }
-
-    public float fGroundedRememberTime { get => _data.ValueRO.fGroundedRememberTime; set => _data.ValueRW.fGroundedRememberTime = value; }
-
+    public float2 PunchPushback     { get => _data.ValueRO.PunchPushback;  set => _data.ValueRW.PunchPushback = value;  }
+    
+    // Misc
+    public bool IsDummy             { get => _data.ValueRO.IsDummy;        set => _data.ValueRW.IsDummy = value;        }
 }

@@ -26,13 +26,11 @@ public partial struct UpdatePlayerStateSystem : ISystem
             in SystemAPI.Query<PlayerAspect>()
                 .WithAll<Simulate>()
         ) {
+            player.IsBlocking = false;
             player.IsGrounded = (Physics.Raycast(
                 player.Position + new float3(0, 1, 0),
                 Vector3.down,
                 1.5f
-
-                
-
             ) || Physics.Raycast(
                 player.Position + new float3(0.6f, 1, 0),
                 Vector3.down,
@@ -43,14 +41,14 @@ public partial struct UpdatePlayerStateSystem : ISystem
                 1.5f
             ));
 
-            player.fGroundedRemember -= Time.deltaTime; // JumpBuffering 
-
+            if (player.CayoteTimer > 0)
+            {
+                player.CayoteTimer -= Time.deltaTime; // Lower jump buffer timer
+            }
             if (player.IsGrounded)
             {
-                player.IsJumping = player.Input.RequestJump;
                 player.IsFalling = false;
-                player.fGroundedRemember = player.fGroundedRememberTime;  // Set Jump Buffering 0,2f
-            
+                player.CayoteTimer = player.CayoteTime;  // Set jump time buffer to initial time
             }
             else
             {

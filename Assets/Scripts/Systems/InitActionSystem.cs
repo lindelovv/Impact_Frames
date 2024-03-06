@@ -3,7 +3,8 @@ using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
 
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
+[UpdateBefore(typeof(PerformActionSystem))]
+[UpdateAfter(typeof(ActionTimerSystem))]
 public partial struct InitActionSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
@@ -25,19 +26,21 @@ public partial struct InitActionSystem : ISystem
             {
                 cmdBuffer.AddComponent<Respawn>(player.Self);
             }
-            //Debug.Log($"AnimLock: {player.IsAnimLocked}");
             if (!player.IsAnimLocked)
             {
-                if (player.Input.RequestJump)
+                // Check if you have Coyote or Groundbuffer
+                if (player.Input.RequestJump && (player.IsGrounded || player.CayoteTimer > 0))
                 {
                     cmdBuffer.AddComponent(player.Self, new Action
                     {
                         Name = ActionName.Jump,
-                        StartTime   = player.Data.jStartTime,
-                        ActiveTime  = player.Data.jActiveTime,
+                        State = ActionState.Startup,
+                        StartTime = player.Data.jStartTime,
+                        ActiveTime = player.Data.jActiveTime,
                         RecoverTime = player.Data.jRecoverTime,
                     });
                     cmdBuffer.AddComponent<DoAction>(player.Self);
+                    player.IsJumping = true;
                     continue;
                 }
                 if (player.Input.RequestDash)
@@ -45,6 +48,7 @@ public partial struct InitActionSystem : ISystem
                     cmdBuffer.AddComponent(player.Self, new Action
                     {
                         Name = ActionName.Dash,
+                        State = ActionState.Startup,
                         StartTime   = player.Data.dStartTime,
                         ActiveTime  = player.Data.dActiveTime,
                         RecoverTime = player.Data.dRecoverTime,
@@ -75,6 +79,7 @@ public partial struct InitActionSystem : ISystem
                             cmdBuffer.AddComponent(player.Self, new Action
                             {
                                 Name = ActionName.HeavyPunch,
+                                State = ActionState.Startup,
                                 StartTime   = player.Data.hpStartTime,
                                 ActiveTime  = player.Data.hpActiveTime,
                                 RecoverTime = player.Data.hpRecoverTime,
@@ -87,6 +92,7 @@ public partial struct InitActionSystem : ISystem
                             cmdBuffer.AddComponent(player.Self, new Action
                             {
                                 Name = ActionName.Punch,
+                                State = ActionState.Startup,
                                 StartTime   = player.Data.pStartTime,
                                 ActiveTime  = player.Data.pActiveTime,
                                 RecoverTime = player.Data.pRecoverTime,
@@ -113,6 +119,7 @@ public partial struct InitActionSystem : ISystem
                             cmdBuffer.AddComponent(player.Self, new Action
                             {
                                 Name = ActionName.HeavyKick,
+                                State = ActionState.Startup,
                                 StartTime   = player.Data.hkStartTime,
                                 ActiveTime  = player.Data.hkActiveTime,
                                 RecoverTime = player.Data.hkRecoverTime,
@@ -125,6 +132,7 @@ public partial struct InitActionSystem : ISystem
                             cmdBuffer.AddComponent(player.Self, new Action
                             {
                                 Name = ActionName.Kick,
+                                State = ActionState.Startup,
                                 StartTime   = player.Data.kStartTime,
                                 ActiveTime  = player.Data.kActiveTime,
                                 RecoverTime = player.Data.kRecoverTime,

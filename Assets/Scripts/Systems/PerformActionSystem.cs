@@ -8,7 +8,6 @@ using UnityEngine;
 
 [BurstCompile]
 [UpdateAfter(typeof(ActionTimerSystem))]
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
 public partial struct PerformActionSystem : ISystem
 {
     [BurstCompile]
@@ -28,7 +27,7 @@ public partial struct PerformActionSystem : ISystem
         ) {
             switch (action.State)
             {
-                case ActionState.Startup:
+                case ActionState.Startup: // If StatupTime is 0 this will be skipped
                 {
                     player.IsAnimLocked = true;
                     cmdBuffer.RemoveComponent<DoAction>(player.Self);
@@ -36,6 +35,10 @@ public partial struct PerformActionSystem : ISystem
                 }
                 case ActionState.Finished:
                 {
+                    if (action.Name == ActionName.Jump)
+                    {
+                        player.IsJumping = false;
+                    }
                     player.IsAnimLocked = false;
                     cmdBuffer.RemoveComponent<DoAction>(player.Self);
                     continue;
@@ -43,37 +46,16 @@ public partial struct PerformActionSystem : ISystem
                 case ActionState.Active:
                 {
                     var collisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
+                    var playerPosition = player.Position;
                     switch (action.Name)
                     {
                         //______________________________________________________________________________________________
                         case ActionName.Jump:
                         {
-                            //// Check if you have Coyote or Groundbuffer
-                            //if (player.JumpPressRemember > 0 && player.fGroundedRemember > 0)
-                            //{
-                            //    Debug.Log("HOPPPPPAAAR MED COYOTE ELLER GROUNDBUFFER");
-                            //    player.JumpPressRemember = 0;
-                            //    player.JumpPressTimer = 0;
-
-                            //    // Adding a new Jumpforce for that state
-                            //    0,
-                            //    player.Velocity += new float3(
-                            //        (player is { IsGrounded: true } //or { IsOnBeat: true }
-                            //            ? player is { IsFalling: true }
-                            //            : player.JumpHeight * SystemAPI.Time.DeltaTime
-                            //                ? -player.Velocity.y + player.JumpHeight * SystemAPI.Time.DeltaTime
-                            //                : 0.0f),
-                            //        0
-                            //    );
-                            //}
-
-                            player.Velocity += new float3(
-                                0,
-                                (player is { IsGrounded: true } //or { IsOnBeat: true } // find what causes this to play
-                                    ? player.JumpHeight                                 // multiple times with IsOnBeat
-                                    : 0.0f),
-                                0
-                            );
+                            // find what causes this to play multiple times with IsOnBeat
+                            player.IsAnimLocked = true;
+                            player.Velocity = new float3(player.Velocity.x, player.JumpHeight, 0);
+                            player.CayoteTimer = -1;
                             cmdBuffer.RemoveComponent<DoAction>(player.Self);
                             break;
                         }
@@ -86,25 +68,57 @@ public partial struct PerformActionSystem : ISystem
                         //______________________________________________________________________________________________
                         case ActionName.Punch:
                         {
-                            PlayerFighting.Punch(player, cmdBuffer, ref state, ref collisionWorld);
+                            PunchHeavy(
+                                player.Self,
+                                player.IsFacingRight ? 1 : -1,
+                                ref playerPosition,
+                                player.PunchPushback,
+                                ref cmdBuffer,
+                                ref state,
+                                ref collisionWorld
+                            );
                             break;
                         }
                         //______________________________________________________________________________________________
                         case ActionName.HeavyPunch:
                         {
-                            PlayerFighting.PunchHeavy(player, cmdBuffer, ref state, ref collisionWorld);
+                            PunchHeavy(
+                                player.Self,
+                                player.IsFacingRight ? 1 : -1,
+                                ref playerPosition,
+                                player.PunchPushback,
+                                ref cmdBuffer,
+                                ref state,
+                                ref collisionWorld
+                            );
                             break;
                         }
                         //______________________________________________________________________________________________
                         case ActionName.Kick:
                         {
-                            PlayerFighting.Kick(player, cmdBuffer, ref state, ref collisionWorld);
+                            Kick(
+                                player.Self,
+                                player.IsFacingRight ? 1 : -1,
+                                ref playerPosition,
+                                player.PunchPushback,
+                                ref cmdBuffer,
+                                ref state,
+                                ref collisionWorld
+                            );
                             break;
                         }
                         //______________________________________________________________________________________________
                         case ActionName.HeavyKick:
                         {
-                            PlayerFighting.KickHeavy(player, cmdBuffer, ref state, ref collisionWorld);
+                            KickHeavy(
+                                player.Self,
+                                player.IsFacingRight ? 1 : -1,
+                                ref playerPosition,
+                                player.PunchPushback,
+                                ref cmdBuffer,
+                                ref state,
+                                ref collisionWorld
+                            );
                             break;
                         }
                         //______________________________________________________________________________________________
@@ -121,5 +135,143 @@ public partial struct PerformActionSystem : ISystem
         }
         cmdBuffer.Playback(state.EntityManager);
         cmdBuffer.Dispose();
+    }
+    
+    [BurstCompile]
+    public static void Punch(in Entity self, in int forward, ref float3 position, in float2 pushback, ref EntityCommandBuffer cmdBuffer, ref SystemState state, ref CollisionWorld collisionWorld)
+    {
+        bool hasHit;
+        Entity entity;
+        CastCollider(ref position, forward, ref collisionWorld, out entity, out hasHit);
+
+        // Check Health and Appyl Damage
+        var entityManager = state.EntityManager;
+        if (   hasHit 
+            && entity != self 
+            && entityManager.HasComponent<HealthComponent>(entity)
+        ) {
+            cmdBuffer.AddComponent<TakeDamage>(entity);
+            
+            cmdBuffer.AddComponent(entity, new ApplyImpact {
+                Amount = new float2(forward * pushback),
+            });
+        }
+    }
+    
+    [BurstCompile]
+    public static void PunchHeavy(in Entity self, in int forward, ref float3 position, in float2 pushback, ref EntityCommandBuffer cmdBuffer, ref SystemState state, ref CollisionWorld collisionWorld)
+    {
+        bool hasHit;
+        Entity entity;
+        CastCollider(ref position, forward, ref collisionWorld, out entity, out hasHit);
+
+        // Check Health and Appyl Damage
+        var entityManager = state.EntityManager;
+        if (   hasHit 
+            && entity != self 
+            && entityManager.HasComponent<HealthComponent>(entity)
+        ) {
+            cmdBuffer.AddComponent<TakeDamage>(entity);
+            
+            cmdBuffer.AddComponent(entity, new ApplyImpact {
+                Amount = new float2(forward * pushback),
+            });
+        }
+    }
+
+    [BurstCompile]
+    public static void Kick(in Entity self, in int forward, ref float3 position, in float2 pushback, ref EntityCommandBuffer cmdBuffer, ref SystemState state, ref CollisionWorld collisionWorld)
+    {
+        bool hasHit;
+        Entity entity;
+        CastCollider(ref position, forward, ref collisionWorld, out entity, out hasHit);
+
+        // Check Health and Appyl Damage
+        var entityManager = state.EntityManager;
+        if (   hasHit 
+            && entity != self 
+            && entityManager.HasComponent<HealthComponent>(entity)
+        ) {
+            cmdBuffer.AddComponent<TakeDamage>(entity);
+            
+            cmdBuffer.AddComponent(entity, new ApplyImpact {
+                Amount = new float2(forward * pushback),
+            });
+        }
+    }
+    
+    [BurstCompile]
+    public static void KickHeavy(in Entity self, in int forward, ref float3 position, in float2 pushback, ref EntityCommandBuffer cmdBuffer, ref SystemState state, ref CollisionWorld collisionWorld)
+    {
+        bool hasHit;
+        Entity entity;
+        CastCollider(ref position, forward, ref collisionWorld, out entity, out hasHit);
+
+        // Check Health and Appyl Damage
+        var entityManager = state.EntityManager;
+        if (   hasHit 
+            && entity != self 
+            && entityManager.HasComponent<HealthComponent>(entity)
+        ) {
+            cmdBuffer.AddComponent<TakeDamage>(entity);
+            
+            cmdBuffer.AddComponent(entity, new ApplyImpact {
+                Amount = new float2(forward * pushback),
+            });
+        }
+    }
+    
+    [BurstCompile]
+    private static unsafe void CastCollider(ref float3 position, int forward, ref CollisionWorld collisionWorld, out Entity entity, out bool hasHit)
+    {
+        var start = position + (new float3(forward * 0.9f, 1f, 0));
+        var end   = position + (new float3(forward * 1,    1f, 0));
+        var size = new float3(1, 1, 1);
+        
+        ColliderCastHit hit = new ColliderCastHit();
+        hasHit = collisionWorld.CastCollider(new ColliderCastInput
+            {
+                Collider = (Unity.Physics.Collider*)Unity.Physics.BoxCollider.Create(new BoxGeometry
+                {
+                    BevelRadius = 0f,
+                    Center = float3.zero,
+                    Orientation = quaternion.identity,
+                    Size = size
+                }, filter: new CollisionFilter
+                {
+                    BelongsTo = ~0u,
+                    CollidesWith = ~0u,
+                    GroupIndex = 0,
+                }).GetUnsafePtr(),
+                Start = start,
+                End = end,
+            },
+            out hit);
+        entity = hit.Entity;
+        DrawBox(ref start, ref end, ref size);
+    }
+
+    [BurstCompile]
+    private void Block(PlayerAspect player)
+    {
+        
+        //Debug.Log("Block");
+    }
+
+    [BurstCompile]
+    private static void DrawBox(ref float3 start, ref float3 end, ref float3 size)
+    {
+        //var t = new Color(0, 0, 0, 0); // TODO: for fun change color over time :o
+        Debug.DrawLine(start + new float3(-(size.x / 2), (size.y / 2), 0), start + new float3(-(size.x / 2), -(size.y / 2), 0), Color.magenta, .2f);
+        Debug.DrawLine(start + new float3((size.x / 2), -(size.y / 2), 0), start + new float3((size.x / 2), (size.y / 2), 0),   Color.magenta, .2f);
+        
+        Debug.DrawLine(start + new float3(-(size.x / 2), (size.y / 2), 0), start + new float3((size.x / 2), (size.y / 2), 0),   Color.magenta, .2f);
+        Debug.DrawLine(start + new float3(-(size.x / 2), -(size.y / 2), 0), start + new float3((size.x / 2), -(size.y / 2), 0), Color.magenta, .2f);
+        
+        Debug.DrawLine(end + new float3(-(size.x / 2), (size.y / 2), 0), end + new float3(-(size.x / 2), -(size.y / 2), 0), Color.cyan, .2f);
+        Debug.DrawLine(end + new float3((size.x / 2), -(size.y / 2), 0), end + new float3((size.x / 2), (size.y / 2), 0),   Color.cyan, .2f);
+        
+        Debug.DrawLine(end + new float3(-(size.x / 2), (size.y / 2), 0), end + new float3((size.x / 2), (size.y / 2), 0),   Color.cyan, .2f);
+        Debug.DrawLine(end + new float3(-(size.x / 2), -(size.y / 2), 0), end + new float3((size.x / 2), -(size.y / 2), 0), Color.cyan, .2f);
     }
 }

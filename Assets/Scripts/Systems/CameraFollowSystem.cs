@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 
 [UpdateAfter(typeof(TransformSystemGroup))]
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
 [WorldSystemFilter(WorldSystemFilterFlags.ClientSimulation)]
 public partial class UpdateCameraTargetSystem : SystemBase
 {

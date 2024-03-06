@@ -37,9 +37,16 @@ public partial struct PlayerMovementSystem : ISystem
         ) {
             // Increase gravity if falling
             {
-                player.GravityFactor = player is { IsGrounded: false, Velocity: { y: <= 1.0f } }
-                    ? 5
-                    : 1;
+                if (player.Data.OverrideGravity)
+                {
+                    player.GravityFactor = player.Data.CustomGravity;
+                }
+                else
+                {
+                    player.GravityFactor = player is { IsGrounded: false, Velocity: { y: <= 1.0f } }
+                        ? 5
+                        : 1;
+                }
             }
 
             // Calculate & Add Horizontal Movement
@@ -52,7 +59,7 @@ public partial struct PlayerMovementSystem : ISystem
                         player.Damping * SystemAPI.Time.DeltaTime
                     ), player.Velocity.y, 0);
                 }
-                else if (!player.IsAnimLocked)
+                else if (player is { IsAnimLocked: false, IsBlocking: false })
                 {
                     player.Velocity = new float3(Util.moveTowards( // Else towards max speed
                         player.Velocity.x,
