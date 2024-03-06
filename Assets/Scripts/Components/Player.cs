@@ -50,6 +50,16 @@ public class Player : MonoBehaviour
     public float MaxComboDelay;
     
     //_______________________________________________________________
+    [Header("Actions\t\t\t\tX = Startup    Y = Active       Z = Recover")] 
+    
+    public float3 JumpTime;
+    public float3 DashTime;
+    public float3 PunchTime;
+    public float3 HeavyPunchTime;
+    public float3 KickTime;
+    public float3 HeavyKickTime;
+    
+    //_______________________________________________________________
     [Header("Misc")] 
     
     [Tooltip("[bool] Disables movement and impulses.")]
@@ -70,6 +80,30 @@ public class Player : MonoBehaviour
                 MaxComboDelay = authoring.MaxComboDelay,
                 OverrideGravity = authoring.OverrideGravity,
                 CustomGravity = authoring.Gravity,
+                // Jump time
+                jStartTime    = authoring.JumpTime.x,
+                jActiveTime   = authoring.JumpTime.y,
+                jRecoverTime  = authoring.JumpTime.z,
+                // Dash time
+                dStartTime    = authoring.DashTime.x,
+                dActiveTime   = authoring.DashTime.y,
+                dRecoverTime  = authoring.DashTime.z,
+                // Punch time
+                pStartTime    = authoring.PunchTime.x,
+                pActiveTime   = authoring.PunchTime.y,
+                pRecoverTime  = authoring.PunchTime.z,
+                // Heavy Punch time
+                hpStartTime   = authoring.HeavyPunchTime.x,
+                hpActiveTime  = authoring.HeavyPunchTime.y,
+                hpRecoverTime = authoring.HeavyPunchTime.z,
+                // Jump time
+                kStartTime    = authoring.KickTime.x,
+                kActiveTime   = authoring.KickTime.y,
+                kRecoverTime  = authoring.KickTime.z,
+                // Jump time
+                hkStartTime   = authoring.HeavyKickTime.x,
+                hkActiveTime  = authoring.HeavyKickTime.y,
+                hkRecoverTime = authoring.HeavyKickTime.z,
             });
             
             // Health component is it's own component in case of reuse,
@@ -125,6 +159,31 @@ public struct PlayerData : IComponentData
     [GhostField] public bool IsDummy;
     [GhostField] public bool OverrideGravity;
     [GhostField] public float CustomGravity;
+    // Jump time
+    public float jStartTime;
+    public float jActiveTime;
+    public float jRecoverTime;
+    // Dash time
+    public float dStartTime;
+    public float dActiveTime;
+    public float dRecoverTime;
+    // Punch time
+    public float pStartTime;
+    public float pActiveTime;
+    public float pRecoverTime;
+    // Heavy Punch
+    public float hpStartTime;
+    public float hpActiveTime;
+    public float hpRecoverTime;
+    // Jump time
+    public float kStartTime;
+    public float kActiveTime;
+    public float kRecoverTime;
+    // Jump time
+    public float hkStartTime;
+    public float hkActiveTime;
+    public float hkRecoverTime;
+
 }
 
 public readonly partial struct PlayerAspect : IAspect
@@ -171,8 +230,8 @@ public readonly partial struct PlayerAspect : IAspect
     public bool IsParrying          { get => _state.ValueRO.IsParrying;    set => _state.ValueRW.IsParrying = value;    }
     public bool IsDashing           { get => _state.ValueRO.IsDashing;     set => _state.ValueRW.IsDashing = value;     }
     public bool IsOnBeat            { get => _state.ValueRO.IsOnBeat;      set => _state.ValueRW.IsOnBeat = value;      }
+    public bool IsAnimLocked        { get => _state.ValueRO.IsAnimLocked;  set => _state.ValueRW.IsAnimLocked = value;  }
     public int HitCounter           { get => _state.ValueRO.HitCounter;    set => _state.ValueRW.HitCounter = value;    }
     public float HitTime            { get => _state.ValueRO.HitTime;       set => _state.ValueRW.HitTime = value;       }
     public float MaxComboDelay      { get => _data.ValueRO.MaxComboDelay;  set => _data.ValueRW.MaxComboDelay = value;  }
-    
 }

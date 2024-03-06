@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -6,8 +5,6 @@ using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Physics;
 using Unity.Transforms;
-using UnityEditor;
-using UnityEngine;
 
 [BurstCompile]
 [UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
@@ -32,90 +29,58 @@ public partial struct PlayerMovementSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        if (SystemAPI.GetSingleton<NetworkTime>().IsFinalPredictionTick)
-        {
-            var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
-            foreach (
-                var player
-                in SystemAPI.Query<PlayerAspect>()
-            ) {
-                // Increase gravity if falling
+        var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
+        foreach (
+            var player
+            in SystemAPI.Query<PlayerAspect>()
+        ) {
+            // Increase gravity if falling
+            {
+                player.GravityFactor = player is { IsGrounded: false, Velocity: { y: <= 1.0f } }
+                    ? 5
+                    : 1;
+            }
+
+            // Calculate & Add Horizontal Movement
+            {
+                if (player.Input.RequestedMovement.x == 0) // If not moving, change velocity towards 0
                 {
-                    if (!player.Data.OverrideGravity)
-                    {
-                        player.GravityFactor = player is { IsGrounded: false, Velocity: { y: <= 1.0f } }
-                            ? 5
-                            : 1;
-                    }
-                    else
-                    {
-                        player.GravityFactor = player.Data.CustomGravity;
-                    }
+                    player.Velocity = new float3(Util.moveTowards(
+                        player.Velocity.x,
+                        player.Position.x,
+                        player.Damping * SystemAPI.Time.DeltaTime
+                    ), player.Velocity.y, 0);
                 }
-
-                // Calculate & Add Horizontal Movement
+                else if (!player.IsAnimLocked)
                 {
-                    if (player.IsDashing)
-                    {
-                        player.Velocity = new float3(player.IsFacingRight ? 20f : -20f, player.Velocity.y, 0);
-                    }
-
-                    if (player.Input.RequestedMovement.x == 0) // If not moving, change velocity towards 0
-                    {
-                        player.Velocity = new float3(Util.moveTowards(
-                            player.Velocity.x,
-                            player.Position.x,
-                            player.Damping * SystemAPI.Time.DeltaTime
-                        ), player.Velocity.y, 0);
-                    }
-                    else if (!player.IsBlocking)
-                    {
-                        player.Velocity = new float3(Util.moveTowards( // Else towards max speed
-                            player.Velocity.x,
-                            player.Input.RequestedMovement.x * player.MaxSpeed,
-                            player.Acceleration * SystemAPI.Time.DeltaTime
-                        ), player.Velocity.y, 0);
-                    }
-                }
-
-                // Rotation
-                {
-                    player.Rotation = quaternion.EulerXYZ(
-                        0f,
-                        (player.IsFacingRight ? 90f : -89.8f),
-                        0f
-                    );
-                }
-
-                // Calculate & Add Jump / Vertical Movement
-                {
-                    if (player.Input.RequestJump)
-                    {
-                        player.Velocity += new float3(
-                            0,
-                            (player is { IsGrounded: true } or { IsOnBeat: true }
-                                ? player is { IsFalling: true }
-                                    ? -player.Velocity.y + player.JumpHeight * SystemAPI.Time.DeltaTime
-                                    : player.JumpHeight * SystemAPI.Time.DeltaTime
-                                : 0.0f),
-                            0
-                        );
-                    }
-                }
-                //Debug.DrawLine(player.Position, player.Position + (player.Velocity / 2), Color.cyan, 1);
-
-                // Apply impact
-                {
-                    if (state.EntityManager.HasComponent<ApplyImpact>(player.Self) 
-                    ) {
-                        player.Velocity += new float3(state.EntityManager.GetComponentData<ApplyImpact>(player.Self).Amount, 0);
-                        cmdBuffer.RemoveComponent<ApplyImpact>(player.Self);
-                    }
+                    player.Velocity = new float3(Util.moveTowards( // Else towards max speed
+                        player.Velocity.x,
+                        player.Input.RequestedMovement.x * player.MaxSpeed,
+                        player.Acceleration * SystemAPI.Time.DeltaTime
+                    ), player.Velocity.y, 0);
                 }
             }
 
-            cmdBuffer.Playback(state.EntityManager);
-            cmdBuffer.Dispose();
+            // Rotation
+            {
+                player.Rotation = quaternion.EulerXYZ(
+                    0f,
+                    (player.IsFacingRight ? 90f : -89.8f),
+                    0f
+                );
+            }
+
+            // Apply impact
+            {
+                if (state.EntityManager.HasComponent<ApplyImpact>(player.Self) 
+                ) {
+                    player.Velocity += new float3(state.EntityManager.GetComponentData<ApplyImpact>(player.Self).Amount, 0);
+                    cmdBuffer.RemoveComponent<ApplyImpact>(player.Self);
+                }
+            }
+            //Debug.DrawLine(player.Position, player.Position + (player.Velocity / 2), Color.cyan, 1);
         }
+        cmdBuffer.Playback(state.EntityManager);
+        cmdBuffer.Dispose();
     }
 }

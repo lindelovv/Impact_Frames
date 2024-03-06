@@ -21,23 +21,21 @@ public partial struct UpdatePlayerStateSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        var serverTick = SystemAPI.GetSingleton<NetworkTime>().ServerTick;
-        
         foreach (
             var player
             in SystemAPI.Query<PlayerAspect>()
                 .WithAll<Simulate>()
         ) {
             player.IsGrounded = (Physics.Raycast(
-                player.Position,
+                player.Position + new float3(0, 1, 0),
                 Vector3.down,
                 1.5f
             ) || Physics.Raycast(
-                player.Position + new float3(0.6f, 0, 0),
+                player.Position + new float3(0.6f, 1, 0),
                 Vector3.down,
                 1.5f
             ) || Physics.Raycast(
-                player.Position + new float3(-0.6f, 0, 0),
+                player.Position + new float3(-0.6f, 1, 0),
                 Vector3.down,
                 1.5f
             ));
@@ -75,7 +73,7 @@ public partial struct UpdatePlayerStateSystem : ISystem
                     player.IsMoving = false;
                 }
 
-                player.IsBlocking = player.Input.RequestBlockParry;
+                player.IsBlocking = player.Input.RequestBlock;
                 if (!player.IsBlocking)
                 {
                     player.IsPunching = player.Input.RequestPunch;
