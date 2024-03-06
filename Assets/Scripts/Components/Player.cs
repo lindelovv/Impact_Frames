@@ -157,6 +157,33 @@ public struct PlayerData : IComponentData
     public float2 PunchPushback;
     public float MaxComboDelay;
     [GhostField] public bool IsDummy;
+    [GhostField] public bool OverrideGravity;
+    [GhostField] public float CustomGravity;
+    // Jump time
+    public float jStartTime;
+    public float jActiveTime;
+    public float jRecoverTime;
+    // Dash time
+    public float dStartTime;
+    public float dActiveTime;
+    public float dRecoverTime;
+    // Punch time
+    public float pStartTime;
+    public float pActiveTime;
+    public float pRecoverTime;
+    // Heavy Punch
+    public float hpStartTime;
+    public float hpActiveTime;
+    public float hpRecoverTime;
+    // Jump time
+    public float kStartTime;
+    public float kActiveTime;
+    public float kRecoverTime;
+    // Jump time
+    public float hkStartTime;
+    public float hkActiveTime;
+    public float hkRecoverTime;
+
 }
 
 public readonly partial struct PlayerAspect : IAspect
@@ -178,7 +205,6 @@ public readonly partial struct PlayerAspect : IAspect
     // Shorthand names for the component data variables (use these for access)
     public PlayerData Data          { get => _data.ValueRO;                set => _data.ValueRW = value;                }
     public bool IsDummy             { get => _data.ValueRO.IsDummy;        set => _data.ValueRW.IsDummy = value;        }
-    public PlayerData Data          { get => _data.ValueRO;                set => _data.ValueRW = value;                }
     public float3 Position          { get => _transform.ValueRO.Position;  set => _transform.ValueRW.Position = value;  }
     public quaternion Rotation      { get => _transform.ValueRO.Rotation;  set => _transform.ValueRW.Rotation = value;  }
     public PhysicsCollider Collider { get => _collider.ValueRO;            set => _collider.ValueRW = value;            }

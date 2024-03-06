@@ -1,5 +1,15 @@
 ﻿using Unity.Entities;
+using Unity.Mathematics;
 using Unity.NetCode;
+
+// Experiment if this help ease of use
+//public struct ActionTimer
+//{
+//    private float3 Time;
+//    public float Startup { get => Time.x; set => Time.x = value; }
+//    public float Active  { get => Time.y; set => Time.y = value; }
+//    public float Recover { get => Time.z; set => Time.z = value; }
+//}
 
 public enum ActionState
 {
