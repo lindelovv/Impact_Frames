@@ -244,7 +244,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 71967068}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09853763, y: 0.00000004735827, z: -0.0000000046893933, w: 0.99513334}
+  m_LocalRotation: {x: 0.09853763, y: 0.000000024674119, z: -0.0000000024432196, w: 0.99513334}
   m_LocalPosition: {x: 32.79, y: 4.52, z: 0.10999966}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -338,7 +338,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 118555190}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}
@@ -1315,7 +1315,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09853763, y: 0.00000004735827, z: -0.0000000046893933, w: 0.99513334}
+  m_LocalRotation: {x: 0.09853763, y: 0.000000024674119, z: -0.0000000024432196, w: 0.99513334}
   m_LocalPosition: {x: 32.79, y: 4.52, z: 0.10999966}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2005,9 +2005,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d7e20a906fe7fb4897c24fbf873aeca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Property:
-    m_Name: Target
-  Target: {fileID: 0}
 --- !u!114 &1594309740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2021,8 +2018,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ExecuteInEditor: 1
-  m_Bindings:
-  - {fileID: 1594309739}
+  m_Bindings: []
   m_VisualEffect: {fileID: 1594309737}
 --- !u!1001 &1603670690
 PrefabInstance:
@@ -2639,6 +2635,6 @@ SceneRoots:
   - {fileID: 833036043}
   - {fileID: 1734465249}
   - {fileID: 16109251}
-  - {fileID: 348684070}
-  - {fileID: 1712618753}
   - {fileID: 680304175}
+  - {fileID: 978703401}
+  - {fileID: 965016791}

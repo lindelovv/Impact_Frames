@@ -47,10 +47,10 @@ public partial struct TriggerEventSystem : ISystem
 
         public void Execute(TriggerEvent triggerEvent)
         {
-            Debug.Log($"{Manager.GetName(triggerEvent.EntityA)}");
-            Debug.Log($"{Manager.HasComponent<SingleTimeTriggerTag>(triggerEvent.EntityA)}");
-            Debug.Log($"{Manager.GetName(triggerEvent.EntityB)}");
-            Debug.Log($"{Manager.HasComponent<SingleTimeTriggerTag>(triggerEvent.EntityB)}");
+            //Debug.Log($"{Manager.GetName(triggerEvent.EntityA)}");
+            //Debug.Log($"{Manager.HasComponent<SingleTimeTriggerTag>(triggerEvent.EntityA)}");
+            //Debug.Log($"{Manager.GetName(triggerEvent.EntityB)}");
+            //Debug.Log($"{Manager.HasComponent<SingleTimeTriggerTag>(triggerEvent.EntityB)}");
             if (Manager.HasComponent<SingleTimeTriggerTag>(triggerEvent.EntityA))
             {
                 Debug.Log("A has player data");

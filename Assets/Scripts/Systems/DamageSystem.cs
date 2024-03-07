@@ -26,10 +26,6 @@ public partial struct DamageSystem : ISystem
 
             //playerState.ValueRW.IsHit = true;
             cmdBuffer.RemoveComponent<TakeDamage>(entity);
-            var connectionId = state.EntityManager.GetComponentData<NetworkId>(entity).Value;
-            if (health.ValueRO.Current <= 0) { cmdBuffer.DestroyEntity(entity); UIManager.instance.DecreaseLife(connectionId); }
-            UIManager.instance.UpdateHealth(health.ValueRW.Current, connectionId);
-
             
             cmdBuffer.AddComponent(entity, new Action {
                 Name = ActionName.HitStun,
