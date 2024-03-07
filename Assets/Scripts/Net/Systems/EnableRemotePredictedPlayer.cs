@@ -1,17 +1,17 @@
-﻿    using Unity.Entities;
-    using UnityEngine;
+﻿using Unity.Entities;
+using UnityEngine;
 
-    public struct EnableRemotePredictedPlayerComponent : IComponentData { }
+public struct EnableRemotePredictedPlayerComponent : IComponentData { }
 
-    [DisallowMultipleComponent]
-    public class EnableRemotePredictedPlayer : MonoBehaviour
+[DisallowMultipleComponent]
+public class EnableRemotePredictedPlayer : MonoBehaviour
+{
+    class Baker : Baker<EnableRemotePredictedPlayer>
     {
-        class Baker : Baker<EnableRemotePredictedPlayer>
+        public override void Bake(EnableRemotePredictedPlayer authoring)
         {
-            public override void Bake(EnableRemotePredictedPlayer authoring)
-            {
-                var entity = GetEntity(TransformUsageFlags.Dynamic);
-                AddComponent<EnableRemotePredictedPlayer>(entity);
-            }
+            var entity = GetEntity(TransformUsageFlags.Dynamic);
+            AddComponent<EnableRemotePredictedPlayer>(entity);
         }
     }
+}

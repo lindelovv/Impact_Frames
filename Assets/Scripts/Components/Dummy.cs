@@ -1,5 +1,6 @@
 ﻿using System;
 using Unity.Entities;
+using Unity.NetCode;
 using UnityEngine;
 
 public class Dummy : MonoBehaviour
@@ -14,4 +15,8 @@ public class Dummy : MonoBehaviour
     }
 }
 
+[GhostComponent(
+    PrefabType = GhostPrefabType.AllPredicted,
+    OwnerSendType = SendToOwnerType.SendToNonOwner
+)]
 public struct DummyTag : IComponentData { }

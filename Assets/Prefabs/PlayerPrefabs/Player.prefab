@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: -317430035401528337}
   - component: {fileID: 6095826172294186699}
   - component: {fileID: 3902094259571194686}
+  - component: {fileID: -4976915794743655092}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -209,9 +210,9 @@ MonoBehaviour:
     z: 0
   OverrideGravity: 0
   Gravity: 0
-  PunchPushback:
-    x: 5
-    y: 1
+  Pushback:
+    x: 0
+    y: 0
   MaxComboDelay: 2
   JumpTime:
     x: 0
@@ -308,7 +309,7 @@ MonoBehaviour:
   SupportAutoCommandTarget: 1
   TrackInterpolationDelay: 1
   GhostGroup: 0
-  UsePreSerialization: 0
+  UsePreSerialization: 1
 --- !u!114 &-3312887918091319252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,3 +368,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ServerPrefab: {fileID: 0}
   ClientPrefab: {fileID: 2056336029179781686, guid: 30119775f5bf0354384cd99953f58f12, type: 3}
+--- !u!114 &-4976915794743655092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5530559309006933450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccea9ea98e38942e0b0938c27ed1903e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MotionType: 0
+  m_Smoothing: 1
+  m_Mass: 1
+  m_LinearDamping: 0.01
+  m_AngularDamping: 1
+  m_InitialLinearVelocity:
+    x: 0
+    y: 0
+    z: 0
+  m_InitialAngularVelocity:
+    x: 0
+    y: 0
+    z: 0
+  m_GravityFactor: 1
+  m_OverrideDefaultMassDistribution: 0
+  m_CenterOfMass:
+    x: 0
+    y: 0
+    z: 0
+  m_Orientation:
+    Value:
+      x: 0
+      y: 0
+      z: 0
+    RotationOrder: 4
+  m_InertiaTensor:
+    x: 0
+    y: 0
+    z: 0
+  m_WorldIndex: 0
+  m_CustomTags:
+    Tag00: 0
+    Tag01: 0
+    Tag02: 0
+    Tag03: 0
+    Tag04: 0
+    Tag05: 0
+    Tag06: 0
+    Tag07: 0

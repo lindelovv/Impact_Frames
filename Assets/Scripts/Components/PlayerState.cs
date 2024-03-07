@@ -41,7 +41,10 @@ public class PlayerState : MonoBehaviour
     }
 }
 
-[GhostComponent(PrefabType = GhostPrefabType.AllPredicted)]
+[GhostComponent(
+    PrefabType=GhostPrefabType.AllPredicted,
+    OwnerSendType = SendToOwnerType.SendToNonOwner
+)]
 public struct PlayerStateComponent : IComponentData
 {
     [GhostField] public bool IsFallingHigh;  // When Raytracing from high

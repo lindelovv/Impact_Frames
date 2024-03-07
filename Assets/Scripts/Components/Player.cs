@@ -3,6 +3,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Physics;
+using Unity.Physics.GraphicsIntegration;
 using Unity.Transforms;
 
 public class Player : MonoBehaviour
@@ -48,8 +49,8 @@ public class Player : MonoBehaviour
     //_______________________________________________________________
     [Header("Attacks")] 
     
-    [Tooltip("[float2] Strength and direction of punch pushback.")]
-    public float2 PunchPushback;
+    [Tooltip("[float2] Strength and direction of pushback.")]
+    public float2 Pushback;
     
     [Tooltip("[float] Max time between attacks for it to count towards combo counter.")]
     public float MaxComboDelay;
@@ -81,7 +82,7 @@ public class Player : MonoBehaviour
                 MovementSpeed = authoring.Speed,
                 MaxSpeed      = authoring.MaxSpeed,
                 JumpHeight    = authoring.JumpHeight,
-                PunchPushback = authoring.PunchPushback,
+                Pushback      = authoring.Pushback,
                 MaxComboDelay = authoring.MaxComboDelay,
                 OverrideGravity = authoring.OverrideGravity,
                 CustomGravity = authoring.Gravity,
@@ -155,13 +156,16 @@ public class Player : MonoBehaviour
 }
 
 // Player-unique data
-[GhostComponent(PrefabType = GhostPrefabType.AllPredicted)]
+[GhostComponent(
+    PrefabType=GhostPrefabType.AllPredicted,
+    OwnerSendType = SendToOwnerType.SendToNonOwner
+)]
 public struct PlayerData : IComponentData
 {
     [GhostField] public float MovementSpeed;
     [GhostField] public float MaxSpeed;
     [GhostField] public float JumpHeight;
-    [GhostField] public float2 PunchPushback;
+    [GhostField] public float2 Pushback;
     [GhostField] public float MaxComboDelay;
     [GhostField] public bool IsDummy;
     [GhostField] public bool OverrideGravity;
@@ -203,62 +207,58 @@ public readonly partial struct PlayerAspect : IAspect
     // Raw lookup data data from entity components
     private readonly RefRW<PlayerData> _data;
     private readonly RefRW<HealthComponent> _health;
-    private readonly RefRW<InputComponentData> _input;
+    private readonly RefRW<InputData> _input;
     private readonly RefRW<PlayerStateComponent> _state;
     private readonly RefRW<PhysicsCollider> _collider;
     private readonly RefRW<PhysicsVelocity> _velocity;
     private readonly RefRW<PhysicsDamping> _damping;
-    private readonly RefRW<PhysicsGravityFactor> _gravityFactor;
+    private readonly RefRW<PhysicsGravityFactor> _gravity;
     private readonly RefRW<LocalTransform> _transform;
     
     // Shorthand names for the component data variables (use these for access)
-    public PlayerData Data          { get => _data.ValueRO;                set => _data.ValueRW = value;                }
+    public PlayerData Data     { get => _data.ValueRO;                set => _data.ValueRW = value;                }
+    public InputData Input     { get => _input.ValueRO;               set => _input.ValueRW = value;               }
     
     // Transform
-    public float3 Position          { get => _transform.ValueRO.Position;  set => _transform.ValueRW.Position = value;  }
-    public quaternion Rotation      { get => _transform.ValueRO.Rotation;  set => _transform.ValueRW.Rotation = value;  }
-    
-    // Physics
-    public PhysicsCollider Collider { get => _collider.ValueRO;            set => _collider.ValueRW = value;            }
+    public float3 Position     { get => _transform.ValueRO.Position;  set => _transform.ValueRW.Position = value;  }
+    public quaternion Rotation { get => _transform.ValueRO.Rotation;  set => _transform.ValueRW.Rotation = value;  }
     
     // Movement
-    public float3 Velocity          { get => _velocity.ValueRO.Linear;     set => _velocity.ValueRW.Linear = value;     }
-    public float Damping            { get => _damping.ValueRO.Linear;      set => _damping.ValueRW.Linear = value;      }
-    public float GravityFactor      { get => _gravityFactor.ValueRO.Value; set => _gravityFactor.ValueRW.Value = value; }
-    public float Acceleration       { get => _data.ValueRO.MovementSpeed;  set => _data.ValueRW.MovementSpeed = value;  }
-    public float MaxSpeed           { get => _data.ValueRO.MaxSpeed;       set => _data.ValueRW.MaxSpeed = value;       }
-    public float JumpHeight         { get => _data.ValueRO.JumpHeight;     set => _data.ValueRW.JumpHeight = value;     }
-    public float CayoteTime         { get => _data.ValueRO.CayoteTime;     set => _data.ValueRW.CayoteTime = value;     }
-    public float CayoteTimer        { get => _data.ValueRO.CayoteTimer;    set => _data.ValueRW.CayoteTimer = value;    }
-    
-    // Input
-    public InputComponentData Input { get => _input.ValueRO;               set => _input.ValueRW = value;               }
+    public float3 Velocity     { get => _velocity.ValueRO.Linear;     set => _velocity.ValueRW.Linear = value;     }
+    public float Damping       { get => _damping.ValueRO.Linear;      set => _damping.ValueRW.Linear = value;      }
+    public float GravityFactor { get => _gravity.ValueRO.Value;       set => _gravity.ValueRW.Value = value;       }
+    public float Acceleration  { get => _data.ValueRO.MovementSpeed;  set => _data.ValueRW.MovementSpeed = value;  }
+    public float MaxSpeed      { get => _data.ValueRO.MaxSpeed;       set => _data.ValueRW.MaxSpeed = value;       }
+    public float JumpHeight    { get => _data.ValueRO.JumpHeight;     set => _data.ValueRW.JumpHeight = value;     }
+    public float CayoteTime    { get => _data.ValueRO.CayoteTime;     set => _data.ValueRW.CayoteTime = value;     }
+    public float CayoteTimer   { get => _data.ValueRO.CayoteTimer;    set => _data.ValueRW.CayoteTimer = value;    }
     
     // Health
-    public float CurrentHealth      { get => _health.ValueRO.Current;      set => _health.ValueRW.Current = value;      }
-    public float MaxHealth          { get => _health.ValueRO.Max;          set => _health.ValueRW.Max = value;          }
+    public float CurrentHealth { get => _health.ValueRO.Current;      set => _health.ValueRW.Current = value;      }
+    public float MaxHealth     { get => _health.ValueRO.Max;          set => _health.ValueRW.Max = value;          }
     
     // State variables
-    public bool IsMoving            { get => _state.ValueRO.IsMoving;      set => _state.ValueRW.IsMoving = value;      }          
-    public bool IsGrounded          { get => _state.ValueRO.IsGrounded;    set => _state.ValueRW.IsGrounded = value;    }
-    public bool IsFacingRight       { get => _state.ValueRO.IsFacingRight; set => _state.ValueRW.IsFacingRight = value; }
-    public bool IsFalling           { get => _state.ValueRO.IsFalling;     set => _state.ValueRW.IsFalling = value;     }
-    public bool IsFallingHigh       { get => _state.ValueRO.IsFallingHigh; set => _state.ValueRW.IsFallingHigh = value; }
-    public bool IsJumping           { get => _state.ValueRO.IsJumping;     set => _state.ValueRW.IsJumping = value;     }
-    public bool IsPunching          { get => _state.ValueRO.IsPunching;    set => _state.ValueRW.IsPunching = value;    }
-    public bool IsKicking           { get => _state.ValueRO.IsKicking;     set => _state.ValueRW.IsKicking = value;     }
-    public bool IsBlocking          { get => _state.ValueRO.IsBlocking;    set => _state.ValueRW.IsBlocking = value;    }
-    public bool IsParrying          { get => _state.ValueRO.IsParrying;    set => _state.ValueRW.IsParrying = value;    }
-    public bool IsDashing           { get => _state.ValueRO.IsDashing;     set => _state.ValueRW.IsDashing = value;     }
-    public bool IsOnBeat            { get => _state.ValueRO.IsOnBeat;      set => _state.ValueRW.IsOnBeat = value;      }
-    public bool IsAnimLocked        { get => _state.ValueRO.IsAnimLocked;  set => _state.ValueRW.IsAnimLocked = value;  }
+    public bool IsMoving       { get => _state.ValueRO.IsMoving;      set => _state.ValueRW.IsMoving = value;      }          
+    public bool IsGrounded     { get => _state.ValueRO.IsGrounded;    set => _state.ValueRW.IsGrounded = value;    }
+    public bool IsFacingRight  { get => _state.ValueRO.IsFacingRight; set => _state.ValueRW.IsFacingRight = value; }
+    public bool IsFalling      { get => _state.ValueRO.IsFalling;     set => _state.ValueRW.IsFalling = value;     }
+    public bool IsFallingHigh  { get => _state.ValueRO.IsFallingHigh; set => _state.ValueRW.IsFallingHigh = value; }
+    public bool IsJumping      { get => _state.ValueRO.IsJumping;     set => _state.ValueRW.IsJumping = value;     }
+    public bool IsPunching     { get => _state.ValueRO.IsPunching;    set => _state.ValueRW.IsPunching = value;    }
+    public bool IsKicking      { get => _state.ValueRO.IsKicking;     set => _state.ValueRW.IsKicking = value;     }
+    public bool IsBlocking     { get => _state.ValueRO.IsBlocking;    set => _state.ValueRW.IsBlocking = value;    }
+    public bool IsParrying     { get => _state.ValueRO.IsParrying;    set => _state.ValueRW.IsParrying = value;    }
+    public bool IsDashing      { get => _state.ValueRO.IsDashing;     set => _state.ValueRW.IsDashing = value;     }
+    public bool IsOnBeat       { get => _state.ValueRO.IsOnBeat;      set => _state.ValueRW.IsOnBeat = value;      }
+    public bool IsAnimLocked   { get => _state.ValueRO.IsAnimLocked;  set => _state.ValueRW.IsAnimLocked = value;  }
+    public bool IsHit          { get => _state.ValueRO.IsHit;         set => _state.ValueRW.IsHit = value;         }
     
     // Fighting/Combo stats
-    public int HitCounter           { get => _state.ValueRO.HitCounter;    set => _state.ValueRW.HitCounter = value;    }
-    public float HitTime            { get => _state.ValueRO.HitTime;       set => _state.ValueRW.HitTime = value;       }
-    public float MaxComboDelay      { get => _data.ValueRO.MaxComboDelay;  set => _data.ValueRW.MaxComboDelay = value;  }
-    public float2 PunchPushback     { get => _data.ValueRO.PunchPushback;  set => _data.ValueRW.PunchPushback = value;  }
+    public int HitCounter      { get => _state.ValueRO.HitCounter;    set => _state.ValueRW.HitCounter = value;    }
+    public float HitTime       { get => _state.ValueRO.HitTime;       set => _state.ValueRW.HitTime = value;       }
+    public float MaxComboDelay { get => _data.ValueRO.MaxComboDelay;  set => _data.ValueRW.MaxComboDelay = value;  }
+    public float2 Pushback     { get => _data.ValueRO.Pushback;       set => _data.ValueRW.Pushback = value;       }
     
     // Misc
-    public bool IsDummy             { get => _data.ValueRO.IsDummy;        set => _data.ValueRW.IsDummy = value;        }
+    public bool IsDummy        { get => _data.ValueRO.IsDummy;        set => _data.ValueRW.IsDummy = value;        }
 }

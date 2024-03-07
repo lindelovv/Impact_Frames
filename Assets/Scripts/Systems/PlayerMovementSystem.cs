@@ -16,7 +16,7 @@ public partial struct PlayerMovementSystem : ISystem
         // Use EntityQueryBuilder to find all entities with the given components.
         var builder = new EntityQueryBuilder(Allocator.Temp)
             .WithAll<PlayerData>()
-            .WithAll<InputComponentData>() //inputComponent för att komma åt inputscriptets inputs
+            .WithAll<InputData>() //inputComponent för att komma åt inputscriptets inputs
             .WithAll<LocalTransform>(); // för att kunna röra saker, transform
 
         // Components in RequireForUpdate are all types we need to run system (the query above and the physics world)
@@ -66,6 +66,11 @@ public partial struct PlayerMovementSystem : ISystem
                         player.Input.RequestedMovement.x * player.MaxSpeed,
                         player.Acceleration * SystemAPI.Time.DeltaTime
                     ), player.Velocity.y, 0);
+                    player.IsFacingRight = (player.Input.RequestedMovement.x > 0.0f);
+                }
+                else
+                {
+                    player.IsFacingRight = (player.Input.RequestedMovement.x > 0.0f);
                 }
             }
 

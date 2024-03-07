@@ -1,8 +1,13 @@
 ﻿using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.NetCode;
 using UnityEngine;
 
+[GhostComponent(
+    PrefabType = GhostPrefabType.AllPredicted,
+    OwnerSendType = SendToOwnerType.SendToNonOwner
+)]
 public struct Falling : IComponentData
 {
     public float StartTime;

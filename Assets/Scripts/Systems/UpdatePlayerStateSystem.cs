@@ -6,7 +6,8 @@ using Unity.Transforms;
 using UnityEngine;
 
 [BurstCompile]
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup)), UpdateBefore(typeof(PlayerMovementSystem))]
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup)),
+ UpdateBefore(typeof(PlayerMovementSystem))]
 public partial struct UpdatePlayerStateSystem : ISystem
 {
     [BurstCompile]
@@ -62,8 +63,7 @@ public partial struct UpdatePlayerStateSystem : ISystem
                 //    // toggle on here and turn off somewhere else after landing?
                 //}
             }
-            player.IsDashing = player.Input.RequestDash;
-            if (!player.IsDashing)
+            if (!player.IsAnimLocked)
             {
                 var isMoving = (player.Input.RequestedMovement != float2.zero);
 
@@ -77,13 +77,10 @@ public partial struct UpdatePlayerStateSystem : ISystem
                 {
                     player.IsMoving = false;
                 }
-
-                player.IsBlocking = player.Input.RequestBlock;
-                if (!player.IsBlocking)
-                {
-                    player.IsPunching = player.Input.RequestPunch;
-                    player.IsKicking = player.Input.RequestKick;
-                }
+            }
+            else
+            {
+                player.IsMoving = false;
             }
         }
     }
