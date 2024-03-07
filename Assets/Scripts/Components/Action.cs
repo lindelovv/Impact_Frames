@@ -1,15 +1,25 @@
 ﻿using Unity.Entities;
-using Unity.Mathematics;
 using Unity.NetCode;
 
-// Experiment if this help ease of use
-//public struct ActionTimer
-//{
-//    private float3 Time;
-//    public float Startup { get => Time.x; set => Time.x = value; }
-//    public float Active  { get => Time.y; set => Time.y = value; }
-//    public float Recover { get => Time.z; set => Time.z = value; }
-//}
+[GhostComponent(
+    PrefabType = GhostPrefabType.AllPredicted,
+    OwnerSendType = SendToOwnerType.SendToNonOwner
+)]
+public struct Action : IComponentData
+{
+    [GhostField] public ActionName Name;
+    [GhostField] public ActionState State;
+    [GhostField] public float StartTime;
+    [GhostField] public float ActiveTime;
+    [GhostField] public float RecoverTime;
+    [GhostField] public bool Repeating;
+}
+
+[GhostComponent(
+    PrefabType = GhostPrefabType.AllPredicted,
+    OwnerSendType = SendToOwnerType.SendToNonOwner
+)]
+public struct DoAction : IComponentData { }
 
 public enum ActionState
 {
@@ -27,16 +37,7 @@ public enum ActionName
     HeavyPunch,
     Kick,
     HeavyKick,
+    Block,
     Parry,
+    HitStun,
 }
-
-public struct Action : IComponentData
-{
-    [GhostField] public ActionName Name;
-    [GhostField] public ActionState State;
-    [GhostField] public float StartTime;
-    [GhostField] public float ActiveTime;
-    [GhostField] public float RecoverTime;
-}
-
-public struct DoAction : IComponentData {}

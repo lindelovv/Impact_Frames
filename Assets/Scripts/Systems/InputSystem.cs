@@ -5,15 +5,14 @@ using UnityEngine.InputSystem;
 
 [UpdateInGroup(typeof(GhostInputSystemGroup))]
 [WorldSystemFilter(WorldSystemFilterFlags.ClientSimulation)]
-//[AlwaysSynchronizeSystem]
+[AlwaysSynchronizeSystem]
 public partial class InputSystem : SystemBase
 {
     private IA_PlayerControls _inputActions;
     
-    public void OnCreate(ref SystemState state)
+    protected override void OnCreate()
     {
-        state.RequireForUpdate<InputComponentData>();
-        state.RequireForUpdate<NetworkId>();
+        RequireForUpdate<InputData>();
     }
 
     protected override void OnStartRunning()
@@ -32,7 +31,7 @@ public partial class InputSystem : SystemBase
         foreach (
             var (inputData, player)
 
-            in SystemAPI.Query<RefRW<InputComponentData>, RefRW<PlayerData>>()
+            in SystemAPI.Query<RefRW<InputData>, RefRW<PlayerData>>()
                 .WithAll<GhostOwnerIsLocal>()
         ) {
             inputData.ValueRW.RequestedMovement = _inputActions.Combat.Move.ReadValue<Vector2>();
@@ -48,7 +47,6 @@ public partial class InputSystem : SystemBase
                 // Setting coyote timeer and remember last time you were grounded
                // player.ValueRW.JumpPressRemember = player.ValueRW.JumpPressTimer;  
             }
-            
             inputData.ValueRW.RequestParry = _inputActions.Combat.BlockParry.WasPressedThisFrame();
         }
     }

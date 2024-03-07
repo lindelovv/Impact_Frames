@@ -1,17 +1,17 @@
-﻿    using Unity.Entities;
-    using UnityEngine;
+﻿using Unity.Entities;
+using UnityEngine;
 
-    public struct EnableGoInGameComp : IComponentData { }
+public struct EnableGoInGameComp : IComponentData { }
 
-    [DisallowMultipleComponent]
-    public class EnableGoInGame : MonoBehaviour
+[DisallowMultipleComponent]
+public class EnableGoInGame : MonoBehaviour
+{
+    class Baker : Baker<EnableGoInGame>
     {
-        class Baker : Baker<EnableGoInGame>
+        public override void Bake(EnableGoInGame authoring)
         {
-            public override void Bake(EnableGoInGame authoring)
-            {
-                var entity = GetEntity(TransformUsageFlags.Dynamic);
-                AddComponent<EnableGoInGameComp>(entity);
-            }
+            var entity = GetEntity(TransformUsageFlags.Dynamic);
+            AddComponent<EnableGoInGameComp>(entity);
         }
     }
+}

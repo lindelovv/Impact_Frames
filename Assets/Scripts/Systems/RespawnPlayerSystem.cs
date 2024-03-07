@@ -5,6 +5,10 @@ using Unity.NetCode;
 using Unity.Transforms;
 using UnityEngine;
 
+[GhostComponent(
+    PrefabType=GhostPrefabType.AllPredicted,
+    OwnerSendType = SendToOwnerType.SendToNonOwner
+)]
 public struct SpawnPoint : IComponentData
 {
     public float3 Position;

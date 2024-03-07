@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 1244181283632142093}
   - component: {fileID: 1553344042008314389}
   - component: {fileID: -3312887918091319252}
-  - component: {fileID: 6130173664912802069}
   - component: {fileID: 1905571665012368345}
   - component: {fileID: 6906501990310020956}
+  - component: {fileID: 7010235459770899136}
   m_Layer: 0
   m_Name: PlayerDummy
   m_TagString: Dummy
@@ -57,10 +57,7 @@ MonoBehaviour:
   Speed: 30
   MaxSpeed: 60
   JumpHeight: 160
-  JumpPressRemember: 0
-  JumpPressTimer: 0.2
-  GroundedRemember: 0
-  GroundedRememberTime: 0.25
+  CayoteTime: 0.25
   Damping: 2
   StartingVelocity:
     x: 0
@@ -167,7 +164,7 @@ MonoBehaviour:
   SupportAutoCommandTarget: 1
   TrackInterpolationDelay: 1
   GhostGroup: 0
-  UsePreSerialization: 0
+  UsePreSerialization: 1
 --- !u!114 &-3312887918091319252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,19 +183,6 @@ MonoBehaviour:
     PrefabType: -1
     SendTypeOptimization: -1
     VariantHash: 6907887384974514810
---- !u!114 &6130173664912802069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5530559309006933450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65b6f88216714636bf8148da4fda8d32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Prefab: {fileID: 2056336029179781686, guid: 30119775f5bf0354384cd99953f58f12, type: 3}
 --- !u!114 &1905571665012368345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,3 +338,17 @@ MonoBehaviour:
         Tag07: 0
     m_SerializedVersion: 1
   m_SerializedVersion: 1
+--- !u!114 &7010235459770899136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5530559309006933450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 725f443b46fd3448e9c957fb78798883, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ServerPrefab: {fileID: 0}
+  ClientPrefab: {fileID: 2056336029179781686, guid: 30119775f5bf0354384cd99953f58f12, type: 3}

@@ -184,9 +184,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7df7307f13d69f943923cc28f40ebc78, type: 3}
       insertIndex: -1
       addedObject: {fileID: -992808150477350423}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7df7307f13d69f943923cc28f40ebc78, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5905987717221149515}
   m_SourcePrefab: {fileID: 100100000, guid: 7df7307f13d69f943923cc28f40ebc78, type: 3}
 --- !u!4 &1712003469078526092 stripped
 Transform:
@@ -209,7 +206,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 3da911043f2dd6846b1ad977d439186a, type: 2}
-  m_CullingMode: 1
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -231,18 +228,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0199cca95a2e14d5883379f33cc211e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5905987717221149515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2056336029179781686}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a6ecc053bb3d480d902deff8d7abe9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AnimationGraphAsset: {fileID: 0}
-  EvaluateGraphInPrediction: 0
-  IgnoreEvents: 0

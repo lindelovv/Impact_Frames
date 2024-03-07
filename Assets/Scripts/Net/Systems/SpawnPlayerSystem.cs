@@ -48,7 +48,6 @@ public partial class SpawnPlayerSystem : SystemBase
                 });
                 
                 cmdBuffer.AddComponent<PlayerSpawned>(connectionEntity);
-                cmdBuffer.AddComponent<InitAnimations>(connectionEntity);
             }
         ).Run();
         cmdBuffer.Playback(EntityManager);

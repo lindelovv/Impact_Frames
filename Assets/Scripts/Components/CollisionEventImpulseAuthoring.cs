@@ -1,5 +1,6 @@
 ﻿using Unity.Entities;
 using Unity.Mathematics;
+using Unity.NetCode;
 using UnityEngine;
 
 public class CollisionEventImpulseAuthoring : MonoBehaviour
@@ -20,6 +21,10 @@ public class CollisionEventImpulseAuthoring : MonoBehaviour
     }
 }
 
+[GhostComponent(
+    PrefabType = GhostPrefabType.AllPredicted,
+    OwnerSendType = SendToOwnerType.SendToNonOwner
+)]
 public struct CollisionEventImpulse : IComponentData
 {
     public float3 Impulse;
