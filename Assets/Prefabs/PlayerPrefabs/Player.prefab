@@ -16,10 +16,7 @@ GameObject:
   - component: {fileID: 1244181283632142093}
   - component: {fileID: 1553344042008314389}
   - component: {fileID: -3312887918091319252}
-  - component: {fileID: -317430035401528337}
-  - component: {fileID: 6095826172294186699}
   - component: {fileID: 3902094259571194686}
-  - component: {fileID: -4976915794743655092}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -208,14 +205,16 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
+  FallGravity: 5
   OverrideGravity: 0
   Gravity: 0
   Pushback:
     x: 0
     y: 0
   MaxComboDelay: 2
+  BlockCooldown: 2
   JumpTime:
-    x: 0
+    x: 0.05
     y: 0
     z: 0.05
   DashTime:
@@ -223,16 +222,16 @@ MonoBehaviour:
     y: 0.02
     z: 0.01
   PunchTime:
-    x: 0.2
-    y: 0.2
+    x: 0.1
+    y: 0.1
     z: 0.2
   HeavyPunchTime:
     x: 0.2
     y: 0.2
     z: 0.2
   KickTime:
-    x: 0.2
-    y: 0.2
+    x: 0.1
+    y: 0.1
     z: 0.2
   HeavyKickTime:
     x: 0.2
@@ -261,6 +260,7 @@ MonoBehaviour:
   IsInRange: 0
   IsOnCooldown: 0
   isFacingRight: 1
+  IsHit: 0
 --- !u!114 &-1779064826349053475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,7 +300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c79d771cedb4794bf100ce60df5f764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultGhostMode: 2
+  DefaultGhostMode: 1
   SupportedGhostModes: 3
   OptimizationMode: 0
   Importance: 999
@@ -328,32 +328,6 @@ MonoBehaviour:
     PrefabType: -1
     SendTypeOptimization: -1
     VariantHash: 6907887384974514810
---- !u!114 &-317430035401528337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5530559309006933450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 560a9847916a77d40888b2996d7b43ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Prefab: {fileID: 3806523540211558309, guid: be20ddc208682854895b1c0eab3f1020, type: 3}
---- !u!114 &6095826172294186699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5530559309006933450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f6e2511454f406cb4b2bc647bc072f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Prefab: {fileID: 1825772372584047608, guid: 11ed419926cd8ee46a4cf79489163fa4, type: 3}
 --- !u!114 &3902094259571194686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,54 +342,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ServerPrefab: {fileID: 0}
   ClientPrefab: {fileID: 2056336029179781686, guid: 30119775f5bf0354384cd99953f58f12, type: 3}
---- !u!114 &-4976915794743655092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5530559309006933450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccea9ea98e38942e0b0938c27ed1903e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MotionType: 0
-  m_Smoothing: 1
-  m_Mass: 1
-  m_LinearDamping: 0.01
-  m_AngularDamping: 1
-  m_InitialLinearVelocity:
-    x: 0
-    y: 0
-    z: 0
-  m_InitialAngularVelocity:
-    x: 0
-    y: 0
-    z: 0
-  m_GravityFactor: 1
-  m_OverrideDefaultMassDistribution: 0
-  m_CenterOfMass:
-    x: 0
-    y: 0
-    z: 0
-  m_Orientation:
-    Value:
-      x: 0
-      y: 0
-      z: 0
-    RotationOrder: 4
-  m_InertiaTensor:
-    x: 0
-    y: 0
-    z: 0
-  m_WorldIndex: 0
-  m_CustomTags:
-    Tag00: 0
-    Tag01: 0
-    Tag02: 0
-    Tag03: 0
-    Tag04: 0
-    Tag05: 0
-    Tag06: 0
-    Tag07: 0

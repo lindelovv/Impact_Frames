@@ -17,6 +17,7 @@ public class PlayerState : MonoBehaviour
     public bool IsInRange;
     public bool IsOnCooldown;
     public bool isFacingRight;
+    public bool IsHit;
     
     private class Baker : Baker<PlayerState>
     {
@@ -36,6 +37,7 @@ public class PlayerState : MonoBehaviour
                 IsInRange = authoring.IsInRange,
                 IsOnCooldown = authoring.IsOnCooldown,
                 IsFacingRight = authoring.isFacingRight,
+                IsHit = authoring.IsHit,
             });
         }
     }
@@ -103,4 +105,6 @@ public struct PlayerStateComponent : IComponentData
 
     /// <summary> Required for Facing the right direction </summary>
     [GhostField] public bool IsFacingRight;
+    
+    [GhostField] public int Random;
 }

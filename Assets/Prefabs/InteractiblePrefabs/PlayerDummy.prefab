@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1211897881023766861}
+  - component: {fileID: 6906501990310020956}
   - component: {fileID: 157595006982165000}
   - component: {fileID: 6524130790032669571}
   - component: {fileID: -1779064826349053475}
@@ -16,7 +17,6 @@ GameObject:
   - component: {fileID: 1553344042008314389}
   - component: {fileID: -3312887918091319252}
   - component: {fileID: 1905571665012368345}
-  - component: {fileID: 6906501990310020956}
   - component: {fileID: 7010235459770899136}
   m_Layer: 0
   m_Name: PlayerDummy
@@ -40,161 +40,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &157595006982165000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5530559309006933450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1784d5218da4d80b82178235eea8d9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CurrentHealth: 10
-  MaxHealth: 10
-  Speed: 30
-  MaxSpeed: 60
-  JumpHeight: 160
-  CayoteTime: 0.25
-  Damping: 2
-  StartingVelocity:
-    x: 0
-    y: 0
-    z: 0
-  OverrideGravity: 0
-  Gravity: 0
-  PunchPushback:
-    x: 5
-    y: 1
-  MaxComboDelay: 0
-  JumpTime:
-    x: 0
-    y: 0
-    z: 0
-  DashTime:
-    x: 0
-    y: 0
-    z: 0
-  PunchTime:
-    x: 0
-    y: 0
-    z: 0
-  HeavyPunchTime:
-    x: 0
-    y: 0
-    z: 0
-  KickTime:
-    x: 0
-    y: 0
-    z: 0
-  HeavyKickTime:
-    x: 0
-    y: 0
-    z: 0
-  IsDummy: 1
---- !u!114 &6524130790032669571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5530559309006933450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e929c1deb612afe41ac0cc1c87952e6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isMoving: 0
-  isGrounded: 0
-  isMobile: 0
-  IsOnBeat: 0
-  IsAttacked: 0
-  HasFullComboMeterEnergy: 0
-  HasCompletedMusicalChallenge: 0
-  IsInRange: 0
-  IsOnCooldown: 0
-  isFacingRight: 1
---- !u!114 &-1779064826349053475
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5530559309006933450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c8b34d15a6274c42b431052fd32e0b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RequestedMove:
-    x: 0
-    y: 0
---- !u!114 &1244181283632142093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5530559309006933450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c16549610bfe4458aa9389201d072bb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1553344042008314389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5530559309006933450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c79d771cedb4794bf100ce60df5f764, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DefaultGhostMode: 1
-  SupportedGhostModes: 3
-  OptimizationMode: 0
-  Importance: 999
-  prefabId: 4f35d5ea584efed4c87f73eedec671b9
-  HasOwner: 1
-  SupportAutoCommandTarget: 1
-  TrackInterpolationDelay: 1
-  GhostGroup: 0
-  UsePreSerialization: 1
---- !u!114 &-3312887918091319252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5530559309006933450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfdaa6c06fe64fbda2b16e07a4ee0b25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ComponentOverrides:
-  - FullTypeName: Unity.Transforms.LocalTransform
-    EntityIndex: 0
-    PrefabType: -1
-    SendTypeOptimization: -1
-    VariantHash: 6907887384974514810
---- !u!114 &1905571665012368345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5530559309006933450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a2ddf6fb94c407cbbdb45e4f9b1e501, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6906501990310020956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,6 +183,164 @@ MonoBehaviour:
         Tag07: 0
     m_SerializedVersion: 1
   m_SerializedVersion: 1
+--- !u!114 &157595006982165000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5530559309006933450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1784d5218da4d80b82178235eea8d9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentHealth: 10
+  MaxHealth: 10
+  Speed: 30
+  MaxSpeed: 60
+  JumpHeight: 160
+  CayoteTime: 0.25
+  Damping: 2
+  StartingVelocity:
+    x: 0
+    y: 0
+    z: 0
+  FallGravity: 0
+  OverrideGravity: 0
+  Gravity: 0
+  Pushback:
+    x: 0
+    y: 0
+  MaxComboDelay: 0
+  BlockCooldown: 0
+  JumpTime:
+    x: 0
+    y: 0
+    z: 0
+  DashTime:
+    x: 0
+    y: 0
+    z: 0
+  PunchTime:
+    x: 0
+    y: 0
+    z: 0
+  HeavyPunchTime:
+    x: 0
+    y: 0
+    z: 0
+  KickTime:
+    x: 0
+    y: 0
+    z: 0
+  HeavyKickTime:
+    x: 0
+    y: 0
+    z: 0
+  IsDummy: 1
+--- !u!114 &6524130790032669571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5530559309006933450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e929c1deb612afe41ac0cc1c87952e6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isMoving: 0
+  isGrounded: 0
+  isMobile: 0
+  IsOnBeat: 0
+  IsAttacked: 0
+  HasFullComboMeterEnergy: 0
+  HasCompletedMusicalChallenge: 0
+  IsInRange: 0
+  IsOnCooldown: 0
+  isFacingRight: 1
+  IsHit: 0
+--- !u!114 &-1779064826349053475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5530559309006933450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c8b34d15a6274c42b431052fd32e0b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RequestedMove:
+    x: 0
+    y: 0
+--- !u!114 &1244181283632142093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5530559309006933450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c16549610bfe4458aa9389201d072bb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1553344042008314389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5530559309006933450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c79d771cedb4794bf100ce60df5f764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultGhostMode: 1
+  SupportedGhostModes: 3
+  OptimizationMode: 0
+  Importance: 999
+  prefabId: 4f35d5ea584efed4c87f73eedec671b9
+  HasOwner: 1
+  SupportAutoCommandTarget: 1
+  TrackInterpolationDelay: 1
+  GhostGroup: 0
+  UsePreSerialization: 1
+--- !u!114 &-3312887918091319252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5530559309006933450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfdaa6c06fe64fbda2b16e07a4ee0b25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ComponentOverrides:
+  - FullTypeName: Unity.Transforms.LocalTransform
+    EntityIndex: 0
+    PrefabType: -1
+    SendTypeOptimization: -1
+    VariantHash: 6907887384974514810
+--- !u!114 &1905571665012368345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5530559309006933450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a2ddf6fb94c407cbbdb45e4f9b1e501, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7010235459770899136
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -42,6 +42,7 @@ public partial struct InitActionSystem : ISystem
                         ActiveTime = player.Data.jActiveTime,
                         RecoverTime = player.Data.jRecoverTime,
                     });
+                    player.IsJumping = true;
                     cmdBuffer.AddComponent<DoAction>(player.Self);
                     continue;
                 }
@@ -61,14 +62,18 @@ public partial struct InitActionSystem : ISystem
                 }
                 if (player.Input.RequestBlock)
                 {
-                    cmdBuffer.AddComponent(player.Self, new Action
+                    if (player.BlockTimer < 0)
                     {
-                        Name = ActionName.Block,
-                        Repeating = true,
-                        State = ActionState.Startup,
-                        ActiveTime  = 4,
-                    });
-                    cmdBuffer.AddComponent<DoAction>(player.Self);
+                        cmdBuffer.AddComponent(player.Self, new Action
+                        {
+                            Name = ActionName.Block,
+                            Repeating = true,
+                            State = ActionState.Startup,
+                            ActiveTime  = 4,
+                        });
+                        player.IsBlocking = true;
+                        cmdBuffer.AddComponent<DoAction>(player.Self);
+                    }
                 } else {
                     //Input button logik för att köra punch
                     if (player.Input.RequestPunch)

@@ -1,10 +1,9 @@
-using System.Threading;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
 
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup)), UpdateAfter(typeof(PerformActionSystem))]
 public partial struct DamageSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
@@ -22,8 +21,10 @@ public partial struct DamageSystem : ISystem
                 .WithAll<TakeDamage>()
         ) {
             health.ValueRW.Current -= damage.Amount;
-            //Debug.Log($"{state.EntityManager.GetName(entity)} Health: {health.ValueRO.Current}");
+            Debug.Log($"{state.EntityManager.GetName(entity)} Health: {health.ValueRO.Current}");
             
+
+            //playerState.ValueRW.IsHit = true;
             cmdBuffer.RemoveComponent<TakeDamage>(entity);
             var connectionId = state.EntityManager.GetComponentData<NetworkId>(entity).Value;
             if (health.ValueRO.Current <= 0) { cmdBuffer.DestroyEntity(entity); UIManager.instance.DecreaseLife(connectionId); }
@@ -32,9 +33,10 @@ public partial struct DamageSystem : ISystem
             
             cmdBuffer.AddComponent(entity, new Action {
                 Name = ActionName.HitStun,
+                Repeating = false,
                 State = ActionState.Startup,
                 StartTime = 0,
-                ActiveTime = .5f,
+                ActiveTime = .2f,
                 RecoverTime = 0,
             });
             cmdBuffer.AddComponent<DoAction>(entity);
@@ -54,7 +56,11 @@ public partial struct DamageSystem : ISystem
     }
 }
 
+[GhostComponent(
+    PrefabType=GhostPrefabType.AllPredicted,
+    OwnerSendType = SendToOwnerType.SendToNonOwner
+)]
 public struct TakeDamage : IComponentData
 {
-    public float Amount;
+    [GhostField] public float Amount;
 }

@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
     [Tooltip("[float3] Override starting velocity. Normally should be {0,0,0}.")]
     public float3 StartingVelocity;
 
+    public float FallGravity;
     public bool OverrideGravity;
     public float Gravity;
     
@@ -54,6 +55,8 @@ public class Player : MonoBehaviour
     
     [Tooltip("[float] Max time between attacks for it to count towards combo counter.")]
     public float MaxComboDelay;
+    
+    public float BlockCooldown;
     
     //_______________________________________________________________
     [Header("Actions\t\t\t\tX = Startup    Y = Active       Z = Recover")] 
@@ -86,7 +89,9 @@ public class Player : MonoBehaviour
                 MaxComboDelay = authoring.MaxComboDelay,
                 OverrideGravity = authoring.OverrideGravity,
                 CustomGravity = authoring.Gravity,
+                FallGravity   = authoring.FallGravity,
                 CayoteTime    = authoring.CayoteTime,
+                BlockCooldown = authoring.BlockCooldown,
                 // Jump time
                 jStartTime    = authoring.JumpTime.x,
                 jActiveTime   = authoring.JumpTime.y,
@@ -168,11 +173,13 @@ public struct PlayerData : IComponentData
     [GhostField] public float2 Pushback;
     [GhostField] public float MaxComboDelay;
     [GhostField] public bool IsDummy;
+    [GhostField] public float FallGravity;
     [GhostField] public bool OverrideGravity;
     [GhostField] public float CustomGravity;
     [GhostField] public float CayoteTime;
     [GhostField] public float CayoteTimer;
-    
+    [GhostField] public float BlockCooldown;
+    [GhostField] public float BlockTimer;
     // Jump time
     [GhostField] public float jStartTime;
     [GhostField] public float jActiveTime;
@@ -227,6 +234,7 @@ public readonly partial struct PlayerAspect : IAspect
     public float3 Velocity     { get => _velocity.ValueRO.Linear;     set => _velocity.ValueRW.Linear = value;     }
     public float Damping       { get => _damping.ValueRO.Linear;      set => _damping.ValueRW.Linear = value;      }
     public float GravityFactor { get => _gravity.ValueRO.Value;       set => _gravity.ValueRW.Value = value;       }
+    public float FallGravity   { get => _data.ValueRO.FallGravity;    set => _data.ValueRW.FallGravity = value;    }
     public float Acceleration  { get => _data.ValueRO.MovementSpeed;  set => _data.ValueRW.MovementSpeed = value;  }
     public float MaxSpeed      { get => _data.ValueRO.MaxSpeed;       set => _data.ValueRW.MaxSpeed = value;       }
     public float JumpHeight    { get => _data.ValueRO.JumpHeight;     set => _data.ValueRW.JumpHeight = value;     }
@@ -258,7 +266,10 @@ public readonly partial struct PlayerAspect : IAspect
     public float HitTime       { get => _state.ValueRO.HitTime;       set => _state.ValueRW.HitTime = value;       }
     public float MaxComboDelay { get => _data.ValueRO.MaxComboDelay;  set => _data.ValueRW.MaxComboDelay = value;  }
     public float2 Pushback     { get => _data.ValueRO.Pushback;       set => _data.ValueRW.Pushback = value;       }
+    public float BlockCooldown { get => _data.ValueRO.BlockCooldown;  set => _data.ValueRW.BlockCooldown = value;  }
+    public float BlockTimer    { get => _data.ValueRO.BlockTimer;     set => _data.ValueRW.BlockTimer = value;     }
     
     // Misc
     public bool IsDummy        { get => _data.ValueRO.IsDummy;        set => _data.ValueRW.IsDummy = value;        }
+    public int Random          { get => _state.ValueRO.Random;        set => _state.ValueRW.Random = value;        }
 }

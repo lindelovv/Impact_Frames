@@ -4,7 +4,6 @@ using Unity.Entities;
 using Unity.NetCode;
 using Unity.NetCode.Hybrid;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 [BurstCompile]
 [UpdateInGroup(typeof(PresentationSystemGroup))]
@@ -47,11 +46,18 @@ public partial class AnimationSyncSystem : SystemBase
             in SystemAPI.Query<RefRW<PlayerStateComponent>>()
                 .WithAll<GhostPresentationGameObjectPrefabReference, PredictedGhost, PlayerData>()
                 .WithEntityAccess()
-        ) {
-            var animator = _ghostPresentationGameObjectSystem.GetGameObjectForEntity(EntityManager, entity)
-                .GetComponent<Animator>();
+        )
+        {
+            var reference = _ghostPresentationGameObjectSystem.GetGameObjectForEntity(EntityManager, entity);
+            if (!reference)
+            {
+                Debug.Log("GameObject reference null");
+                continue;
+            }
+            var getVFX = reference.GetComponent<VFXGetters>();
+            var animator = reference.GetComponent<Animator>();
             
-            animator.SetInteger(Parameters.Random, Random.Range(0, 2)); // CHANGE DAMAGE TO ITS OWN RANDOM
+            animator.SetInteger(Parameters.Random, playerState.ValueRO.Random); // CHANGE DAMAGE TO ITS OWN RANDOM
             //if (playerState.isPunching)
             //{
             //    Debug.Log(reference.Animator.GetInteger(_parameters.Random));
@@ -68,11 +74,7 @@ public partial class AnimationSyncSystem : SystemBase
             animator.SetBool(   Parameters.IsAnimLocked,      playerState.ValueRO.IsAnimLocked );
             animator.SetBool(   Parameters.IsHit,             playerState.ValueRO.IsHit        );
             animator.SetInteger(Parameters.HitCounter,        playerState.ValueRO.HitCounter   );
-
-            if (playerState.ValueRO.IsHit)
-            {
-                playerState.ValueRW.IsHit = false;
-            }
+            //Debug.Log($"{playerState.ValueRO.IsHit}");
         }
         cmdBuffer.Playback(EntityManager);
         cmdBuffer.Dispose();
