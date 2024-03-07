@@ -98,6 +98,15 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reset"",
+                    ""type"": ""Button"",
+                    ""id"": ""6de796b0-59a0-423f-bc94-5220dc349503"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -105,6 +114,17 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""9d4bc08e-352c-4d28-ae7c-df792ce5ddd5"",
                     ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Punch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""357b1a9b-066b-4506-afdf-75fd38929858"",
+                    ""path"": ""<Keyboard>/j"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -125,8 +145,30 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""905a86a8-5661-4806-9e86-acb5988a1ea8"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Kick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""f65d4d29-c143-4465-a0c1-8ca1bb2747ef"",
                     ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Block/Parry"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""014ba4df-b160-4a8e-a9bd-efa3e5e26de6"",
+                    ""path"": ""<Keyboard>/h"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -232,6 +274,17 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c736f4ac-c367-4b40-abb2-1e9541f0f631"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -248,6 +301,7 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
         m_Combat_SpecialMove = m_Combat.FindAction("SpecialMove", throwIfNotFound: true);
         m_Combat_Dash = m_Combat.FindAction("Dash", throwIfNotFound: true);
         m_Combat_AnimCancel = m_Combat.FindAction("AnimCancel", throwIfNotFound: true);
+        m_Combat_Reset = m_Combat.FindAction("Reset", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -317,6 +371,7 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Combat_SpecialMove;
     private readonly InputAction m_Combat_Dash;
     private readonly InputAction m_Combat_AnimCancel;
+    private readonly InputAction m_Combat_Reset;
     public struct CombatActions
     {
         private @IA_PlayerControls m_Wrapper;
@@ -329,6 +384,7 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @SpecialMove => m_Wrapper.m_Combat_SpecialMove;
         public InputAction @Dash => m_Wrapper.m_Combat_Dash;
         public InputAction @AnimCancel => m_Wrapper.m_Combat_AnimCancel;
+        public InputAction @Reset => m_Wrapper.m_Combat_Reset;
         public InputActionMap Get() { return m_Wrapper.m_Combat; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -362,6 +418,9 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
             @AnimCancel.started += instance.OnAnimCancel;
             @AnimCancel.performed += instance.OnAnimCancel;
             @AnimCancel.canceled += instance.OnAnimCancel;
+            @Reset.started += instance.OnReset;
+            @Reset.performed += instance.OnReset;
+            @Reset.canceled += instance.OnReset;
         }
 
         private void UnregisterCallbacks(ICombatActions instance)
@@ -390,6 +449,9 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
             @AnimCancel.started -= instance.OnAnimCancel;
             @AnimCancel.performed -= instance.OnAnimCancel;
             @AnimCancel.canceled -= instance.OnAnimCancel;
+            @Reset.started -= instance.OnReset;
+            @Reset.performed -= instance.OnReset;
+            @Reset.canceled -= instance.OnReset;
         }
 
         public void RemoveCallbacks(ICombatActions instance)
@@ -417,5 +479,6 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
         void OnSpecialMove(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnAnimCancel(InputAction.CallbackContext context);
+        void OnReset(InputAction.CallbackContext context);
     }
 }

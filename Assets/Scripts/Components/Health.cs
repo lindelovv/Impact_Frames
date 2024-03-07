@@ -20,6 +20,10 @@ public class Health : MonoBehaviour
     }
 }
 
+[GhostComponent(
+    PrefabType = GhostPrefabType.AllPredicted,
+    OwnerSendType = SendToOwnerType.SendToNonOwner
+)]
 public struct HealthComponent : IComponentData
 {
     [GhostField(Quantization=10)] public float Current;

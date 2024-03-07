@@ -1,58 +1,55 @@
+using System.Collections.Generic;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
 using UnityEngine;
 
-public class InputData : MonoBehaviour
+public class Input : MonoBehaviour
 {
     //-----------------------
     [Tooltip("[float2] Movement requested from { w, a, s, d } keypresses."), SerializeField]
     private float2 RequestedMove;
     
-    private class Baker : Baker<InputData>
+    private class Baker : Baker<Input>
     {
-        public override void Bake(InputData authoring)
+        public override void Bake(Input authoring)
         {
-            AddComponent<InputComponentData>(GetEntity(TransformUsageFlags.None));
+            AddComponent<InputData>(GetEntity(TransformUsageFlags.None));
         }
     }
 }
 
-[GhostComponent(PrefabType = GhostPrefabType.AllPredicted, OwnerSendType = SendToOwnerType.SendToNonOwner)]
-public struct InputComponentData : IInputComponentData
+[GhostComponent(
+    PrefabType = GhostPrefabType.AllPredicted,
+    OwnerSendType = SendToOwnerType.SendToNonOwner
+)]
+public struct InputData : IInputComponentData
 {
     // Movement
-    [GhostField] public Vec2Command RequestedMovement;
+    [GhostField] public float2 RequestedMovement;
     
     // Jumping & DoubleJump
-    [GhostField] public BoolCommand RequestJump;
+    [GhostField] public bool RequestJump;
 
     // Punch & HeavyPunch
-    [GhostField] public BoolCommand RequestPunch;
+    [GhostField] public bool RequestPunch;
 
     // Kick & HeavyKick
-    [GhostField] public BoolCommand RequestKick;
+    [GhostField] public bool RequestKick;
 
     // Block
-    [GhostField] public BoolCommand RequestBlockParry;
+    [GhostField] public bool RequestBlock;
+    
+    // Parry
+    [GhostField] public bool RequestParry;
 
     // Dash & AirDash
-
+    [GhostField] public bool RequestDash;
 
     // Special Attack
 
-
     // Animation Cancle
-}
-
-public struct Vec2Command : ICommandData
-{
-    [GhostField] public NetworkTick Tick { get; set; }
-    [GhostField(Quantization=100)] public float2 Value;
-}
-
-public struct BoolCommand : ICommandData
-{
-    [GhostField] public NetworkTick Tick { get; set; }
-    [GhostField] public bool Value;
+    
+    //
+    [GhostField] public bool RequestReset;
 }

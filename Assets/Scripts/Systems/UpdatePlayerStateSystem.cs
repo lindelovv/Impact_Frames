@@ -6,7 +6,8 @@ using Unity.Transforms;
 using UnityEngine;
 
 [BurstCompile]
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup)), UpdateBefore(typeof(PlayerMovementSystem))]
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup)),
+ UpdateBefore(typeof(PlayerMovementSystem))]
 public partial struct UpdatePlayerStateSystem : ISystem
 {
     [BurstCompile]
@@ -21,80 +22,65 @@ public partial struct UpdatePlayerStateSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        var serverTick = SystemAPI.GetSingleton<NetworkTime>().ServerTick;
-        
         foreach (
             var player
             in SystemAPI.Query<PlayerAspect>()
-                //.WithAll<WorldRenderBounds>()
+                .WithAll<Simulate>()
         ) {
-            // Set isGrounded to true if the ray has collision close under player
-            //var left = new float3(player.Position + new float3(-0.5f, -0.99f, 0));
-            //var right = new float3(player.Position + new float3(0.5f, -0.99f, 0));
-            //var slightDownRight = new float3(0.9f, -0.1f, 0);
-            //var slightDownLeft = new float3(-0.9f, -0.1f, 0);
-            //player.IsGrounded = (Physics.Raycast(
-            //    left,
-            //    slightDownRight,
-            //    1f
-            //) || (Physics.Raycast(
-            //    right,
-            //    slightDownLeft,
-            //    1f
-            //)));
-            //Debug.DrawLine(left, left + slightDownRight);
-            //Debug.DrawLine(right, right + slightDownLeft);
-            
+            player.IsBlocking = false;
             player.IsGrounded = (Physics.Raycast(
-                player.Position,
+                player.Position + new float3(0, 1, 0),
                 Vector3.down,
                 1.5f
             ) || Physics.Raycast(
-                player.Position + new float3(0.6f, 0, 0),
+                player.Position + new float3(0.6f, 1, 0),
                 Vector3.down,
                 1.5f
             ) || Physics.Raycast(
-                player.Position + new float3(-0.6f, 0, 0),
+                player.Position + new float3(-0.6f, 1, 0),
                 Vector3.down,
                 1.5f
             ));
-            
+
+            if (player.CayoteTimer > 0)
+            {
+                player.CayoteTimer -= Time.deltaTime; // Lower jump buffer timer
+            }
             if (player.IsGrounded)
             {
-                player.IsJumping = player.Input.RequestJump.Value;
                 player.IsFalling = false;
+                player.CayoteTimer = player.CayoteTime;  // Set jump time buffer to initial time
             }
             else
             {
                 player.IsFalling = player is { Velocity: { y: < 0f } };
-                if (Physics.Raycast(
-                            player.Position,
-                            Vector3.down,
-                            1.5f
-                )) {
-                    // Is falling from high
-                    // toggle on here and turn off somewhere else after landing?
+                //if (Physics.Raycast(
+                //            player.Position,
+                //            Vector3.down,
+                //            1.5f
+                //)) {
+                //    // Is falling from high
+                //    // toggle on here and turn off somewhere else after landing?
+                //}
+            }
+            if (!player.IsAnimLocked)
+            {
+                var isMoving = (player.Input.RequestedMovement != float2.zero);
+
+                // Character rotation
+                if (isMoving.x)
+                {
+                    player.IsMoving = true;
+                    player.IsFacingRight = (player.Input.RequestedMovement.x > 0.0f);
+                }
+                else if (!isMoving.y)
+                {
+                    player.IsMoving = false;
                 }
             }
-            
-            var isMoving = (player.Input.RequestedMovement.Value != float2.zero);
-            
-            // Character rotation
-            if (isMoving.x)
-            {
-                player.IsMoving = true;
-                player.IsFacingRight = (player.Input.RequestedMovement.Value.x > 0.0f);
-            }
-            else if (!isMoving.y)
+            else
             {
                 player.IsMoving = false;
-            }
-
-            player.IsBlocking = player.Input.RequestBlockParry.Value;
-            if (!player.IsBlocking)
-            {
-                player.IsPunching = player.Input.RequestPunch.Value;
-                Debug.Log($"{ player.Input.RequestPunch.Value} + KNAPPTRYCK");
             }
         }
     }

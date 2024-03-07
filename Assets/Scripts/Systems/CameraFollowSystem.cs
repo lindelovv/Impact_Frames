@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Collections;
 using Unity.Entities;
 using Unity.NetCode;
 using Unity.Transforms;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 [UpdateAfter(typeof(TransformSystemGroup))]
 [WorldSystemFilter(WorldSystemFilterFlags.ClientSimulation)]
@@ -15,7 +11,7 @@ public partial class UpdateCameraTargetSystem : SystemBase
 
     protected override void OnCreate()
     {
-        RequireForUpdate<InputComponentData>();
+        RequireForUpdate<InputData>();
         RequireForUpdate<NetworkId>();
     }
 

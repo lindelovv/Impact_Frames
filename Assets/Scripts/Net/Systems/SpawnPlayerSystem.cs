@@ -1,4 +1,5 @@
-﻿using Unity.Collections;
+﻿using System;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
@@ -25,26 +26,30 @@ public partial class SpawnPlayerSystem : SystemBase
     {
         var prefab = SystemAPI.GetSingleton<SpawnerComponent>().Player;
         var spawnPoint = SystemAPI.GetSingleton<SpawnerComponent>().SpawnPoint;
-        var commandBuffer = new EntityCommandBuffer(Allocator.Temp);
+        var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
         Entities
             .WithStoreEntityQueryInField(ref _newPlayers)
             .WithNone<PlayerSpawned>()
             .ForEach((Entity connectionEntity, in NetworkStreamInGame req, in NetworkId networkId) =>
             {
                 Debug.Log($"Spawning player for connection {networkId.Value}");
-                var player = commandBuffer.Instantiate(prefab);
+                var player = cmdBuffer.Instantiate(prefab);
+
+                cmdBuffer.SetComponent(player, new GhostOwner { NetworkId = networkId.Value });
+
+                cmdBuffer.AppendToBuffer(connectionEntity, new LinkedEntityGroup {Value = player});
+
+                cmdBuffer.AddComponent(player, new ConnectionOwner { Entity = connectionEntity });
+                cmdBuffer.SetComponent(player, new PlayerId { Value = (Int16)networkId.Value });
                 
-                commandBuffer.SetComponent(player, new GhostOwner { NetworkId = networkId.Value });
-
-                commandBuffer.AddComponent<PlayerSpawned>(connectionEntity);
-                commandBuffer.AddComponent<InitAnimations>(connectionEntity);
-
-                commandBuffer.AppendToBuffer(connectionEntity, new LinkedEntityGroup {Value = player});
-
-                commandBuffer.AddComponent(player, new ConnectionOwner { Entity = connectionEntity });
-                commandBuffer.SetComponent(player, spawnPoint);
+                cmdBuffer.SetComponent(player, spawnPoint);
+                cmdBuffer.AddComponent(player, new SpawnPoint {
+                    Position = spawnPoint.Position,
+                });
+                
+                cmdBuffer.AddComponent<PlayerSpawned>(connectionEntity);
             }
         ).Run();
-        commandBuffer.Playback(EntityManager);
+        cmdBuffer.Playback(EntityManager);
     }
 }
