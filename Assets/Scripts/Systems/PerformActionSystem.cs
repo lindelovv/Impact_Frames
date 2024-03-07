@@ -6,10 +6,12 @@ using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Physics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [BurstCompile]
 [UpdateInGroup(typeof(PredictedSimulationSystemGroup)),
  UpdateAfter(typeof(UpdatePlayerStateSystem))]
+ //UpdateBefore(typeof(UpdatePlayerStateSystem))]
 public partial struct PerformActionSystem : ISystem
 {
     [BurstCompile]
@@ -89,6 +91,7 @@ public partial struct PerformActionSystem : ISystem
                         case ActionState.Startup:  { player.IsPunching = true; break; }
                         case ActionState.Active:
                         {
+                            player.Random = Random.Range(0, 2);
                             Punch(
                                 player.Self,
                                 player.IsFacingRight ? 1 : -1,
@@ -98,6 +101,7 @@ public partial struct PerformActionSystem : ISystem
                                 ref state,
                                 ref collisionWorld
                             );
+                            player.HitTime = Time.time;
                             break;
                         }
                         case ActionState.Recovery: { player.IsPunching = false; break; }
@@ -122,6 +126,7 @@ public partial struct PerformActionSystem : ISystem
                                 ref state,
                                 ref collisionWorld
                             );
+                            player.HitTime = Time.time;
                             break;
                         }
                         case ActionState.Recovery: { player.IsPunching = false; break; }
@@ -137,6 +142,7 @@ public partial struct PerformActionSystem : ISystem
                         case ActionState.Startup:  { player.IsKicking = true; break; }
                         case ActionState.Active:
                         {
+                            player.Random = Random.Range(0, 2);
                             Kick(
                                 player.Self,
                                 player.IsFacingRight ? 1 : -1,
@@ -146,6 +152,7 @@ public partial struct PerformActionSystem : ISystem
                                 ref state,
                                 ref collisionWorld
                             );
+                            player.HitTime = Time.time;
                             break;
                         }
                         case ActionState.Recovery: { player.IsKicking = false; break; }
@@ -170,6 +177,7 @@ public partial struct PerformActionSystem : ISystem
                                 ref state,
                                 ref collisionWorld
                             );
+                            player.HitTime = Time.time;
                             break;
                         }
                         case ActionState.Recovery: { player.IsKicking = false; break; }
@@ -185,10 +193,8 @@ public partial struct PerformActionSystem : ISystem
                         case ActionState.Startup:  { player.IsBlocking = true; break; }
                         case ActionState.Active:
                         {
-                            Debug.Log("Block");
                             if (!player.Input.RequestBlock)
                             {
-                                Debug.Log("Cancel Block");
                                 player.IsBlocking = false;
                                 player.IsAnimLocked = false;
                                 cmdBuffer.RemoveComponent<DoAction>(player.Self);
@@ -196,7 +202,11 @@ public partial struct PerformActionSystem : ISystem
                             }
                             break;
                         }
-                        case ActionState.Recovery: { player.IsBlocking = false; break; }
+                        case ActionState.Recovery:
+                        {
+                            player.BlockTimer = player.BlockCooldown;
+                            player.IsBlocking = false; break;
+                        }
                         case ActionState.Finished: { break; }
                     }
                     break;
@@ -214,12 +224,11 @@ public partial struct PerformActionSystem : ISystem
                     {
                         case ActionState.Startup:  { player.IsHit = true; break; }
                         case ActionState.Active:   { cmdBuffer.RemoveComponent<DoAction>(player.Self); break; }
-                        case ActionState.Recovery: { player.IsHit = false; break; }
+                        case ActionState.Recovery: { player.IsHit = false; player.IsFallingHigh = false; break; }
                         case ActionState.Finished: { break; }
                     }
                     break;
                 }
-                
             }
             if (!action.Repeating)
             {
@@ -243,7 +252,9 @@ public partial struct PerformActionSystem : ISystem
             && entity != self 
             && entityManager.HasComponent<HealthComponent>(entity)
         ) {
-            cmdBuffer.AddComponent<TakeDamage>(entity);
+            cmdBuffer.AddComponent(entity, new TakeDamage {
+                Amount = 1,
+            });
             
             cmdBuffer.AddComponent(entity, new ApplyImpact {
                 Amount = new float2(forward * pushback),
@@ -264,7 +275,9 @@ public partial struct PerformActionSystem : ISystem
             && entity != self 
             && entityManager.HasComponent<HealthComponent>(entity)
         ) {
-            cmdBuffer.AddComponent<TakeDamage>(entity);
+            cmdBuffer.AddComponent(entity, new TakeDamage {
+                Amount = 1,
+            });
             
             cmdBuffer.AddComponent(entity, new ApplyImpact {
                 Amount = new float2(forward * pushback),
@@ -285,7 +298,9 @@ public partial struct PerformActionSystem : ISystem
             && entity != self 
             && entityManager.HasComponent<HealthComponent>(entity)
         ) {
-            cmdBuffer.AddComponent<TakeDamage>(entity);
+            cmdBuffer.AddComponent(entity, new TakeDamage {
+                Amount = 1,
+            });
             
             cmdBuffer.AddComponent(entity, new ApplyImpact {
                 Amount = new float2(forward * pushback),
@@ -306,7 +321,9 @@ public partial struct PerformActionSystem : ISystem
             && entity != self 
             && entityManager.HasComponent<HealthComponent>(entity)
         ) {
-            cmdBuffer.AddComponent<TakeDamage>(entity);
+            cmdBuffer.AddComponent(entity, new TakeDamage {
+                Amount = 1,
+            });
             
             cmdBuffer.AddComponent(entity, new ApplyImpact {
                 Amount = new float2(forward * pushback),

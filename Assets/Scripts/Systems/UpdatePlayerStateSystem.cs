@@ -27,7 +27,6 @@ public partial struct UpdatePlayerStateSystem : ISystem
             in SystemAPI.Query<PlayerAspect>()
                 .WithAll<Simulate>()
         ) {
-            player.IsBlocking = false;
             player.IsGrounded = (Physics.Raycast(
                 player.Position + new float3(0, 1, 0),
                 Vector3.down,
@@ -41,7 +40,11 @@ public partial struct UpdatePlayerStateSystem : ISystem
                 Vector3.down,
                 1.5f
             ));
-
+            
+            if (!player.IsBlocking)
+            {
+                player.BlockTimer -= Time.deltaTime;
+            }
             if (player.CayoteTimer > 0)
             {
                 player.CayoteTimer -= Time.deltaTime; // Lower jump buffer timer
@@ -73,10 +76,14 @@ public partial struct UpdatePlayerStateSystem : ISystem
                     player.IsMoving = true;
                     player.IsFacingRight = (player.Input.RequestedMovement.x > 0.0f);
                 }
-                else if (!isMoving.y)
+                else
                 {
                     player.IsMoving = false;
                 }
+                //else if (!isMoving.y)
+                //{
+                //    player.IsMoving = false;
+                //}
             }
             else
             {

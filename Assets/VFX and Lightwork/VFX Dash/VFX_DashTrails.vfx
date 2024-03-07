@@ -63,8 +63,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 6055
     y: 877
-    width: 4831
-    height: 2945
+    width: 4830
+    height: 2940
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -251,7 +251,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615781}
   m_ExposedName: Target
   m_Exposed: 1
-  m_Order: 1
+  m_Order: 0
   m_Category: 
   m_Min:
     m_Type:
@@ -13271,7 +13271,7 @@ MonoBehaviour:
   - {fileID: 8926484042661617120}
   m_ExposedName: SetLifeTime_EnergyBall
   m_Exposed: 1
-  m_Order: 2
+  m_Order: 1
   m_Category: 
   m_Min:
     m_Type:

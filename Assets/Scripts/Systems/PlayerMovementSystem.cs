@@ -44,7 +44,7 @@ public partial struct PlayerMovementSystem : ISystem
                 else
                 {
                     player.GravityFactor = player is { IsGrounded: false, Velocity: { y: <= 1.0f } }
-                        ? 5
+                        ? player.FallGravity
                         : 1;
                 }
             }

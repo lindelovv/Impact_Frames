@@ -3,12 +3,11 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Physics;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 [RequireMatchingQueriesForUpdate]
 [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 //[UpdateAfter(typeof(PhysicsSystemGroup))]
-public partial struct TriggerEventSystem : ISystem
+public partial struct OneOffTriggerEventSystem : ISystem
 {
     [BurstCompile]
     public void OnCreate(ref SystemState state)
@@ -21,12 +20,11 @@ public partial struct TriggerEventSystem : ISystem
     {
         var cmdBuffer = new EntityCommandBuffer(Allocator.TempJob);
         foreach (
-            var (fallingObjectData, entity)
-            in SystemAPI.Query<FallingObjectData>()
+            var (_, entity)
+            in SystemAPI.Query<SingleTimeTriggerTag>()
                 .WithEntityAccess()
         ) {
-            state.Dependency = new TriggerEventJob {
-                FallingObjectData = SystemAPI.GetComponentLookup<FallingObjectData>(),
+            state.Dependency = new OneOffTriggerEventJob {
                 Entity = entity,
                 Manager = state.EntityManager,
                 CmdBuffer = cmdBuffer,
@@ -38,19 +36,14 @@ public partial struct TriggerEventSystem : ISystem
     }
 
     [BurstCompile]
-    struct TriggerEventJob : ITriggerEventsJob
+    struct OneOffTriggerEventJob : ITriggerEventsJob
     {
-        public ComponentLookup<FallingObjectData> FallingObjectData;
         public Entity Entity;
         public EntityManager Manager;
         public EntityCommandBuffer CmdBuffer;
 
         public void Execute(TriggerEvent triggerEvent)
         {
-            Debug.Log($"{Manager.GetName(triggerEvent.EntityA)}");
-            Debug.Log($"{Manager.HasComponent<SingleTimeTriggerTag>(triggerEvent.EntityA)}");
-            Debug.Log($"{Manager.GetName(triggerEvent.EntityB)}");
-            Debug.Log($"{Manager.HasComponent<SingleTimeTriggerTag>(triggerEvent.EntityB)}");
             if (Manager.HasComponent<SingleTimeTriggerTag>(triggerEvent.EntityA))
             {
                 Debug.Log("A has player data");
@@ -61,6 +54,15 @@ public partial struct TriggerEventSystem : ISystem
                 Debug.Log("B has player data");
                 CmdBuffer.RemoveComponent<PhysicsCollider>(triggerEvent.EntityA);
             }
+            return;
+            
+            //if (triggerEvent.EntityA == Player || triggerEvent.EntityB == Player) { Debug.Log("One is player :-)"); return; }
+            //
+            //Debug.Log("Remove collider");
+            //var (player, other) = (triggerEvent.EntityA == Player) 
+            //    ? (triggerEvent.EntityA, triggerEvent.EntityB) 
+            //    : (triggerEvent.EntityB, triggerEvent.EntityA);
+            //CmdBuffer.RemoveComponent<PhysicsCollider>(other);
         }
     }
 }
