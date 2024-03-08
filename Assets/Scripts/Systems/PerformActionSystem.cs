@@ -223,7 +223,12 @@ public partial struct PerformActionSystem : ISystem
                     switch (action.State)
                     {
                         case ActionState.Startup:  { player.IsHit = true; break; }
-                        case ActionState.Active:   { cmdBuffer.RemoveComponent<DoAction>(player.Self); break; }
+                        case ActionState.Active:
+                        {
+                            player.Random = Random.Range(0, 2);
+                            cmdBuffer.RemoveComponent<DoAction>(player.Self);
+                            break;
+                        }
                         case ActionState.Recovery: { player.IsHit = false; player.IsFallingHigh = false; break; }
                         case ActionState.Finished: { break; }
                     }

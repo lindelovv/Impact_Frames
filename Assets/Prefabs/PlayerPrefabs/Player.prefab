@@ -226,7 +226,7 @@ MonoBehaviour:
     y: 0.1
     z: 0.2
   HeavyPunchTime:
-    x: 0.2
+    x: 0.3
     y: 0.2
     z: 0.2
   KickTime:
@@ -234,7 +234,7 @@ MonoBehaviour:
     y: 0.1
     z: 0.2
   HeavyKickTime:
-    x: 0.2
+    x: 0.3
     y: 0.2
     z: 0.2
   IsDummy: 0
@@ -300,7 +300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c79d771cedb4794bf100ce60df5f764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultGhostMode: 2
+  DefaultGhostMode: 1
   SupportedGhostModes: 3
   OptimizationMode: 0
   Importance: 999

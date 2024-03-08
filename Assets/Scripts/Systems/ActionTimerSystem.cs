@@ -10,6 +10,7 @@ public partial struct ActionTimerSystem : ISystem
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<Action>();
+        state.RequireForUpdate<NetworkTime>();
     }
 
     public void OnUpdate(ref SystemState state)

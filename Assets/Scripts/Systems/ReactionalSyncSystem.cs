@@ -17,7 +17,7 @@ public partial struct ReactionalSyncSystem : ISystem
             in SystemAPI.Query<RefRW<PlayerStateComponent>>()
         ) {
             var timeToBeat = Reactional.Playback.MusicSystem.GetTimeToBeat(2);
-            if (timeToBeat < 1f)
+            if (timeToBeat < .5f)
             {
                 playerState.ValueRW.IsOnBeat = true;
                 if (playerState.ValueRO is { IsJumping: true, IsGrounded: false } && _canPlayStinger)
@@ -28,7 +28,7 @@ public partial struct ReactionalSyncSystem : ISystem
             }
             else
             {
-                _canPlayStinger = true;
+                if (!playerState.ValueRO.IsGrounded) { _canPlayStinger = true; }
                 playerState.ValueRW.IsOnBeat = false;
             }
         }
