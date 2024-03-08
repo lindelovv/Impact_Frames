@@ -31,7 +31,7 @@ public partial struct InitActionSystem : ISystem
             if (!player.IsAnimLocked)
             {
                 // Check if you have Coyote or Groundbuffer
-                if (player.Input.RequestJump && (player.IsGrounded || player.CayoteTimer > 0))
+                if (player.Input.RequestJump && ((player.IsGrounded || player.CayoteTimer > 0) || player.IsOnBeat))
                 {
                     cmdBuffer.AddComponent(player.Self, new Action
                     {

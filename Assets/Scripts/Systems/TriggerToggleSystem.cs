@@ -2,13 +2,10 @@
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Physics;
-using UnityEngine;
-using UnityEngine.EventSystems;
 
 [RequireMatchingQueriesForUpdate]
 [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-//[UpdateAfter(typeof(PhysicsSystemGroup))]
-public partial struct TriggerEventSystem : ISystem
+public partial class TriggerToggleSystem : SystemBase
 {
     [BurstCompile]
     public void OnCreate(ref SystemState state)
@@ -17,31 +14,31 @@ public partial struct TriggerEventSystem : ISystem
     }
 
     [BurstCompile]
-    public void OnUpdate(ref SystemState state)
+    protected override void OnUpdate()
     {
         var cmdBuffer = new EntityCommandBuffer(Allocator.TempJob);
         foreach (
-            var (fallingObjectData, entity)
-            in SystemAPI.Query<FallingObjectData>()
+            var (thoughtBubble, entity)
+            in SystemAPI.Query<PlayerData>()
                 .WithEntityAccess()
         ) {
-            state.Dependency = new TriggerEventJob {
+            Dependency = new TriggerToggleJob {
                 FallingObjectData = SystemAPI.GetComponentLookup<FallingObjectData>(),
-                Entity = entity,
-                Manager = state.EntityManager,
+                ThoughtBubble = entity,
+                Manager = EntityManager,
                 CmdBuffer = cmdBuffer,
-            }.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
-            state.Dependency.Complete();
+            }.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), Dependency);
+            Dependency.Complete();
         }
-        cmdBuffer.Playback(state.EntityManager);
+        cmdBuffer.Playback(EntityManager);
         cmdBuffer.Dispose();
     }
 
     [BurstCompile]
-    struct TriggerEventJob : ITriggerEventsJob
+    struct TriggerToggleJob : ITriggerEventsJob
     {
         public ComponentLookup<FallingObjectData> FallingObjectData;
-        public Entity Entity;
+        public Entity ThoughtBubble;
         public EntityManager Manager;
         public EntityCommandBuffer CmdBuffer;
 
@@ -51,16 +48,14 @@ public partial struct TriggerEventSystem : ISystem
             //Debug.Log($"{Manager.HasComponent<SingleTimeTriggerTag>(triggerEvent.EntityA)}");
             //Debug.Log($"{Manager.GetName(triggerEvent.EntityB)}");
             //Debug.Log($"{Manager.HasComponent<SingleTimeTriggerTag>(triggerEvent.EntityB)}");
-            if (Manager.HasComponent<SingleTimeTriggerTag>(triggerEvent.EntityA))
-            {
-                Debug.Log("A has player data");
-                CmdBuffer.RemoveComponent<PhysicsCollider>(triggerEvent.EntityB);
-            }
-            if (Manager.HasComponent<SingleTimeTriggerTag>(triggerEvent.EntityA))
-            {
-                Debug.Log("B has player data");
-                CmdBuffer.RemoveComponent<PhysicsCollider>(triggerEvent.EntityA);
-            }
+            //if (Manager.HasComponent<SingleTimeTriggerTag>(triggerEvent.EntityA))
+            //{
+            //    Debug.Log("A has player data");
+            //}
+            //if (Manager.HasComponent<SingleTimeTriggerTag>(triggerEvent.EntityA))
+            //{
+            //    Debug.Log("B has player data");
+            //}
         }
     }
 }

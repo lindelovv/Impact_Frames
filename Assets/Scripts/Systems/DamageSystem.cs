@@ -23,14 +23,9 @@ public partial struct DamageSystem : ISystem
             health.ValueRW.Current -= damage.Amount;
             Debug.Log($"{state.EntityManager.GetName(entity)} Health: {health.ValueRO.Current}");
             
-
-            //playerState.ValueRW.IsHit = true;
             cmdBuffer.RemoveComponent<TakeDamage>(entity);
-            var connectionId = state.EntityManager.GetComponentData<NetworkId>(entity).Value;
-            if (health.ValueRO.Current <= 0) { cmdBuffer.DestroyEntity(entity); UIManager.instance.DecreaseLife(connectionId); }
-            UIManager.instance.UpdateHealth(health.ValueRW.Current, connectionId);
-
             
+            cmdBuffer.RemoveComponent<Action>(entity);
             cmdBuffer.AddComponent(entity, new Action {
                 Name = ActionName.HitStun,
                 Repeating = false,
@@ -44,9 +39,12 @@ public partial struct DamageSystem : ISystem
             if (id.Value != 0)
             {
                 // Update UI
-                UIManager.instance.UpdateHealth(health.ValueRW.Current, id.Value);
+                UIManager.instance.UpdateHealth(health.ValueRO.Current, id.Value);
                 if (health.ValueRO.Current <= 0)
                 {
+                    cmdBuffer.AddComponent<Respawn>(entity);
+                    health.ValueRW.Current = health.ValueRO.Max;
+                    UIManager.instance.UpdateHealth(health.ValueRO.Current, id.Value);
                     UIManager.instance.DecreaseLife(id.Value);
                 }
             }

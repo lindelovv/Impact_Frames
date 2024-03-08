@@ -226,7 +226,7 @@ MonoBehaviour:
     y: 0.1
     z: 0.2
   HeavyPunchTime:
-    x: 0.2
+    x: 0.3
     y: 0.2
     z: 0.2
   KickTime:
@@ -234,7 +234,7 @@ MonoBehaviour:
     y: 0.1
     z: 0.2
   HeavyKickTime:
-    x: 0.2
+    x: 0.3
     y: 0.2
     z: 0.2
   IsDummy: 0
