@@ -11,6 +11,7 @@ public class Sound_MusicController : MonoBehaviour
 
     [Header("Audio Source Parameters: ")]
     public float volume = 0.3f;
+    public bool isLooping = true;
     
     [Header("Audio Mixer Parameters: ")]
     public bool useMixer;
@@ -35,13 +36,18 @@ public class Sound_MusicController : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        source.volume = volume;
+    }
+
     void HandleAudioSource()
     {
 
         source = GetComponent<AudioSource>();
         source.clip = clip;
         source.volume = volume;
-        source.loop = true;
+        source.loop = isLooping;
         source.Play();
 
         if (useMixer == true)
