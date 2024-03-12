@@ -1,5 +1,4 @@
-﻿using System;
-using Unity.Burst;
+﻿using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -9,8 +8,8 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [BurstCompile]
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup)),
- UpdateAfter(typeof(UpdatePlayerStateSystem))]
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
+ //UpdateAfter(typeof(UpdatePlayerStateSystem))]
  //UpdateBefore(typeof(UpdatePlayerStateSystem))]
 public partial struct PerformActionSystem : ISystem
 {

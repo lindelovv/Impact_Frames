@@ -1,26 +1,6 @@
 ﻿using Unity.Entities;
 using Unity.NetCode;
 
-[GhostComponent(
-    PrefabType = GhostPrefabType.AllPredicted,
-    OwnerSendType = SendToOwnerType.SendToNonOwner
-)]
-public struct Action : IComponentData
-{
-    [GhostField] public ActionName Name;
-    [GhostField] public ActionState State;
-    [GhostField] public float StartTime;
-    [GhostField] public float ActiveTime;
-    [GhostField] public float RecoverTime;
-    [GhostField] public bool Repeating;
-}
-
-[GhostComponent(
-    PrefabType = GhostPrefabType.AllPredicted,
-    OwnerSendType = SendToOwnerType.SendToNonOwner
-)]
-public struct DoAction : IComponentData { }
-
 public enum ActionState
 {
     Startup,
@@ -41,3 +21,25 @@ public enum ActionName
     Parry,
     HitStun,
 }
+
+[GhostComponent(
+    PrefabType = GhostPrefabType.AllPredicted,
+    OwnerSendType = SendToOwnerType.SendToNonOwner,
+    SendTypeOptimization = GhostSendType.AllClients
+)]
+public struct Action : IComponentData
+{
+    [GhostField] public ActionName Name;
+    [GhostField] public ActionState State;
+    [GhostField] public float StartTime;
+    [GhostField] public float ActiveTime;
+    [GhostField] public float RecoverTime;
+    [GhostField] public bool Repeating;
+}
+
+[GhostComponent(
+    PrefabType = GhostPrefabType.AllPredicted,
+    OwnerSendType = SendToOwnerType.SendToNonOwner,
+    SendTypeOptimization = GhostSendType.AllClients
+)]
+public struct DoAction : IComponentData { }

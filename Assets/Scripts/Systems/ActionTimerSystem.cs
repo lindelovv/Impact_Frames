@@ -3,7 +3,7 @@ using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
 
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup)),
+[UpdateInGroup(typeof(SimulationSystemGroup)),
  UpdateBefore(typeof(InitActionSystem))]
 public partial struct ActionTimerSystem : ISystem
 {

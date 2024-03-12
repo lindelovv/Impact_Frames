@@ -3,7 +3,6 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Physics;
-using Unity.Physics.GraphicsIntegration;
 using Unity.Transforms;
 
 public class Player : MonoBehaviour
@@ -161,10 +160,6 @@ public class Player : MonoBehaviour
 }
 
 // Player-unique data
-[GhostComponent(
-    PrefabType=GhostPrefabType.AllPredicted,
-    OwnerSendType = SendToOwnerType.SendToNonOwner
-)]
 public struct PlayerData : IComponentData
 {
     [GhostField] public float MovementSpeed;
