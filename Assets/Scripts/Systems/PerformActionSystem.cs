@@ -369,7 +369,6 @@ public partial struct PerformActionSystem : ISystem
     [BurstCompile]
     private void Block(PlayerAspect player)
     {
-        
         //Debug.Log("Block");
     }
 

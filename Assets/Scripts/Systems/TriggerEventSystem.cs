@@ -1,7 +1,9 @@
 ﻿using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Physics;
+using Unity.Transforms;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -19,47 +21,41 @@ public partial struct TriggerEventSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        var cmdBuffer = new EntityCommandBuffer(Allocator.TempJob);
-        foreach (
-            var (fallingObjectData, entity)
-            in SystemAPI.Query<FallingObjectData>()
-                .WithEntityAccess()
-        ) {
-            state.Dependency = new TriggerEventJob {
-                FallingObjectData = SystemAPI.GetComponentLookup<FallingObjectData>(),
-                Entity = entity,
-                Manager = state.EntityManager,
-                CmdBuffer = cmdBuffer,
-            }.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
-            state.Dependency.Complete();
-        }
-        cmdBuffer.Playback(state.EntityManager);
-        cmdBuffer.Dispose();
+        var query = SystemAPI.QueryBuilder()
+            .WithAllRW<PhysicsVelocity>()
+            .WithAll<LocalTransform, PhysicsMass>()
+            .WithNone<StatefulTriggerEvent>()
+            .Build();
+        
+        new TriggerEventJob {
+            NonTriggerDynamicBodyMask = query.GetEntityQueryMask(),
+            StepComponent = SystemAPI.HasSingleton<PhysicsStep>()
+                ? SystemAPI.GetSingleton<PhysicsStep>()
+                : PhysicsStep.Default,
+            DeltaTime = SystemAPI.Time.DeltaTime,
+            LocalTransforms = SystemAPI.GetComponentLookup<LocalTransform>(),
+            Velocities = SystemAPI.GetComponentLookup<PhysicsVelocity>(),
+            Masses = SystemAPI.GetComponentLookup<PhysicsMass>(),
+        }.Schedule();
     }
 
     [BurstCompile]
-    struct TriggerEventJob : ITriggerEventsJob
+    partial struct TriggerEventJob : IJobEntity
     {
-        public ComponentLookup<FallingObjectData> FallingObjectData;
-        public Entity Entity;
-        public EntityManager Manager;
-        public EntityCommandBuffer CmdBuffer;
+        public EntityQueryMask NonTriggerDynamicBodyMask;
+        public PhysicsStep StepComponent;
+        public float DeltaTime;
+        [ReadOnly] public ComponentLookup<LocalTransform> LocalTransforms;
+        [ReadOnly] public ComponentLookup<PhysicsMass> Masses;
+        public ComponentLookup<PhysicsVelocity> Velocities;
 
-        public void Execute(TriggerEvent triggerEvent)
+        public void Execute(Entity entity, ref DynamicBuffer<StatefulTriggerEvent> triggerEventBuffer)
         {
-            //Debug.Log($"{Manager.GetName(triggerEvent.EntityA)}");
-            //Debug.Log($"{Manager.HasComponent<SingleTimeTriggerTag>(triggerEvent.EntityA)}");
-            //Debug.Log($"{Manager.GetName(triggerEvent.EntityB)}");
-            //Debug.Log($"{Manager.HasComponent<SingleTimeTriggerTag>(triggerEvent.EntityB)}");
-            if (Manager.HasComponent<SingleTimeTriggerTag>(triggerEvent.EntityA))
+            foreach (var triggerEvent in triggerEventBuffer)
             {
-                Debug.Log("A has player data");
-                CmdBuffer.RemoveComponent<PhysicsCollider>(triggerEvent.EntityB);
-            }
-            if (Manager.HasComponent<SingleTimeTriggerTag>(triggerEvent.EntityA))
-            {
-                Debug.Log("B has player data");
-                CmdBuffer.RemoveComponent<PhysicsCollider>(triggerEvent.EntityA);
+                var other = triggerEvent.GetOtherEntity(entity);
+                var velocity = Velocities[other];
+                velocity.Linear += new float3(1, 1, 0);
             }
         }
     }
