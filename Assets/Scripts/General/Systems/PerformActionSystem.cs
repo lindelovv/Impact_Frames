@@ -75,6 +75,7 @@ public partial struct PerformActionSystem : ISystem
                         case ActionState.Startup:  { player.IsDashing = true; break; }
                         case ActionState.Active:
                         {
+                            // note: maybe add some Y velocity
                             player.Velocity = new float3((player.IsFacingRight ? 20f : -20f), player.Velocity.y, 0);
                             break;
                         }
