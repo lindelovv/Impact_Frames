@@ -45,18 +45,14 @@ public class Sound_AmbianceController : MonoBehaviour
     {
         if(instance == null){
             instance = this;
-        } 
+        }
 
-
-    }
-
-    void Start()
-    {
         HandleMainAmbiance();
         HandleAudioSources();
 
     }
 
+  
     void HandleAudioSources()
     {
         // Makes a childObject with the new AudioSources that you use and fill them with the AudioClips

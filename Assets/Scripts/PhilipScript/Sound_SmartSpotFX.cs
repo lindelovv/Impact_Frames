@@ -4,138 +4,160 @@ using UnityEngine;
 
 
 
+
+/*
+ * Set Tags on Occlusion Objects that match the OcclusionDetectionTag
+ * And Add a Collider (non Trigger) on the Object for the Raycast to work
+ * Set RaycastLength in Inspector
+ * set MaxDistance for AudioSource Sphere if enableDistanceCulling is true
+ */
 [RequireComponent(typeof(AudioLowPassFilter))]
+[RequireComponent(typeof(AudioSource))]
 public class Sound_SmartSpotFX : MonoBehaviour
 {
     [SerializeField] GameObject AudioListnerGameObject;
     private AudioSource audioSource;
+    public string AudioListnerTag;
     
     [Header("Occlusion: ")]
     public float lpfFreq_Low = 1000f;
     public float lpfFreq_High = 22000f;
-    public bool Set_Occlusion;
+    public bool enableOcclusionDetection;
+    public string OcclusionDetectionTag;
 
     private AudioLowPassFilter lpFilter;
-    private float rayCastLength = 15f;
+    public float rayCastLength = 15f;
 
-    [Header("Rescource Awareness: ")]
-    public bool Set_AwareAudioListener;
+    [Header("Rescource Aware Audio Source: ")]
+    public bool enableDistanceCulling;
+    public float audioSourceMaxDistance;
     public bool DebugDistance;
-    private float maxDistance; // Sätts via AudioSource'n i Inspector
-
-
-    // FOR OCCLUSION, ADD COLLIDER(Not triggered) AND TAGG WALL
+    
 
     void Start()
     {
-        AudioListnerGameObject = GameObject.Find("FPSController"); // Find GameObject With AudioListener
+
+        //AudioListnerTag = AudioListnerGameObject.tag;
+        //AudioListnerGameObject = GameObject.Find(AudioListnerTag); // Find GameObject With AudioListener
         audioSource = GetComponent<AudioSource>();
         lpFilter = GetComponent<AudioLowPassFilter>();
         
         
 
         
-        maxDistance = audioSource.maxDistance; // läs av ljudkällans maxDistance (3D-sfär)
+        audioSourceMaxDistance = audioSource.maxDistance; // Reads the 3d-Sphere of the AudioSource
         
         if(DebugDistance == true)
         {
-            maxDistance = 5f;                     // För debugging
-            Debug.Log("Debuging max distance at: " + maxDistance);
+            audioSourceMaxDistance = 5f;                     // Debug
+            Debug.Log("Debuging max distance at: " + audioSourceMaxDistance);
         }
-        
-
-
     }
 
 
     void Update()
     {
-        if(Set_Occlusion == true)
+        if(enableOcclusionDetection == true)
         {
-            runOcclusion();
+            setLowpassFreq();
         }
 
-        if(Set_AwareAudioListener == true)
+        if(enableDistanceCulling == true)
         {
-            RunDistanceAwareAudioSource();
+            setDistanceCulling();
         }
        
 
 
     }
 
-    void runOcclusion()
+    /**
+     * When an object is identified the method handels proper lowPassFrequency for "Occlusion"
+     */
+
+    void setLowpassFreq()
     {
 
-        // När en vägg identifierats mellan ljudkälla och lyssnare så "aktiveras" lågpassfiltret.
-        bool occlusion = GetOcclusion(AudioListnerGameObject, rayCastLength);
+        // Can be set in Inspector if Default Value isnt wished for
         float lpfFreq;
-        if (occlusion)
+        if (isSoundOccluded(AudioListnerGameObject, rayCastLength))
         {
-            lpfFreq = lpfFreq_Low; // Set in Inspector
+            lpfFreq = lpfFreq_Low;
         }
         else
         {
-            lpfFreq = lpfFreq_High; // Set in Inspector
+            lpfFreq = lpfFreq_High; 
         }
         lpFilter.cutoffFrequency = lpfFreq;
         // Debug.Log("lpf_freq = " + lpfFreq);  //Debug on/off
 
     }
 
-    private bool GetOcclusion(GameObject obj, float distance)
+    /**
+     * Bool check if the sound is occluded with raycast
+     * Checks from the in Object (Audio Listener) with the set distance (In Inspector)
+     * 1.Direction for raycast [between the scene's AudioListener and the sound source, i.e., our position]
+     * 2. Mark raycast with line https://docs.unity3d.com/ScriptReference/Debug.DrawRay.html
+     * 3.The Physics.Raycast method returns true if there is an obstacle between the sound source and listener
+     * When the raycast identifies an obstacle, information about the identified obstacle is stored in the object occluderRayHit
+     * 4. Check your tag name OcclusionDetectionTag to ensure that it is a valid obstacle
+     */
+    private bool isSoundOccluded(GameObject obj, float distance)
     {
 
-        // Riktning för raycast [mellan scenens AudioListener och ljudkällan, d.v.s. vår position]
+        // 1
         Vector3 raycastDir = obj.transform.position - transform.position;
 
-        // Markera raycast med linje 
-        // https://docs.unity3d.com/ScriptReference/Debug.DrawRay.html
+        // 2
         Debug.DrawRay(transform.position, raycastDir, Color.green);
 
         RaycastHit hit;
-        // Utför raycast.
-        // Metoden Physics.Raycast returnerar true vid hinder mellan ljudkälla och lyssnare
-        // När raycasten identifierat hinder anges info om identifierat hinder i objektet occluderRayHit
-        bool obstacle = Physics.Raycast(transform.position, raycastDir, out hit, distance);
-        if (obstacle)
+
+        // 3
+        if (Physics.Raycast(transform.position, raycastDir, out hit, distance))
         {
-            // säkerställ att det är ett giltigt hinder och inte bara en liten mygga eller projektil
-            if (hit.collider.gameObject.tag == "Wall") // Tag with apropriate tag "SoundBarrier" and put colliders with soundbarrier-tag where needed
+            // 4
+            if (hit.collider.gameObject.tag == OcclusionDetectionTag) 
             {
-                return true; // lpf-frekvens
+                return true; // isSoundOccluded true
             }
         }
 
         return false;
     }
 
-    void RunDistanceAwareAudioSource()
+
+    /*
+     * CheckDistance() to the AudioListenerGameObj and compare with the max distance set
+     * on the AudioSource Sphere.
+     * Play sound if AudioListener isInside the range  
+     * // MÅSTE ÄNDRAS TILL ATT DET ÄR PLAYER IN RANGE FÖR VI ÄR INTE KAMERAN
+     * else stop/cull playback to save resources
+     */
+    void setDistanceCulling()
     {
 
-        // beräkna avståndet mellan ljudkälla och lyssnare
         float dist = CheckDistance(AudioListnerGameObject);
 
-        if (dist < maxDistance)
+        if (dist < audioSourceMaxDistance)
         {
-            // ljudet återstartas när lyssnaren är inom ljudkällans hörbara område
+            
             if (audioSource.isPlaying == false) audioSource.Play();
             //Debug.Log("distance = " + dist + ": Audio Restarted");
         }
         else
         {
-            // Stäng av uppspelning när lyssnaren är utanför ljudkällans hörbara område (sparar resurser)
-            audioSource.Stop(); // Vid kommande återstart - ska uppspelning börja därifrån den är eller ta det från början?
+            
+            audioSource.Stop(); 
             //Debug.Log("distance = " + dist + ": Audio Stopped");
         }
     }
 
-    
+    /*
+     * Checks Obj with Audio Listener, return distance to that obj.
+     */
     private float CheckDistance(GameObject obj)
     {
-        // obj är det objekt som har scenens AudioListener
-        // metoden returnerar avståndet till scenens AudioListener
-
         float dist = Vector3.Distance(obj.transform.position, transform.position);
 
         return dist;

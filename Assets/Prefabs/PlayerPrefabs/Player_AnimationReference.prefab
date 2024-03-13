@@ -324,11 +324,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Block: {fileID: 8300526060962481688}
-  DashTrail: {fileID: 4738199482222643031, guid: 41f773a9ba1358741bee3a4db485d38a, type: 3}
   DashSmoke: {fileID: 5403028436399260159}
   SmokeTrail: {fileID: 8926484042661614526, guid: f383140ed210dba48a0d1968e7358f32, type: 3}
   LandingImpact: {fileID: 600649835271172138}
-  Target: {fileID: 0}
 --- !u!1001 &5118111856926216464
 PrefabInstance:
   m_ObjectHideFlags: 0

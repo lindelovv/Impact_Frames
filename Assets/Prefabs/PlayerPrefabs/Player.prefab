@@ -198,7 +198,7 @@ MonoBehaviour:
   MaxHealth: 10
   Speed: 30
   MaxSpeed: 60
-  JumpHeight: 24
+  JumpHeight: 18
   CayoteTime: 0.25
   Damping: 2
   StartingVelocity:

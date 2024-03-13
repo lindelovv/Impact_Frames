@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/**
+ * In ECS put this script on object outside SubScene and reference it in the AudioTriggerSystem.cs
+ * Handle onPlay() and other things in AudioTriggerSystem.sc
+ */
 [RequireComponent(typeof(AudioSource))]
-public class Sound_TriggerZones : MonoBehaviour
+public class AudioTriggerZone_Source : MonoBehaviour
 {
-    [SerializeField] AudioSource source;
+    public AudioSource source;
     public AudioClip clip;
 
     [Header("Trigger Parameters")]
     public bool PlayOnce;
     public float volume;
-    public float minDistance = 3f;
-    public float maxDistance = 10f;
+    public float audioSourceMinDistance = 3f;
+    public float audioSourceMaxDistance = 10f;
     public float spatialBlend;
     
 
@@ -20,17 +25,22 @@ public class Sound_TriggerZones : MonoBehaviour
     {
         source.GetComponent<AudioSource>();
         source.clip = clip;
-        source.minDistance = minDistance;
-        source.maxDistance = maxDistance;
+        source.minDistance = audioSourceMinDistance;
+        source.maxDistance = audioSourceMaxDistance;
         source.spatialBlend = spatialBlend;
         source.volume = volume;
 
     }
 
-    private void OnTriggerEnter(Collider collision)
+
+
+    /**
+     * This is used for gameObj collisions. 
+     */
+   /* private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Player") && !source.isPlaying){
-
+            Debug.Log("Player Collided");
             source.PlayOneShot(clip);
 
             if (PlayOnce)
@@ -39,9 +49,9 @@ public class Sound_TriggerZones : MonoBehaviour
             }
 
         }
-    }
+    }*/
 
-    private IEnumerator DestroyAfterClip()
+    public IEnumerator DestroyAfterClip()
     {
         yield return new WaitForSeconds(clip.length);
         Destroy(gameObject);

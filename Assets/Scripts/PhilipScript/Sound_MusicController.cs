@@ -27,15 +27,11 @@ public class Sound_MusicController : MonoBehaviour
         {
             instance = this;
         }
-    }
-
-    void Start()
-    {
 
         HandleAudioSource();
-
     }
 
+    
     private void Update()
     {
         source.volume = volume;
