@@ -10,6 +10,7 @@ using UnityEngine;
  * And Add a Collider (non Trigger) on the Object for the Raycast to work
  * Set RaycastLength in Inspector
  * set MaxDistance for AudioSource Sphere if enableDistanceCulling is true
+ * The SoundClip is set in the Objects AudioSource
  */
 [RequireComponent(typeof(AudioLowPassFilter))]
 [RequireComponent(typeof(AudioSource))]
@@ -17,8 +18,11 @@ public class Sound_SmartSpotFX : MonoBehaviour
 {
     [SerializeField] GameObject AudioListnerGameObject;
     private AudioSource audioSource;
-    public string AudioListnerTag;
     
+    [Header("Audio Source Params: ")]
+    public float spatialBlend;
+    public float audioSourceMaxDistance = 10f;
+
     [Header("Occlusion: ")]
     public float lpfFreq_Low = 1000f;
     public float lpfFreq_High = 22000f;
@@ -30,22 +34,19 @@ public class Sound_SmartSpotFX : MonoBehaviour
 
     [Header("Rescource Aware Audio Source: ")]
     public bool enableDistanceCulling;
-    public float audioSourceMaxDistance;
+    public bool setRandomPlaybackStart;    
     public bool DebugDistance;
-    
 
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.maxDistance = audioSourceMaxDistance;
+        audioSource.spatialBlend = Mathf.Clamp(spatialBlend, 0, 1);
+
+        lpFilter = GetComponent<AudioLowPassFilter>();
+    }
     void Start()
     {
-
-        //AudioListnerTag = AudioListnerGameObject.tag;
-        //AudioListnerGameObject = GameObject.Find(AudioListnerTag); // Find GameObject With AudioListener
-        audioSource = GetComponent<AudioSource>();
-        lpFilter = GetComponent<AudioLowPassFilter>();
-        
-        
-
-        
-        audioSourceMaxDistance = audioSource.maxDistance; // Reads the 3d-Sphere of the AudioSource
         
         if(DebugDistance == true)
         {
@@ -57,7 +58,9 @@ public class Sound_SmartSpotFX : MonoBehaviour
 
     void Update()
     {
-        if(enableOcclusionDetection == true)
+
+        audioSource.maxDistance = audioSourceMaxDistance;
+        if (enableOcclusionDetection == true)
         {
             setLowpassFreq();
         }
@@ -66,8 +69,8 @@ public class Sound_SmartSpotFX : MonoBehaviour
         {
             setDistanceCulling();
         }
-       
 
+        Debug.Log(lpFilter.cutoffFrequency);  // Debug the used Freq
 
     }
 
@@ -142,7 +145,15 @@ public class Sound_SmartSpotFX : MonoBehaviour
         if (dist < audioSourceMaxDistance)
         {
             
-            if (audioSource.isPlaying == false) audioSource.Play();
+            if (audioSource.isPlaying == false)
+            {
+                if (setRandomPlaybackStart)
+                {
+                    audioSource.time = Random.Range(0f, audioSource.clip.length);
+                }
+
+                audioSource.Play();
+            }
             //Debug.Log("distance = " + dist + ": Audio Restarted");
         }
         else
