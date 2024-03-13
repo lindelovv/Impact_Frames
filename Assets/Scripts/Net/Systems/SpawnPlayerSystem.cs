@@ -32,7 +32,7 @@ public partial class SpawnPlayerSystem : SystemBase
             .WithNone<PlayerSpawned>()
             .ForEach((Entity connectionEntity, in NetworkStreamInGame req, in NetworkId networkId) =>
             {
-                Debug.Log($"Spawning player for connection {networkId.Value}");
+                //Debug.Log($"Spawning player for connection {networkId.Value}");
                 var player = cmdBuffer.Instantiate(prefab);
 
                 cmdBuffer.SetComponent(player, new GhostOwner { NetworkId = networkId.Value });
@@ -45,6 +45,7 @@ public partial class SpawnPlayerSystem : SystemBase
                 cmdBuffer.SetComponent(player, spawnPoint);
                 cmdBuffer.AddComponent(player, new SpawnPoint {
                     Position = spawnPoint.Position,
+                    Rotation = spawnPoint.Rotation,
                 });
                 
                 cmdBuffer.AddComponent<PlayerSpawned>(connectionEntity);

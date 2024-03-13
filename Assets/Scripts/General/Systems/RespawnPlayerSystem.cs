@@ -12,6 +12,7 @@ using UnityEngine;
 public struct SpawnPoint : IComponentData
 {
     public float3 Position;
+    public quaternion Rotation;
 }
 
 public struct Respawn : IComponentData {}
@@ -37,6 +38,7 @@ public partial struct RespawnPlayerSystem : ISystem
         ) {
             Debug.Log("Respawn");
             transform.ValueRW.Position = spawnPoint.Position;
+            transform.ValueRW.Rotation = spawnPoint.Rotation;
             cmdBuffer.RemoveComponent<Respawn>(entity);
         }
         cmdBuffer.Playback(state.EntityManager);
