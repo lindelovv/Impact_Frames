@@ -70,7 +70,7 @@ public class Sound_SmartSpotFX : MonoBehaviour
             setDistanceCulling();
         }
 
-        Debug.Log(lpFilter.cutoffFrequency);  // Debug the used Freq
+        //Debug.Log(lpFilter.cutoffFrequency);  // Debug the used Freq
 
     }
 
@@ -134,7 +134,7 @@ public class Sound_SmartSpotFX : MonoBehaviour
      * CheckDistance() to the AudioListenerGameObj and compare with the max distance set
      * on the AudioSource Sphere.
      * Play sound if AudioListener isInside the range  
-     * // MÅSTE ÄNDRAS TILL ATT DET ÄR PLAYER IN RANGE FÖR VI ÄR INTE KAMERAN
+     * // Mï¿½STE ï¿½NDRAS TILL ATT DET ï¿½R PLAYER IN RANGE Fï¿½R VI ï¿½R INTE KAMERAN
      * else stop/cull playback to save resources
      */
     void setDistanceCulling()

@@ -36,21 +36,28 @@ public partial class VFXSyncSystem : SystemBase
             var reference = _ghostPresentationGameObjectSystem.GetGameObjectForEntity(EntityManager, entity);
             if (!reference) { Debug.Log("GameObject reference null"); continue; }
             
-            var getVFX = reference.GetComponent<VFXGetters>();
-            if (!getVFX) { Debug.Log("VFX getter null"); continue; }
+            var get = reference.GetComponent<Getters>();
+            if (!get) { Debug.Log("VFX getter null"); continue; }
 
             if (playerState.ValueRO.IsBlocking)
             {
-                getVFX.Block.enabled = true;
+                get.Block.enabled = true;
             }
             else
             {
-                getVFX.Block.enabled = false;
+                get.Block.enabled = false;
             }
+
+            if (playerState.ValueRO.IsDashing && !get.AudioSource.isPlaying)
+            {
+                get.AudioSource.PlayOneShot(get.DashAudioClip);
+            }
+            
             if (playerState.ValueRO.IsFallingHigh && playerState.ValueRO.IsGrounded)
             {
                 // Add some cool ass camera shake
-                getVFX.LandingImpact.Play();
+                get.LandingImpact.Play();
+                get.AudioSource.PlayOneShot(get.LandingHard);
                 playerState.ValueRW.IsFallingHigh = false;
             }
         }
