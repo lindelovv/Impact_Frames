@@ -17,7 +17,11 @@ public class Getters : MonoBehaviour
     public List<AudioClip> AudioClips;
     public AudioClip DashAudioClip;
     public AudioClip LandingHard;
-    
+
+    public bool isTimerRunning;
+    public bool timerCompleted;
+
+
     public void PlayClip(AudioClip audioClip)
     {
         AudioSource.PlayOneShot(audioClip);
@@ -28,5 +32,15 @@ public class Getters : MonoBehaviour
         DashTrail = GameObject.FindWithTag("DashTrail").GetComponent<VisualEffect>();
         if(!DashTrail) { Debug.Log("Dash null"); }
         DashTrail.enabled = false;
+    }
+
+
+    // Använd i där man klickar och sätt timerCompleted till false efter tiden är klar
+    private IEnumerator TimerCoroutine()
+    {
+        isTimerRunning = true; // Mark the timer as running.
+        yield return new WaitForSeconds(3f); // Wait for 3 seconds.
+        timerCompleted = true; // Mark the timer as completed.
+        isTimerRunning = false; // Reset the timer running flag.
     }
 }
