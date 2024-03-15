@@ -76,7 +76,7 @@ public partial struct PerformActionSystem : ISystem
                         case ActionState.Active:
                         {
                             // note: maybe add some Y velocity
-                            player.Velocity = new float3((player.IsFacingRight ? 20f : -20f), player.Velocity.y, 0);
+                            player.Velocity = new float3((player.IsFacingRight ? player.DashSpeed : -player.DashSpeed), player.Velocity.y, 0);
                             break;
                         }
                         case ActionState.Recovery: { break; }
@@ -230,7 +230,7 @@ public partial struct PerformActionSystem : ISystem
                             cmdBuffer.RemoveComponent<DoAction>(player.Self);
                             break;
                         }
-                        case ActionState.Recovery: { player.IsHit = false; player.IsFallingHigh = false; break; }
+                        case ActionState.Recovery: { player.IsHit = false; break; }
                         case ActionState.Finished: { break; }
                     }
                     break;
@@ -252,7 +252,7 @@ public partial struct PerformActionSystem : ISystem
         Entity entity;
         CastCollider(ref position, forward, ref collisionWorld, out entity, out hasHit);
 
-        // Check Health and Appyl Damage
+        // Check Health and Apply Damage
         var entityManager = state.EntityManager;
         if (   hasHit 
             && entity != self 

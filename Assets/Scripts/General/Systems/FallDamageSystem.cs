@@ -51,7 +51,7 @@ public partial struct FallDamageSystem : ISystem
                 continue;
             }
             
-            //player.IsFallingHigh = Time.time - state.EntityManager.GetComponentData<Falling>(player.Self).StartTime > .7f;
+            player.IsFallingHigh = Time.time - state.EntityManager.GetComponentData<Falling>(player.Self).StartTime > .7f;
             
             if (player.IsGrounded)
             {
