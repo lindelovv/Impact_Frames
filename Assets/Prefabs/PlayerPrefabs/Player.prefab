@@ -219,7 +219,7 @@ MonoBehaviour:
     z: 0.05
   DashTime:
     x: 0
-    y: 0.02
+    y: 1
     z: 0.01
   PunchTime:
     x: 0.1

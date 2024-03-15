@@ -1,4 +1,5 @@
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Transforms;
 using UnityEngine;
@@ -28,7 +29,8 @@ public partial class UpdateCameraTargetSystem : SystemBase
             in SystemAPI.Query<RefRO<LocalToWorld>>()
                 .WithAll<GhostOwnerIsLocal>()
         ) {
-            _cameraTarget.position = transform.ValueRO.Position;
+            var camPos = transform.ValueRO.Position;
+            _cameraTarget.position = new float3(camPos.x, camPos.y + 1, camPos.z);
             _cameraTarget.rotation = transform.ValueRO.Rotation;
         }
     }

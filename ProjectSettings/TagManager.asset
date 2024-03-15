@@ -8,6 +8,7 @@ TagManager:
   - CameraTarget
   - Dummy
   - Occluded
+  - DashTrail
   layers:
   - Default
   - TransparentFX

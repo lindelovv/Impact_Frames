@@ -1,4 +1,6 @@
-﻿using Unity.Burst;
+﻿using System;
+using System.Collections;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.NetCode;
@@ -26,18 +28,27 @@ public partial class VFXSyncSystem : SystemBase
     protected override void OnUpdate()
     {
         var cmdBuffer = new EntityCommandBuffer(Allocator.TempJob);
-        
+
         foreach (
             var (playerState, entity)
             in SystemAPI.Query<RefRW<PlayerStateComponent>>()
                 .WithAll<GhostPresentationGameObjectPrefabReference, PredictedGhost, PlayerData>()
                 .WithEntityAccess()
-        ) {
+        )
+        {
             var reference = _ghostPresentationGameObjectSystem.GetGameObjectForEntity(EntityManager, entity);
-            if (!reference) { Debug.Log("GameObject reference null"); continue; }
-            
+            if (!reference)
+            {
+                Debug.Log("GameObject reference null");
+                continue;
+            }
+
             var get = reference.GetComponent<Getters>();
-            if (!get) { Debug.Log("VFX getter null"); continue; }
+            if (!get)
+            {
+                Debug.Log("VFX getter null");
+                continue;
+            }
 
             if (playerState.ValueRO.IsBlocking)
             {
@@ -48,11 +59,13 @@ public partial class VFXSyncSystem : SystemBase
                 get.Block.enabled = false;
             }
 
+            //Debug.Log($"dashing {playerState.ValueRO.IsDashing}");
             if (playerState.ValueRO.IsDashing && !get.AudioSource.isPlaying)
             {
+                get.DashTrail.enabled = true;
                 get.AudioSource.PlayOneShot(get.DashAudioClip);
             }
-            
+
             if (playerState.ValueRO.IsFallingHigh && playerState.ValueRO.IsGrounded)
             {
                 // Add some cool ass camera shake
@@ -61,6 +74,7 @@ public partial class VFXSyncSystem : SystemBase
                 playerState.ValueRW.IsFallingHigh = false;
             }
         }
+
         cmdBuffer.Playback(EntityManager);
         cmdBuffer.Dispose();
     }

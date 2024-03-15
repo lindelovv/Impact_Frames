@@ -79,8 +79,8 @@ public partial struct PerformActionSystem : ISystem
                             player.Velocity = new float3((player.IsFacingRight ? 20f : -20f), player.Velocity.y, 0);
                             break;
                         }
-                        case ActionState.Recovery: { player.IsDashing = false; break; }
-                        case ActionState.Finished: { break; }
+                        case ActionState.Recovery: { break; }
+                        case ActionState.Finished: { player.IsDashing = false; break; }
                     }
                     break;
                 }

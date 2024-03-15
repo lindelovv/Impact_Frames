@@ -620,6 +620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Block: {fileID: 8300526060962481688}
   DashSmoke: {fileID: 5403028436399260159}
+  DashTrail: {fileID: 0}
   SmokeTrail: {fileID: 8926484042661614526, guid: f383140ed210dba48a0d1968e7358f32, type: 3}
   LandingImpact: {fileID: 600649835271172138}
   AudioSource: {fileID: 3686169403229632009}
