@@ -43,9 +43,14 @@ public partial struct PlayerMovementSystem : ISystem
                 }
                 else
                 {
-                    player.GravityFactor = player is { IsGrounded: false, Velocity: { y: <= 1.0f } }
+                    player.GravityFactor = player is { IsGrounded: false, Velocity: { y: <= 2.0f } }
                         ? player.FallGravity
                         : 1;
+                }
+
+                if (player.IsJumping && player.Velocity.y > 2f)
+                {
+                    player.Velocity *= player.JumpDecay;
                 }
             }
 

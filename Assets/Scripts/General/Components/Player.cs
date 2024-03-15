@@ -28,6 +28,11 @@ public class Player : MonoBehaviour
     
     [Tooltip("[float] How high the player can jump.")]
     public float JumpHeight;
+    [Tooltip("[float] How fast jump decays.")]
+    public float JumpDecay;
+    
+    [Tooltip("[float] How fast dash.")]
+    public float DashSpeed;
 
     // Philips variabler
 
@@ -85,6 +90,8 @@ public class Player : MonoBehaviour
                 MovementSpeed = authoring.Speed,
                 MaxSpeed      = authoring.MaxSpeed,
                 JumpHeight    = authoring.JumpHeight,
+                JumpDecay     = authoring.JumpDecay,
+                DashSpeed     = authoring.DashSpeed,
                 Pushback      = authoring.Pushback,
                 MaxComboDelay = authoring.MaxComboDelay,
                 OverrideGravity = authoring.OverrideGravity,
@@ -170,6 +177,8 @@ public struct PlayerData : IComponentData
     [GhostField] public float MovementSpeed;
     [GhostField] public float MaxSpeed;
     [GhostField] public float JumpHeight;
+    [GhostField] public float JumpDecay;
+    [GhostField] public float DashSpeed;
     [GhostField] public float2 Pushback;
     [GhostField] public float MaxComboDelay;
     [GhostField] public bool IsDummy;
@@ -238,6 +247,8 @@ public readonly partial struct PlayerAspect : IAspect
     public float Acceleration  { get => _data.ValueRO.MovementSpeed;  set => _data.ValueRW.MovementSpeed = value;  }
     public float MaxSpeed      { get => _data.ValueRO.MaxSpeed;       set => _data.ValueRW.MaxSpeed = value;       }
     public float JumpHeight    { get => _data.ValueRO.JumpHeight;     set => _data.ValueRW.JumpHeight = value;     }
+    public float JumpDecay     { get => _data.ValueRO.JumpDecay;      set => _data.ValueRW.JumpDecay = value;      }
+    public float DashSpeed     { get => _data.ValueRO.DashSpeed;      set => _data.ValueRW.DashSpeed = value;      }
     public float CayoteTime    { get => _data.ValueRO.CayoteTime;     set => _data.ValueRW.CayoteTime = value;     }
     public float CayoteTimer   { get => _data.ValueRO.CayoteTimer;    set => _data.ValueRW.CayoteTimer = value;    }
     

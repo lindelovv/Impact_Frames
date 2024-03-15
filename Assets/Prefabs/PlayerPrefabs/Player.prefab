@@ -198,16 +198,18 @@ MonoBehaviour:
   MaxHealth: 10
   Speed: 30
   MaxSpeed: 60
-  JumpHeight: 18
+  JumpHeight: 20
+  JumpDecay: 0.95
+  DashSpeed: 28
   CayoteTime: 0.25
   Damping: 2
   StartingVelocity:
     x: 0
     y: 0
     z: 0
-  FallGravity: 5
+  FallGravity: 7
   OverrideGravity: 0
-  Gravity: 0
+  Gravity: 1
   Pushback:
     x: 0
     y: 0
@@ -219,7 +221,7 @@ MonoBehaviour:
     z: 0.05
   DashTime:
     x: 0
-    y: 1
+    y: 0.2
     z: 0.01
   PunchTime:
     x: 0.1
