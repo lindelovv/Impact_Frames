@@ -625,8 +625,10 @@ MonoBehaviour:
   LandingImpact: {fileID: 600649835271172138}
   AudioSource: {fileID: 3686169403229632009}
   AudioClips: []
-  DashAudioClip: {fileID: 8300000, guid: aa7294fdb5f047242ab6dc7d67db4220, type: 3}
+  DashAudioClip: {fileID: 8300000, guid: 6b0bec7ca85fa7d47bc355a4df38da83, type: 3}
   LandingHard: {fileID: 8300000, guid: 9abb2b1239a41914b813d1f9a4304abc, type: 3}
+  isTimerRunning: 0
+  timerCompleted: 0
 --- !u!82 &3686169403229632009
 AudioSource:
   m_ObjectHideFlags: 0

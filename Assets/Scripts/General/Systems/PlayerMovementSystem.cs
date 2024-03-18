@@ -48,9 +48,10 @@ public partial struct PlayerMovementSystem : ISystem
                         : 1;
                 }
 
-                if (player.IsJumping && player.Velocity.y > 2f)
+                var velocityY = player.Velocity.y;
+                if (player.IsJumping && velocityY > 2f)
                 {
-                    player.Velocity *= player.JumpDecay;
+                    velocityY *= player.JumpDecay;
                 }
             }
 
