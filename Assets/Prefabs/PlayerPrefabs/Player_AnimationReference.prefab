@@ -563,6 +563,16 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3686169403229632009}
   m_SourcePrefab: {fileID: 100100000, guid: 7df7307f13d69f943923cc28f40ebc78, type: 3}
+--- !u!1 &1170286821622007146 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 33014765769841165, guid: 7df7307f13d69f943923cc28f40ebc78, type: 3}
+  m_PrefabInstance: {fileID: 1173464130683936615}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1314272955276917809 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -9046105324318432426, guid: 7df7307f13d69f943923cc28f40ebc78, type: 3}
+  m_PrefabInstance: {fileID: 1173464130683936615}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1712003469078526092 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7df7307f13d69f943923cc28f40ebc78, type: 3}
@@ -618,17 +628,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 912f6a78dd0a9e24f8286920368905fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Body: {fileID: 1314272955276917809}
+  Face: {fileID: 6641387152203436155}
+  Hair: {fileID: 1170286821622007146}
   Block: {fileID: 8300526060962481688}
   DashSmoke: {fileID: 5403028436399260159}
   DashTrail: {fileID: 0}
-  SmokeTrail: {fileID: 8926484042661614526, guid: f383140ed210dba48a0d1968e7358f32, type: 3}
+  SmokeTrail: {fileID: 5363483100961274003}
   LandingImpact: {fileID: 600649835271172138}
   AudioSource: {fileID: 3686169403229632009}
+  BlockAudioSource: {fileID: 0}
   AudioClips: []
   DashAudioClip: {fileID: 8300000, guid: 6b0bec7ca85fa7d47bc355a4df38da83, type: 3}
   LandingHard: {fileID: 8300000, guid: 9abb2b1239a41914b813d1f9a4304abc, type: 3}
+  BlockClip: {fileID: 0}
+  DashTime: 0.8
   isTimerRunning: 0
   timerCompleted: 0
+  BodyMaterials: []
+  FaceMaterials: []
+  HairMaterials: []
+  Ethereal:
+  - {fileID: 2100000, guid: 70bbde4061bc7d94c993de0e7c8f4e13, type: 2}
+  - {fileID: 2100000, guid: 70bbde4061bc7d94c993de0e7c8f4e13, type: 2}
+  - {fileID: 2100000, guid: 70bbde4061bc7d94c993de0e7c8f4e13, type: 2}
 --- !u!82 &3686169403229632009
 AudioSource:
   m_ObjectHideFlags: 0
@@ -725,6 +748,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &6641387152203436155 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3719400422004633828, guid: 7df7307f13d69f943923cc28f40ebc78, type: 3}
+  m_PrefabInstance: {fileID: 1173464130683936615}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5118111856926216464
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -810,7 +838,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2717252612880679377, guid: 0a06712ba42c54d448eb2f570635a9ac, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2717252612880679377, guid: 0a06712ba42c54d448eb2f570635a9ac, type: 3}
       propertyPath: m_LocalPosition.z

@@ -34,21 +34,12 @@ public partial class VFXSyncSystem : SystemBase
             in SystemAPI.Query<RefRW<PlayerStateComponent>>()
                 .WithAll<GhostPresentationGameObjectPrefabReference, PredictedGhost, PlayerData>()
                 .WithEntityAccess()
-        )
-        {
+        ) {
             var reference = _ghostPresentationGameObjectSystem.GetGameObjectForEntity(EntityManager, entity);
-            if (!reference)
-            {
-                Debug.Log("GameObject reference null");
-                continue;
-            }
+            if (!reference) { Debug.Log("GameObject reference null"); continue; }
 
             var get = reference.GetComponent<Getters>();
-            if (!get)
-            {
-                Debug.Log("VFX getter null");
-                continue;
-            }
+            if (!get) { Debug.Log("VFX getter null"); continue; }
 
             if (playerState.ValueRO.IsBlocking)
             {
@@ -59,11 +50,21 @@ public partial class VFXSyncSystem : SystemBase
                 get.Block.enabled = false;
             }
 
-            //Debug.Log($"dashing {playerState.ValueRO.IsDashing}");
-            if (playerState.ValueRO.IsDashing && !get.AudioSource.isPlaying)
+            // Reactional sets cooldown to reset bool value (to play once and not have to use isPlaying)
+            if (playerState.ValueRO.IsDashing && !get.isTimerRunning)
             {
-                get.DashTrail.enabled = true;
+                get.DashTrail.Play();
+                get.DashSmoke.Play();
+                get.ToggleEthereal(true);
+                get.Timer();
                 get.AudioSource.PlayOneShot(get.DashAudioClip);
+            }
+            else if (get.timerCompleted)
+            {
+                get.ToggleEthereal(false);
+                get.DashSmoke.Stop();
+                get.DashTrail.Stop();
+                get.timerCompleted = false;
             }
 
             if (playerState.ValueRO.IsFallingHigh && playerState.ValueRO.IsGrounded)
