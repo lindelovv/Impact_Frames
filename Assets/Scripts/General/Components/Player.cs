@@ -271,6 +271,7 @@ public readonly partial struct PlayerAspect : IAspect
     public bool IsOnBeat       { get => _state.ValueRO.IsOnBeat;      set => _state.ValueRW.IsOnBeat = value;      }
     public bool IsAnimLocked   { get => _state.ValueRO.IsAnimLocked;  set => _state.ValueRW.IsAnimLocked = value;  }
     public bool IsHit          { get => _state.ValueRO.IsHit;         set => _state.ValueRW.IsHit = value;         }
+    public bool HasHit         { get => _state.ValueRO.HasHit;        set => _state.ValueRW.HasHit = value;        }
     
     // Fighting/Combo stats
     public int HitCounter      { get => _state.ValueRO.HitCounter;    set => _state.ValueRW.HitCounter = value;    }

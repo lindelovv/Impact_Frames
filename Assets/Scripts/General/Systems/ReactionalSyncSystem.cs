@@ -4,6 +4,7 @@
 public partial struct ReactionalSyncSystem : ISystem
 {
     private bool _canPlayStinger;
+    private float _gracePeriod;
     
     public void OnCreate(ref SystemState state)
     {

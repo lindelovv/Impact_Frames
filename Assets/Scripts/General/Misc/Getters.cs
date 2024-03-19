@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.VFX;
 using UnityEngine.VFX.Utility;
+using Random = UnityEngine.Random;
 
 public class Getters : MonoBehaviour
 {
@@ -32,7 +33,11 @@ public class Getters : MonoBehaviour
     public Material[] BodyMaterials;
     public Material[] FaceMaterials;
     public Material[] HairMaterials;
-    public Material[] Ethereal;
+    public Material[] EtherealMat;
+
+    public List<AudioClip> FootstepSounds;
+    
+    public bool _hasHit;
 
     private void Start()
     {
@@ -49,9 +54,9 @@ public class Getters : MonoBehaviour
     {
         if (etherealState)
         {
-            Body.GetComponent<SkinnedMeshRenderer>().materials = Ethereal;
-            Face.GetComponent<SkinnedMeshRenderer>().materials = Ethereal;
-            Hair.GetComponent<SkinnedMeshRenderer>().materials = Ethereal;
+            Body.GetComponent<SkinnedMeshRenderer>().materials = EtherealMat;
+            Face.GetComponent<SkinnedMeshRenderer>().materials = EtherealMat;
+            Hair.GetComponent<SkinnedMeshRenderer>().materials = EtherealMat;
         }
         else
         {
@@ -61,9 +66,23 @@ public class Getters : MonoBehaviour
         }
     }
     
+    public void PlayRandomFootsteps()
+    {
+        var index = Random.Range(0, FootstepSounds.Count);
+        AudioSource.PlayOneShot(FootstepSounds[index]);
+    }
+    
     public void PlayClip(AudioClip audioClip)
     {
         AudioSource.PlayOneShot(audioClip);
+    }
+    
+    public void PlayHitClip(AudioClip audioClip)
+    {
+        //if (_hasHit)
+        {
+            AudioSource.PlayOneShot(audioClip);
+        }
     }
 
     // Använd i där man klickar och sätt timerCompleted till false efter tiden är klar

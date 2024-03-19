@@ -81,6 +81,9 @@ public struct PlayerStateComponent : IComponentData
     
     /// <summary> Counting time since last attack </summary>
     [GhostField] public float HitTime;
+    
+    /// <summary> Signaling if player has hit something </summary>
+    [GhostField] public bool HasHit;
 
     /// <summary> Required Bunny Jump, Attacks </summary>
     [GhostField] public bool IsOnBeat;

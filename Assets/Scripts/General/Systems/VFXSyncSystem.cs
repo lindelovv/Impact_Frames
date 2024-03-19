@@ -41,12 +41,16 @@ public partial class VFXSyncSystem : SystemBase
             var get = reference.GetComponent<Getters>();
             if (!get) { Debug.Log("VFX getter null"); continue; }
 
+            get._hasHit = playerState.ValueRO.HasHit;
+
             if (playerState.ValueRO.IsBlocking)
             {
+                get.BlockAudioSource.Play();
                 get.Block.enabled = true;
             }
             else
             {
+                get.BlockAudioSource.Stop();
                 get.Block.enabled = false;
             }
 

@@ -46,6 +46,7 @@ public partial struct PerformActionSystem : ISystem
             }
             var collisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
             var playerPosition = player.Position;
+            var playerHasHit = player.HasHit;
             switch (action.Name)
             {
                 //______________________________________________________________________________________________
@@ -100,12 +101,18 @@ public partial struct PerformActionSystem : ISystem
                                 player.Pushback,
                                 ref cmdBuffer,
                                 ref state,
-                                ref collisionWorld
+                                ref collisionWorld, 
+                                out playerHasHit
                             );
                             player.HitTime = Time.time;
                             break;
                         }
-                        case ActionState.Recovery: { player.IsPunching = false; break; }
+                        case ActionState.Recovery:
+                        {
+                            player.IsPunching = false;
+                            player.HasHit = false;
+                            break;
+                        }
                         case ActionState.Finished: { break; }
                     }
                     break;
@@ -125,12 +132,18 @@ public partial struct PerformActionSystem : ISystem
                                 player.Pushback,
                                 ref cmdBuffer,
                                 ref state,
-                                ref collisionWorld
+                                ref collisionWorld,
+                                out playerHasHit
                             );
                             player.HitTime = Time.time;
                             break;
                         }
-                        case ActionState.Recovery: { player.IsPunching = false; break; }
+                        case ActionState.Recovery:
+                        {
+                            player.IsPunching = false;
+                            player.HasHit = false;
+                            break;
+                        }
                         case ActionState.Finished: { break; }
                     }
                     break;
@@ -151,12 +164,18 @@ public partial struct PerformActionSystem : ISystem
                                 player.Pushback,
                                 ref cmdBuffer,
                                 ref state,
-                                ref collisionWorld
+                                ref collisionWorld,
+                                out playerHasHit
                             );
                             player.HitTime = Time.time;
                             break;
                         }
-                        case ActionState.Recovery: { player.IsKicking = false; break; }
+                        case ActionState.Recovery:
+                        {
+                            player.IsKicking = false;
+                            player.HasHit = false;
+                            break;
+                        }
                         case ActionState.Finished: { break; }
                     }
                     break;
@@ -176,12 +195,18 @@ public partial struct PerformActionSystem : ISystem
                                 player.Pushback,
                                 ref cmdBuffer,
                                 ref state,
-                                ref collisionWorld
+                                ref collisionWorld,
+                                out playerHasHit
                             );
                             player.HitTime = Time.time;
                             break;
                         }
-                        case ActionState.Recovery: { player.IsKicking = false; break; }
+                        case ActionState.Recovery:
+                        {
+                            player.IsKicking = false;
+                            player.HasHit = false;
+                            break;
+                        }
                         case ActionState.Finished: { break; }
                     }
                     break;
@@ -206,7 +231,8 @@ public partial struct PerformActionSystem : ISystem
                         case ActionState.Recovery:
                         {
                             player.BlockTimer = player.BlockCooldown;
-                            player.IsBlocking = false; break;
+                            player.IsBlocking = false;
+                            break;
                         }
                         case ActionState.Finished: { break; }
                     }
@@ -246,9 +272,8 @@ public partial struct PerformActionSystem : ISystem
     }
     
     [BurstCompile]
-    public static void Punch(in Entity self, in int forward, ref float3 position, in float2 pushback, ref EntityCommandBuffer cmdBuffer, ref SystemState state, ref CollisionWorld collisionWorld)
+    public static void Punch(in Entity self, in int forward, ref float3 position, in float2 pushback, ref EntityCommandBuffer cmdBuffer, ref SystemState state, ref CollisionWorld collisionWorld, out bool hasHit)
     {
-        bool hasHit;
         Entity entity;
         CastCollider(ref position, forward, ref collisionWorld, out entity, out hasHit);
 
@@ -269,9 +294,8 @@ public partial struct PerformActionSystem : ISystem
     }
     
     [BurstCompile]
-    public static void PunchHeavy(in Entity self, in int forward, ref float3 position, in float2 pushback, ref EntityCommandBuffer cmdBuffer, ref SystemState state, ref CollisionWorld collisionWorld)
+    public static void PunchHeavy(in Entity self, in int forward, ref float3 position, in float2 pushback, ref EntityCommandBuffer cmdBuffer, ref SystemState state, ref CollisionWorld collisionWorld, out bool hasHit)
     {
-        bool hasHit;
         Entity entity;
         CastCollider(ref position, forward, ref collisionWorld, out entity, out hasHit);
 
@@ -292,9 +316,8 @@ public partial struct PerformActionSystem : ISystem
     }
 
     [BurstCompile]
-    public static void Kick(in Entity self, in int forward, ref float3 position, in float2 pushback, ref EntityCommandBuffer cmdBuffer, ref SystemState state, ref CollisionWorld collisionWorld)
+    public static void Kick(in Entity self, in int forward, ref float3 position, in float2 pushback, ref EntityCommandBuffer cmdBuffer, ref SystemState state, ref CollisionWorld collisionWorld, out bool hasHit)
     {
-        bool hasHit;
         Entity entity;
         CastCollider(ref position, forward, ref collisionWorld, out entity, out hasHit);
 
@@ -315,9 +338,8 @@ public partial struct PerformActionSystem : ISystem
     }
     
     [BurstCompile]
-    public static void KickHeavy(in Entity self, in int forward, ref float3 position, in float2 pushback, ref EntityCommandBuffer cmdBuffer, ref SystemState state, ref CollisionWorld collisionWorld)
+    public static void KickHeavy(in Entity self, in int forward, ref float3 position, in float2 pushback, ref EntityCommandBuffer cmdBuffer, ref SystemState state, ref CollisionWorld collisionWorld, out bool hasHit)
     {
-        bool hasHit;
         Entity entity;
         CastCollider(ref position, forward, ref collisionWorld, out entity, out hasHit);
 

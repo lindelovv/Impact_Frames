@@ -25615,14 +25615,14 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.13333334
-    functionName: PlayClip
+    functionName: PlayRandomFootsteps
     data: 
     objectReferenceParameter: {fileID: 8300000, guid: 330dba1ad1eb09b4487942174473c364, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.33333334
-    functionName: PlayClip
+    functionName: PlayRandomFootsteps
     data: 
     objectReferenceParameter: {fileID: 8300000, guid: e8c4112b358fc594bbe15d7338750d00, type: 3}
     floatParameter: 0
