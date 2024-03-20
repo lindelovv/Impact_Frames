@@ -1,10 +1,11 @@
 ﻿using Unity.Entities;
+using UnityEngine;
 
 [UpdateInGroup(typeof(SimulationSystemGroup))]
 public partial struct ReactionalSyncSystem : ISystem
 {
     private bool _canPlayStinger;
-    private float _gracePeriod;
+    private static readonly float _gracePeriod = 0.5f;
     
     public void OnCreate(ref SystemState state)
     {
@@ -18,7 +19,7 @@ public partial struct ReactionalSyncSystem : ISystem
             in SystemAPI.Query<RefRW<PlayerStateComponent>>()
         ) {
             var timeToBeat = Reactional.Playback.MusicSystem.GetTimeToBeat(2);
-            if (timeToBeat < .5f)
+            if (timeToBeat < _gracePeriod )
             {
                 playerState.ValueRW.IsOnBeat = true;
                 if (playerState.ValueRO is { IsJumping: true, IsGrounded: false } && _canPlayStinger)

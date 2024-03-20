@@ -3,8 +3,7 @@ using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
 
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup)),
- UpdateBefore(typeof(InitActionSystem))]
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup)), UpdateBefore(typeof(InitActionSystem))]
 public partial struct ActionTimerSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
@@ -21,16 +20,16 @@ public partial struct ActionTimerSystem : ISystem
             in SystemAPI.Query<RefRW<Action>>()
                 .WithEntityAccess()
         ) {
-            //Debug.Log($"Action: {action.ValueRO.Name}, State: {action.ValueRO.State}");
             switch (action.ValueRO.State)
             { 
                 //_________________________
+                case ActionState.None: { continue; }
+                //_________________________
                 case ActionState.Startup: {
-                    //Debug.Log($"Startup {action.ValueRO.StartTime}");
                     
                     if (action.ValueRO.StartTime < 0) {
                         action.ValueRW.State++;
-                        cmdBuffer.AddComponent<DoAction>(entity);
+                        action.ValueRW.DoAction = true;
                     }
                     action.ValueRW.StartTime -= Time.deltaTime;
                     
@@ -38,11 +37,10 @@ public partial struct ActionTimerSystem : ISystem
                 }
                 //_________________________
                 case ActionState.Active: {
-                    //Debug.Log($"Active {action.ValueRO.ActiveTime}");
                     
                     if (action.ValueRO.ActiveTime < 0) {
                         action.ValueRW.State++;
-                        cmdBuffer.AddComponent<DoAction>(entity);
+                        action.ValueRW.DoAction = true;
                     }
                     action.ValueRW.ActiveTime -= Time.deltaTime;
                     
@@ -50,11 +48,10 @@ public partial struct ActionTimerSystem : ISystem
                 }
                 //_________________________
                 case ActionState.Recovery: {
-                    //Debug.Log($"Recover {action.ValueRO.RecoverTime}");
                     
                     if (action.ValueRO.RecoverTime < 0) {
                         action.ValueRW.State++;
-                        cmdBuffer.AddComponent<DoAction>(entity);
+                        action.ValueRW.DoAction = true;
                     }
                     action.ValueRW.RecoverTime -= Time.deltaTime;
                     
@@ -62,7 +59,9 @@ public partial struct ActionTimerSystem : ISystem
                 }
                 //_________________________
                 case ActionState.Finished: {
-                    cmdBuffer.RemoveComponent<Action>(entity);
+                    action.ValueRW.State = ActionState.None;
+                    action.ValueRW.DoAction = false;
+                    
                     break;
                 }
             }

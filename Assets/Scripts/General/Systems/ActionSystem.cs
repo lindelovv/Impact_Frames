@@ -1,5 +1,4 @@
-﻿using System;
-using Unity.Burst;
+﻿using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -9,10 +8,8 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [BurstCompile]
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup)),
- UpdateAfter(typeof(UpdatePlayerStateSystem))]
- //UpdateBefore(typeof(UpdatePlayerStateSystem))]
-public partial struct PerformActionSystem : ISystem
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup)), UpdateAfter(typeof(UpdatePlayerStateSystem))]
+public partial struct ActionSystem : ISystem
 {
     [BurstCompile]
     public void OnCreate(ref SystemState state)
@@ -26,33 +23,32 @@ public partial struct PerformActionSystem : ISystem
         var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
         foreach (
             var (player, action)
-            in SystemAPI.Query<PlayerAspect, Action>()
-                .WithAll<DoAction>()
+            in SystemAPI.Query<PlayerAspect, RefRW<Action>>()
         ) {
-            switch (action.State)
+            switch (action.ValueRO.State)
             {
                 case ActionState.Startup:
                 {
                     player.IsAnimLocked = true;
-                    cmdBuffer.RemoveComponent<DoAction>(player.Self);
+                    action.ValueRW.DoAction = false;
                     break;
                 }
                 case ActionState.Finished:
                 {
                     player.IsAnimLocked = false;
-                    cmdBuffer.RemoveComponent<DoAction>(player.Self);
+                    //action.ValueRW.DoAction = false;
                     break;
                 }
             }
             var collisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
             var playerPosition = player.Position;
             var playerHasHit = player.HasHit;
-            switch (action.Name)
+            switch (action.ValueRO.Name)
             {
                 //______________________________________________________________________________________________
                 case ActionName.Jump:
                 {
-                    switch (action.State)
+                    switch (action.ValueRO.State)
                     {
                         case ActionState.Startup:  { player.IsJumping = true; break; }
                         case ActionState.Active:
@@ -71,7 +67,7 @@ public partial struct PerformActionSystem : ISystem
                 //______________________________________________________________________________________________
                 case ActionName.Dash:
                 {
-                    switch (action.State)
+                    switch (action.ValueRO.State)
                     {
                         case ActionState.Startup:  { player.IsDashing = true; break; }
                         case ActionState.Active:
@@ -88,7 +84,7 @@ public partial struct PerformActionSystem : ISystem
                 //______________________________________________________________________________________________
                 case ActionName.Punch:
                 {
-                    switch (action.State)
+                    switch (action.ValueRO.State)
                     {
                         case ActionState.Startup:  { player.IsPunching = true; break; }
                         case ActionState.Active:
@@ -120,7 +116,7 @@ public partial struct PerformActionSystem : ISystem
                 //______________________________________________________________________________________________
                 case ActionName.HeavyPunch:
                 {
-                    switch (action.State)
+                    switch (action.ValueRO.State)
                     {
                         case ActionState.Startup:  { player.IsPunching = true; break; }
                         case ActionState.Active:
@@ -151,7 +147,7 @@ public partial struct PerformActionSystem : ISystem
                 //______________________________________________________________________________________________
                 case ActionName.Kick:
                 {
-                    switch (action.State)
+                    switch (action.ValueRO.State)
                     {
                         case ActionState.Startup:  { player.IsKicking = true; break; }
                         case ActionState.Active:
@@ -183,7 +179,7 @@ public partial struct PerformActionSystem : ISystem
                 //______________________________________________________________________________________________
                 case ActionName.HeavyKick:
                 {
-                    switch (action.State)
+                    switch (action.ValueRO.State)
                     {
                         case ActionState.Startup:  { player.IsKicking = true; break; }
                         case ActionState.Active:
@@ -214,7 +210,7 @@ public partial struct PerformActionSystem : ISystem
                 //______________________________________________________________________________________________
                 case ActionName.Block:
                 {
-                    switch (action.State)
+                    switch (action.ValueRO.State)
                     {
                         case ActionState.Startup:  { player.IsBlocking = true; break; }
                         case ActionState.Active:
@@ -223,8 +219,7 @@ public partial struct PerformActionSystem : ISystem
                             {
                                 player.IsBlocking = false;
                                 player.IsAnimLocked = false;
-                                cmdBuffer.RemoveComponent<DoAction>(player.Self);
-                                cmdBuffer.RemoveComponent<Action>(player.Self);
+                                action.ValueRW.DoAction = false;
                             }
                             break;
                         }
@@ -247,13 +242,13 @@ public partial struct PerformActionSystem : ISystem
                 //______________________________________________________________________________________________
                 case ActionName.HitStun:
                 {
-                    switch (action.State)
+                    switch (action.ValueRO.State)
                     {
                         case ActionState.Startup:  { player.IsHit = true; break; }
                         case ActionState.Active:
                         {
                             player.Random = Random.Range(0, 2);
-                            cmdBuffer.RemoveComponent<DoAction>(player.Self);
+                            action.ValueRW.DoAction = false;
                             break;
                         }
                         case ActionState.Recovery: { player.IsHit = false; break; }
@@ -262,9 +257,9 @@ public partial struct PerformActionSystem : ISystem
                     break;
                 }
             }
-            if (!action.Repeating)
-            {
-                cmdBuffer.RemoveComponent<DoAction>(player.Self);
+            if (!action.ValueRO.Repeating)
+            { 
+                action.ValueRW.DoAction = false;
             }
         }
         cmdBuffer.Playback(state.EntityManager);

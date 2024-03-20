@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: -1779064826349053475}
   - component: {fileID: 1244181283632142093}
   - component: {fileID: 1553344042008314389}
-  - component: {fileID: -3312887918091319252}
   - component: {fileID: 3902094259571194686}
   m_Layer: 0
   m_Name: Player
@@ -224,21 +223,21 @@ MonoBehaviour:
     y: 0.2
     z: 0.01
   PunchTime:
-    x: 0.1
+    x: 0.2
     y: 0.1
-    z: 0.2
+    z: 0.7
   HeavyPunchTime:
     x: 0.3
     y: 0.2
-    z: 0.2
+    z: 1
   KickTime:
-    x: 0.1
+    x: 0.2
     y: 0.1
-    z: 0.2
+    z: 0.7
   HeavyKickTime:
     x: 0.3
     y: 0.2
-    z: 0.2
+    z: 1
   IsDummy: 0
 --- !u!114 &6524130790032669571
 MonoBehaviour:
@@ -302,7 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c79d771cedb4794bf100ce60df5f764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultGhostMode: 1
+  DefaultGhostMode: 2
   SupportedGhostModes: 3
   OptimizationMode: 0
   Importance: 999
@@ -312,24 +311,6 @@ MonoBehaviour:
   TrackInterpolationDelay: 1
   GhostGroup: 0
   UsePreSerialization: 1
---- !u!114 &-3312887918091319252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5530559309006933450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfdaa6c06fe64fbda2b16e07a4ee0b25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ComponentOverrides:
-  - FullTypeName: Unity.Transforms.LocalTransform
-    EntityIndex: 0
-    PrefabType: -1
-    SendTypeOptimization: -1
-    VariantHash: 6907887384974514810
 --- !u!114 &3902094259571194686
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -57,26 +57,29 @@ public partial struct PlayerMovementSystem : ISystem
 
             // Calculate & Add Horizontal Movement
             {
-                if (player.Input.RequestedMovement.x == 0) // If not moving, change velocity towards 0
+                if (!player.IsDashing)
                 {
-                    player.Velocity = new float3(Util.moveTowards(
-                        player.Velocity.x,
-                        player.Position.x,
-                        player.Damping * SystemAPI.Time.DeltaTime
-                    ), player.Velocity.y, 0);
-                }
-                else if (player is { IsAnimLocked: false, IsBlocking: false })
-                {
-                    player.Velocity = new float3(Util.moveTowards( // Else towards max speed
-                        player.Velocity.x,
-                        player.Input.RequestedMovement.x * player.MaxSpeed,
-                        player.Acceleration * SystemAPI.Time.DeltaTime
-                    ), player.Velocity.y, 0);
-                    player.IsFacingRight = (player.Input.RequestedMovement.x > 0.0f);
-                }
-                else
-                {
-                    player.IsFacingRight = (player.Input.RequestedMovement.x > 0.0f);
+                    if (player.Input.RequestedMovement.x == 0) // If not moving, change velocity towards 0
+                    {
+                        player.Velocity = new float3(Util.moveTowards(
+                            player.Velocity.x,
+                            player.Position.x,
+                            player.Damping * SystemAPI.Time.DeltaTime
+                        ), player.Velocity.y, 0);
+                    }
+                    else if (player is { IsAnimLocked: false, IsBlocking: false })
+                    {
+                        player.Velocity = new float3(Util.moveTowards( // Else towards max speed
+                            player.Velocity.x,
+                            player.Input.RequestedMovement.x * player.MaxSpeed,
+                            player.Acceleration * SystemAPI.Time.DeltaTime
+                        ), player.Velocity.y, 0);
+                        player.IsFacingRight = (player.Input.RequestedMovement.x > 0.0f);
+                    }
+                    else
+                    {
+                        player.IsFacingRight = (player.Input.RequestedMovement.x > 0.0f);
+                    }
                 }
             }
 

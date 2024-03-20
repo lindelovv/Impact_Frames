@@ -43,8 +43,13 @@ public class PlayerState : MonoBehaviour
     }
 }
 
+//[GhostComponent(
+//    PrefabType=GhostPrefabType.AllPredicted,
+//    OwnerSendType = SendToOwnerType.SendToNonOwner
+//)]
 [GhostComponent(
-    PrefabType=GhostPrefabType.AllPredicted,
+    PrefabType=GhostPrefabType.All,
+    SendTypeOptimization=GhostSendType.AllClients,
     OwnerSendType = SendToOwnerType.SendToNonOwner
 )]
 public struct PlayerStateComponent : IComponentData

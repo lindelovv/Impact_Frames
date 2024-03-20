@@ -125,6 +125,11 @@ public class Player : MonoBehaviour
                 hkRecoverTime = authoring.HeavyKickTime.z,
             });
             
+            AddComponent(entity, new Action {
+                State = ActionState.None,
+                DoAction = false,
+            });
+            
             // Health component is it's own component in case of reuse,
             // but since we always want one on the player it is added here in code
             // from the values from this authoring component (see [Header("Health")] above).

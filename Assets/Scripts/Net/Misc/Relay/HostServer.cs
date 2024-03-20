@@ -263,9 +263,10 @@ public partial class HostServer : SystemBase
             return HostStatus.FailedToHost;
         }
 
-        var regionList = collectRegionTask.Result;
+        //var regionList = collectRegionTask.Result;
         // pick a region from the list
-        var targetRegion = regionList[0].Id;
+        var targetRegion = "europe-north1";//regionList[0].Id;
+        Debug.LogWarning("[Net] Forcing server 'europe-north1'");
 
         // Request an allocation to the Relay service
         // with a maximum of 5 peer connections, for a maximum of 6 players.

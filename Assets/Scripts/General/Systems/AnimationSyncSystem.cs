@@ -32,7 +32,6 @@ public partial class AnimationSyncSystem : SystemBase
     {
         _ghostPresentationGameObjectSystem = World.GetExistingSystemManaged<GhostPresentationGameObjectSystem>();
         RequireForUpdate<GhostPresentationGameObjectPrefabReference>();
-        RequireForUpdate<PredictedGhost>();
         RequireForUpdate<PlayerData>();
     }
 
@@ -44,7 +43,7 @@ public partial class AnimationSyncSystem : SystemBase
         foreach (
             var (playerState, entity)
             in SystemAPI.Query<RefRW<PlayerStateComponent>>()
-                .WithAll<GhostPresentationGameObjectPrefabReference, PredictedGhost, PlayerData>()
+                .WithAll<GhostPresentationGameObjectPrefabReference, PlayerData>()
                 .WithEntityAccess()
         ) {
             var reference = _ghostPresentationGameObjectSystem.GetGameObjectForEntity(EntityManager, entity);

@@ -4,7 +4,7 @@ using Unity.NetCode;
 using UnityEngine;
 
 [UpdateInGroup(typeof(PredictedSimulationSystemGroup)),
- UpdateBefore(typeof(PerformActionSystem)),
+ UpdateBefore(typeof(ActionSystem)),
  UpdateAfter(typeof(ActionTimerSystem))]
 public partial struct InitActionSystem : ISystem
 {
@@ -20,10 +20,13 @@ public partial struct InitActionSystem : ISystem
     {
         var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
         foreach (
-            var player 
-            in SystemAPI.Query<PlayerAspect>()
-                .WithNone<Action>()
+            var (player, action) 
+            in SystemAPI.Query<PlayerAspect, Action>()
         ) {
+            if (action.State != ActionState.None)
+            {
+                continue;
+            }
             if (player.Input.RequestReset)
             {
                 cmdBuffer.AddComponent<Respawn>(player.Self);
@@ -33,7 +36,7 @@ public partial struct InitActionSystem : ISystem
                 // Check if you have Coyote or Groundbuffer
                 if (player.Input.RequestJump && ((player.IsGrounded || player.CayoteTimer > 0) || player.IsOnBeat))
                 {
-                    cmdBuffer.AddComponent(player.Self, new Action
+                    cmdBuffer.SetComponent(player.Self, new Action
                     {
                         Name = ActionName.Jump,
                         Repeating = false,
@@ -41,14 +44,14 @@ public partial struct InitActionSystem : ISystem
                         StartTime = player.Data.jStartTime,
                         ActiveTime = player.Data.jActiveTime,
                         RecoverTime = player.Data.jRecoverTime,
+                        DoAction = true,
                     });
                     player.IsJumping = true;
-                    cmdBuffer.AddComponent<DoAction>(player.Self);
                     continue;
                 }
                 if (player.Input.RequestDash)
                 {
-                    cmdBuffer.AddComponent(player.Self, new Action
+                    cmdBuffer.SetComponent(player.Self, new Action
                     {
                         Name = ActionName.Dash,
                         Repeating = false,
@@ -56,23 +59,23 @@ public partial struct InitActionSystem : ISystem
                         StartTime   = player.Data.dStartTime,
                         ActiveTime  = player.Data.dActiveTime,
                         RecoverTime = player.Data.dRecoverTime,
+                        DoAction = true,
                     });
-                    cmdBuffer.AddComponent<DoAction>(player.Self);
                     continue;
                 }
                 if (player.Input.RequestBlock)
                 {
                     if (player.BlockTimer < 0)
                     {
-                        cmdBuffer.AddComponent(player.Self, new Action
+                        cmdBuffer.SetComponent(player.Self, new Action
                         {
                             Name = ActionName.Block,
                             Repeating = true,
                             State = ActionState.Startup,
                             ActiveTime  = 4,
+                            DoAction = true,
                         });
                         player.IsBlocking = true;
-                        cmdBuffer.AddComponent<DoAction>(player.Self);
                     }
                 } else {
                     //Input button logik för att köra punch
@@ -90,7 +93,7 @@ public partial struct InitActionSystem : ISystem
                         
                         if (player.HitCounter == 4)
                         {
-                            cmdBuffer.AddComponent(player.Self, new Action
+                            cmdBuffer.SetComponent(player.Self, new Action
                             {
                                 Name = ActionName.HeavyPunch,
                                 Repeating = false,
@@ -98,12 +101,12 @@ public partial struct InitActionSystem : ISystem
                                 StartTime   = player.Data.hpStartTime,
                                 ActiveTime  = player.Data.hpActiveTime,
                                 RecoverTime = player.Data.hpRecoverTime,
+                                DoAction = true,
                             });
-                            cmdBuffer.AddComponent<DoAction>(player.Self);
                         }
                         else
                         {
-                            cmdBuffer.AddComponent(player.Self, new Action
+                            cmdBuffer.SetComponent(player.Self, new Action
                             {
                                 Name = ActionName.Punch,
                                 Repeating = false,
@@ -111,8 +114,8 @@ public partial struct InitActionSystem : ISystem
                                 StartTime   = player.Data.pStartTime,
                                 ActiveTime  = player.Data.pActiveTime,
                                 RecoverTime = player.Data.pRecoverTime,
+                                DoAction = true,
                             });
-                            cmdBuffer.AddComponent<DoAction>(player.Self);
                         }
                     }
                     //Input button logik för att köra kick
@@ -130,7 +133,7 @@ public partial struct InitActionSystem : ISystem
                         
                         if (player.HitCounter == 4)
                         {
-                            cmdBuffer.AddComponent(player.Self, new Action
+                            cmdBuffer.SetComponent(player.Self, new Action
                             {
                                 Name = ActionName.HeavyKick,
                                 Repeating = false,
@@ -138,12 +141,12 @@ public partial struct InitActionSystem : ISystem
                                 StartTime   = player.Data.hkStartTime,
                                 ActiveTime  = player.Data.hkActiveTime,
                                 RecoverTime = player.Data.hkRecoverTime,
+                                DoAction = true,
                             });
-                            cmdBuffer.AddComponent<DoAction>(player.Self);
                         }
                         else
                         {
-                            cmdBuffer.AddComponent(player.Self, new Action
+                            cmdBuffer.SetComponent(player.Self, new Action
                             {
                                 Name = ActionName.Kick,
                                 Repeating = false,
@@ -151,8 +154,8 @@ public partial struct InitActionSystem : ISystem
                                 StartTime   = player.Data.kStartTime,
                                 ActiveTime  = player.Data.kActiveTime,
                                 RecoverTime = player.Data.kRecoverTime,
+                                DoAction = true,
                             });
-                            cmdBuffer.AddComponent<DoAction>(player.Self);
                         }
                     }
                 }

@@ -24001,3 +24001,10 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.2
+    functionName: PlayHitClip
+    data: 
+    objectReferenceParameter: {fileID: 8300000, guid: be6a71ebc26e27f4698c006950109844, type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
