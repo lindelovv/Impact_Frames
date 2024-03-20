@@ -64,7 +64,16 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Block/Parry"",
+                    ""name"": ""Parry"",
+                    ""type"": ""Button"",
+                    ""id"": ""5fd618a4-512f-41fd-99b5-967001791d4b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Block"",
                     ""type"": ""Button"",
                     ""id"": ""1e68240f-90b2-4233-959a-691bdcb6262e"",
                     ""expectedControlType"": ""Button"",
@@ -158,10 +167,10 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""f65d4d29-c143-4465-a0c1-8ca1bb2747ef"",
                     ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Block/Parry"",
+                    ""action"": ""Block"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -172,7 +181,7 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Block/Parry"",
+                    ""action"": ""Block"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -285,6 +294,17 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Reset"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""48c55531-3fe3-4c8e-a5e7-cf753027d6ed"",
+                    ""path"": ""<Keyboard>/u"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Parry"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -297,7 +317,8 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
         m_Combat_Jump = m_Combat.FindAction("Jump", throwIfNotFound: true);
         m_Combat_Punch = m_Combat.FindAction("Punch", throwIfNotFound: true);
         m_Combat_Kick = m_Combat.FindAction("Kick", throwIfNotFound: true);
-        m_Combat_BlockParry = m_Combat.FindAction("Block/Parry", throwIfNotFound: true);
+        m_Combat_Parry = m_Combat.FindAction("Parry", throwIfNotFound: true);
+        m_Combat_Block = m_Combat.FindAction("Block", throwIfNotFound: true);
         m_Combat_SpecialMove = m_Combat.FindAction("SpecialMove", throwIfNotFound: true);
         m_Combat_Dash = m_Combat.FindAction("Dash", throwIfNotFound: true);
         m_Combat_AnimCancel = m_Combat.FindAction("AnimCancel", throwIfNotFound: true);
@@ -367,7 +388,8 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Combat_Jump;
     private readonly InputAction m_Combat_Punch;
     private readonly InputAction m_Combat_Kick;
-    private readonly InputAction m_Combat_BlockParry;
+    private readonly InputAction m_Combat_Parry;
+    private readonly InputAction m_Combat_Block;
     private readonly InputAction m_Combat_SpecialMove;
     private readonly InputAction m_Combat_Dash;
     private readonly InputAction m_Combat_AnimCancel;
@@ -380,7 +402,8 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Combat_Jump;
         public InputAction @Punch => m_Wrapper.m_Combat_Punch;
         public InputAction @Kick => m_Wrapper.m_Combat_Kick;
-        public InputAction @BlockParry => m_Wrapper.m_Combat_BlockParry;
+        public InputAction @Parry => m_Wrapper.m_Combat_Parry;
+        public InputAction @Block => m_Wrapper.m_Combat_Block;
         public InputAction @SpecialMove => m_Wrapper.m_Combat_SpecialMove;
         public InputAction @Dash => m_Wrapper.m_Combat_Dash;
         public InputAction @AnimCancel => m_Wrapper.m_Combat_AnimCancel;
@@ -406,9 +429,12 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
             @Kick.started += instance.OnKick;
             @Kick.performed += instance.OnKick;
             @Kick.canceled += instance.OnKick;
-            @BlockParry.started += instance.OnBlockParry;
-            @BlockParry.performed += instance.OnBlockParry;
-            @BlockParry.canceled += instance.OnBlockParry;
+            @Parry.started += instance.OnParry;
+            @Parry.performed += instance.OnParry;
+            @Parry.canceled += instance.OnParry;
+            @Block.started += instance.OnBlock;
+            @Block.performed += instance.OnBlock;
+            @Block.canceled += instance.OnBlock;
             @SpecialMove.started += instance.OnSpecialMove;
             @SpecialMove.performed += instance.OnSpecialMove;
             @SpecialMove.canceled += instance.OnSpecialMove;
@@ -437,9 +463,12 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
             @Kick.started -= instance.OnKick;
             @Kick.performed -= instance.OnKick;
             @Kick.canceled -= instance.OnKick;
-            @BlockParry.started -= instance.OnBlockParry;
-            @BlockParry.performed -= instance.OnBlockParry;
-            @BlockParry.canceled -= instance.OnBlockParry;
+            @Parry.started -= instance.OnParry;
+            @Parry.performed -= instance.OnParry;
+            @Parry.canceled -= instance.OnParry;
+            @Block.started -= instance.OnBlock;
+            @Block.performed -= instance.OnBlock;
+            @Block.canceled -= instance.OnBlock;
             @SpecialMove.started -= instance.OnSpecialMove;
             @SpecialMove.performed -= instance.OnSpecialMove;
             @SpecialMove.canceled -= instance.OnSpecialMove;
@@ -475,7 +504,8 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnPunch(InputAction.CallbackContext context);
         void OnKick(InputAction.CallbackContext context);
-        void OnBlockParry(InputAction.CallbackContext context);
+        void OnParry(InputAction.CallbackContext context);
+        void OnBlock(InputAction.CallbackContext context);
         void OnSpecialMove(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnAnimCancel(InputAction.CallbackContext context);

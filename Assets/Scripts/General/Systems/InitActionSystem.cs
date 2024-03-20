@@ -63,6 +63,17 @@ public partial struct InitActionSystem : ISystem
                     });
                     continue;
                 }
+                if (player.Input.RequestParry)
+                {
+                    cmdBuffer.SetComponent(player.Self, new Action
+                    {
+                        Name = ActionName.Parry,
+                        Repeating = true,
+                        State = ActionState.Startup,
+                        ActiveTime  = .2f,
+                        DoAction = true,
+                    });
+                }
                 if (player.Input.RequestBlock)
                 {
                     if (player.BlockTimer < 0)

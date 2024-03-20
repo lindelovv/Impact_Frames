@@ -8,7 +8,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [BurstCompile]
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup)), UpdateAfter(typeof(UpdatePlayerStateSystem))]
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
 public partial struct ActionSystem : ISystem
 {
     [BurstCompile]
@@ -220,6 +220,9 @@ public partial struct ActionSystem : ISystem
                                 player.IsBlocking = false;
                                 player.IsAnimLocked = false;
                                 action.ValueRW.DoAction = false;
+                                action.ValueRW.ActiveTime = 0;
+                                action.ValueRW.State = ActionState.None;
+                                action.ValueRW.Name = ActionName.None;
                             }
                             break;
                         }
@@ -236,7 +239,16 @@ public partial struct ActionSystem : ISystem
                 //______________________________________________________________________________________________
                 case ActionName.Parry:
                 {
-                    // TODO
+                    switch (action.ValueRO.State)
+                    {
+                        case ActionState.Startup:  { player.IsParrying = true; break; }
+                        case ActionState.Active:
+                        {
+                            break;
+                        }
+                        case ActionState.Recovery: { player.IsParrying = false; break; }
+                        case ActionState.Finished: { break; }
+                    }
                     break;
                 }
                 //______________________________________________________________________________________________

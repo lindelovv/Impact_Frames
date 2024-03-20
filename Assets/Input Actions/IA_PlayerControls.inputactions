@@ -42,7 +42,16 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Block/Parry",
+                    "name": "Parry",
+                    "type": "Button",
+                    "id": "5fd618a4-512f-41fd-99b5-967001791d4b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Block",
                     "type": "Button",
                     "id": "1e68240f-90b2-4233-959a-691bdcb6262e",
                     "expectedControlType": "Button",
@@ -136,10 +145,10 @@
                     "name": "",
                     "id": "f65d4d29-c143-4465-a0c1-8ca1bb2747ef",
                     "path": "<Mouse>/rightButton",
-                    "interactions": "",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "",
-                    "action": "Block/Parry",
+                    "action": "Block",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -150,7 +159,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Block/Parry",
+                    "action": "Block",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -261,6 +270,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Reset",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "48c55531-3fe3-4c8e-a5e7-cf753027d6ed",
+                    "path": "<Keyboard>/u",
+                    "interactions": "Tap",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Parry",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

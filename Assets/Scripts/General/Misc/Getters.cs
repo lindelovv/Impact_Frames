@@ -39,6 +39,7 @@ public class Getters : MonoBehaviour
     public List<AudioClip> JumpSounds;
     public List<AudioClip> ParrySounds;
     public bool _hasHit;
+    public bool _blockActive;
 
 
     private void Awake()

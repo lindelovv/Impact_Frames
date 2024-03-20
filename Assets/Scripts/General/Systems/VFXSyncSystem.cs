@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections;
-using Unity.Burst;
+﻿using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
-using Unity.NetCode;
 using Unity.NetCode.Hybrid;
 using UnityEngine;
-using UnityEngine.VFX;
 
 [BurstCompile]
 [UpdateInGroup(typeof(PresentationSystemGroup))]
@@ -35,22 +31,26 @@ public partial class VFXSyncSystem : SystemBase
                 .WithEntityAccess()
         ) {
             var reference = _ghostPresentationGameObjectSystem.GetGameObjectForEntity(EntityManager, entity);
-            if (!reference) { Debug.Log("GameObject reference null"); continue; }
+            if (!reference) { /*Debug.Log("GameObject reference null");*/ continue; }
 
             var get = reference.GetComponent<Getters>();
             if (!get) { Debug.Log("VFX getter null"); continue; }
 
             get._hasHit = playerState.ValueRO.HasHit;
 
-            if (playerState.ValueRO.IsBlocking)
+            if (playerState.ValueRO.IsBlocking && !get._blockActive)
             {
                 get.BlockAudioSource.Play();
-                get.Block.enabled = true;
+                get.Block.SetBool("KillParticle", true);
+                get.Block.Play();
+                get._blockActive = true;
             }
-            else
+            else if (get._blockActive)
             {
                 get.BlockAudioSource.Stop();
-                get.Block.enabled = false;
+                get.Block.SetBool("KillParticle", false);
+                get.Block.Stop();
+                get._blockActive = false;
             }
 
             // Reactional sets cooldown to reset bool value (to play once and not have to use isPlaying)

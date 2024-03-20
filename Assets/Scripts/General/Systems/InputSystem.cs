@@ -36,18 +36,25 @@ public partial class InputSystem : SystemBase
         ) {
             inputData.ValueRW.RequestedMovement = _inputActions.Combat.Move.ReadValue<Vector2>();
             
-            IsButtonHeld(_inputActions.Combat.Reset,      ref inputData.ValueRW.RequestReset);
-            IsButtonHeld(_inputActions.Combat.Jump,       ref inputData.ValueRW.RequestJump );
-            IsButtonHeld(_inputActions.Combat.Punch,      ref inputData.ValueRW.RequestPunch);
-            IsButtonHeld(_inputActions.Combat.Kick,       ref inputData.ValueRW.RequestKick );
-            IsButtonHeld(_inputActions.Combat.Dash,       ref inputData.ValueRW.RequestDash );
-            IsButtonHeld(_inputActions.Combat.BlockParry, ref inputData.ValueRW.RequestBlock);
+            IsButtonHeld(_inputActions.Combat.Reset, ref inputData.ValueRW.RequestReset);
+            IsButtonHeld(_inputActions.Combat.Jump,  ref inputData.ValueRW.RequestJump );
+            IsButtonHeld(_inputActions.Combat.Punch, ref inputData.ValueRW.RequestPunch);
+            IsButtonHeld(_inputActions.Combat.Kick,  ref inputData.ValueRW.RequestKick );
+            IsButtonHeld(_inputActions.Combat.Dash,  ref inputData.ValueRW.RequestDash );
+            //IsButtonHeld(_inputActions.Combat.Block, ref inputData.ValueRW.RequestBlock );
+            
+            _inputActions.Combat.Block.performed += context => inputData.ValueRW.RequestBlock = true;
+            _inputActions.Combat.Block.canceled  += context => inputData.ValueRW.RequestBlock = false;
+
+            _inputActions.Combat.Parry.performed += context => inputData.ValueRW.RequestParry = true;
+            _inputActions.Combat.Parry.canceled  += context => inputData.ValueRW.RequestParry = false;
+            
+            //inputData.ValueRW.RequestParry = _inputActions.Combat.Parry.WasPressedThisFrame();
             
             if(_inputActions.Combat.Jump.WasPressedThisFrame() ) {
                 // Setting coyote timeer and remember last time you were grounded
                // player.ValueRW.JumpPressRemember = player.ValueRW.JumpPressTimer;  
             }
-            inputData.ValueRW.RequestParry = _inputActions.Combat.BlockParry.WasPressedThisFrame();
         }
     }
 
