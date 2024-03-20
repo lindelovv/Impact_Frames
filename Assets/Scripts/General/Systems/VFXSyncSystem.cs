@@ -60,7 +60,7 @@ public partial class VFXSyncSystem : SystemBase
                 get.DashSmoke.Play();
                 get.ToggleEthereal(true);
                 get.Timer();
-                get.AudioSource.PlayOneShot(get.DashAudioClip);
+                get.AudioSource_MainOneShots.PlayOneShot(get.DashAudioClip);
             }
             else if (get.timerCompleted)
             {
@@ -74,7 +74,7 @@ public partial class VFXSyncSystem : SystemBase
             {
                 // Add some cool ass camera shake
                 get.LandingImpact.Play();
-                get.AudioSource.PlayOneShot(get.LandingHard);
+                get.AudioSource_MainOneShots.PlayOneShot(get.LandingHard);
                 playerState.ValueRW.IsFallingHigh = false;
             }
         }

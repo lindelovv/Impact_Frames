@@ -19,7 +19,7 @@ public class Getters : MonoBehaviour
     public VisualEffect SmokeTrail;
     public VisualEffect LandingImpact;
 
-    public AudioSource AudioSource;
+    public AudioSource AudioSource_MainOneShots;
     public AudioSource BlockAudioSource;
     public List<AudioClip> AudioClips;
     public AudioClip DashAudioClip;
@@ -36,11 +36,20 @@ public class Getters : MonoBehaviour
     public Material[] EtherealMat;
 
     public List<AudioClip> FootstepSounds;
-    
+    public List<AudioClip> JumpSounds;
+    public List<AudioClip> ParrySounds;
     public bool _hasHit;
 
+
+    private void Awake()
+    {
+        // Setting all audiio to 3D sounds before star so it works in editor
+        AudioSource_MainOneShots.spatialBlend = 1;
+        BlockAudioSource.spatialBlend = 1;
+    }
     private void Start()
     {
+        
         DashTrail = GameObject.FindWithTag("DashTrail").GetComponent<VisualEffect>();
         if(!DashTrail) { Debug.Log("Dash null"); }
         DashTrail.Stop();
@@ -69,19 +78,31 @@ public class Getters : MonoBehaviour
     public void PlayRandomFootsteps()
     {
         var index = Random.Range(0, FootstepSounds.Count);
-        AudioSource.PlayOneShot(FootstepSounds[index]);
+        AudioSource_MainOneShots.PlayOneShot(FootstepSounds[index]);
     }
-    
+
+    public void PlayRandomJumps()
+    {
+        var index = Random.Range(0, JumpSounds.Count);
+        AudioSource_MainOneShots.PlayOneShot(JumpSounds[index]);
+    }
+
+    public void PlayRandomParry()
+    {
+        var index = Random.Range(0, ParrySounds.Count);
+        AudioSource_MainOneShots.PlayOneShot(ParrySounds[index]);
+    }
+
     public void PlayClip(AudioClip audioClip)
     {
-        AudioSource.PlayOneShot(audioClip);
+        AudioSource_MainOneShots.PlayOneShot(audioClip);
     }
     
     public void PlayHitClip(AudioClip audioClip)
     {
         //if (_hasHit)
         {
-            AudioSource.PlayOneShot(audioClip);
+            AudioSource_MainOneShots.PlayOneShot(audioClip);
         }
     }
 
