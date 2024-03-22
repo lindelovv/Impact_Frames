@@ -56,6 +56,8 @@ public partial struct PlayerMovementSystem : ISystem
                 }
             }
 
+            if(player.IsAnimLocked) { continue; }
+            if(player.IsAnimLocked) { ; }
             // Calculate & Add Horizontal Movement
             {
                 if (!player.IsDashing)

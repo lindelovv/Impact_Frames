@@ -299,7 +299,7 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""48c55531-3fe3-4c8e-a5e7-cf753027d6ed"",
                     ""path"": ""<Keyboard>/u"",
-                    ""interactions"": ""Tap"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Parry"",

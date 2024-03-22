@@ -53,6 +53,11 @@ public partial class VFXSyncSystem : SystemBase
                 get._blockActive = false;
             }
 
+            if (playerState.ValueRO.IsHit)
+            {
+                get.InkSplatter.Play();
+            }
+
             // Reactional sets cooldown to reset bool value (to play once and not have to use isPlaying)
             if (playerState.ValueRO.IsDashing && !get.isTimerRunning)
             {

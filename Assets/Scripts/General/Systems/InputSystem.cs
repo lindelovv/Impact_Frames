@@ -5,25 +5,27 @@ using UnityEngine.InputSystem;
 
 [UpdateInGroup(typeof(GhostInputSystemGroup))]
 [WorldSystemFilter(WorldSystemFilterFlags.ClientSimulation)]
-[AlwaysSynchronizeSystem]
 public partial class InputSystem : SystemBase
 {
     private IA_PlayerControls _inputActions;
     
     protected override void OnCreate()
     {
+        base.OnCreate();
         RequireForUpdate<InputData>();
     }
 
     protected override void OnStartRunning()
     {
+        base.OnStartRunning();
         _inputActions = new IA_PlayerControls();
         _inputActions.Enable();
     }
 
     protected override void OnStopRunning()
     {
-        _inputActions.Disable();
+        base.OnStopRunning();
+        _inputActions?.Disable();
     }
 
     protected override void OnUpdate()

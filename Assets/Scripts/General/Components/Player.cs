@@ -144,17 +144,14 @@ public class Player : MonoBehaviour
             if (!authoring.IsDummy)
             {
                 //// Needed to query collisions
-                AddComponent(entity, new PhysicsVelocity
-                {
+                AddComponent(entity, new PhysicsVelocity {
                     Linear = authoring.StartingVelocity,
                 });
-                AddComponent(entity, new PhysicsDamping
-                {
+                AddComponent(entity, new PhysicsDamping {
                     Linear = authoring.Damping,
                     Angular = 9999999,
                 });
-                AddComponent(entity, new PhysicsMass
-                {
+                AddComponent(entity, new PhysicsMass {
                     Transform = RigidTransform.identity,
                     InverseMass = 1,
                     InverseInertia = 0,
@@ -163,8 +160,7 @@ public class Player : MonoBehaviour
                 AddComponent<PhysicsGravityFactor>(entity);
 
                 // Might switch this out later to add/remove as needed instead
-                AddComponent(entity, new ApplyImpact
-                {
+                AddComponent(entity, new ApplyImpact {
                     Amount = 0f,
                 });
             }
@@ -173,8 +169,13 @@ public class Player : MonoBehaviour
 }
 
 // Player-unique data
+//[GhostComponent(
+//    PrefabType=GhostPrefabType.AllPredicted,
+//    OwnerSendType = SendToOwnerType.SendToNonOwner
+//)]
 [GhostComponent(
-    PrefabType=GhostPrefabType.AllPredicted,
+    PrefabType = GhostPrefabType.All,
+    SendTypeOptimization = GhostSendType.AllClients,
     OwnerSendType = SendToOwnerType.SendToNonOwner
 )]
 public struct PlayerData : IComponentData

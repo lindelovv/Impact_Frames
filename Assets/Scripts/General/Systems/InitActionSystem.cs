@@ -68,7 +68,7 @@ public partial struct InitActionSystem : ISystem
                     cmdBuffer.SetComponent(player.Self, new Action
                     {
                         Name = ActionName.Parry,
-                        Repeating = true,
+                        Repeating = false,
                         State = ActionState.Startup,
                         ActiveTime  = .2f,
                         DoAction = true,

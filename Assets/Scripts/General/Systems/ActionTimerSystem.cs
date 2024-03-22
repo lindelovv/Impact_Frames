@@ -60,6 +60,7 @@ public partial struct ActionTimerSystem : ISystem
                 //_________________________
                 case ActionState.Finished: {
                     action.ValueRW.State = ActionState.None;
+                    action.ValueRW.Name = ActionName.None;
                     action.ValueRW.DoAction = false;
                     
                     break;

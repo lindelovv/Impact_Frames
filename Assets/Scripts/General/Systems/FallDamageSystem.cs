@@ -63,8 +63,9 @@ public partial struct FallDamageSystem : ISystem
                 }
                 player.IsFallingHigh = true;
                 cmdBuffer.AddComponent(player.Self, new TakeDamage {
-                    Amount = math.clamp(damage, 0, 10),
+                    Amount = math.clamp((damage * 2), 0, 10),
                 });
+                
                 cmdBuffer.RemoveComponent<Falling>(player.Self);
             }
         }

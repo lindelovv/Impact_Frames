@@ -25,15 +25,6 @@ public partial struct DamageSystem : ISystem
             
             cmdBuffer.RemoveComponent<TakeDamage>(entity);
             
-            cmdBuffer.RemoveComponent<Action>(entity);
-            cmdBuffer.AddComponent(entity, new Action {
-                Name = ActionName.HitStun,
-                Repeating = false,
-                State = ActionState.Startup,
-                StartTime = 0,
-                ActiveTime = .2f,
-                RecoverTime = 0,
-            });
             cmdBuffer.SetComponent(entity, new Action
             {
                 Name = ActionName.HitStun,
