@@ -3,7 +3,7 @@ using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
 
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup)), UpdateAfter(typeof(ActionSystem))]
+//[UpdateInGroup(typeof(PredictedSimulationSystemGroup)), UpdateAfter(typeof(ActionSystem))]
 public partial struct DamageSystem : ISystem
 {
     public void OnCreate(ref SystemState state)

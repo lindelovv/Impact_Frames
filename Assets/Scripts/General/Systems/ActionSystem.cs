@@ -8,7 +8,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [BurstCompile]
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
+//[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
 public partial struct ActionSystem : ISystem
 {
     [BurstCompile]
