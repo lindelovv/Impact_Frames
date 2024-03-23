@@ -38,8 +38,6 @@ public partial class AnimationSyncSystem : SystemBase
     [BurstCompile]
     protected override void OnUpdate()
     {
-        var cmdBuffer = new EntityCommandBuffer(Allocator.TempJob);
-        
         foreach (
             var (playerState, entity)
             in SystemAPI.Query<RefRW<PlayerStateComponent>>()
@@ -65,7 +63,5 @@ public partial class AnimationSyncSystem : SystemBase
             animator.SetBool(   Parameters.IsHit,        playerState.ValueRO.IsHit        );
             animator.SetInteger(Parameters.HitCounter,   playerState.ValueRO.HitCounter   );
         }
-        cmdBuffer.Playback(EntityManager);
-        cmdBuffer.Dispose();
     }
 }

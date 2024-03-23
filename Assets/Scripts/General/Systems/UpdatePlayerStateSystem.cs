@@ -6,8 +6,7 @@ using Unity.Transforms;
 using UnityEngine;
 
 [BurstCompile]
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup)),
- UpdateBefore(typeof(PlayerMovementSystem))]
+//[UpdateInGroup(typeof(PredictedSimulationSystemGroup)), UpdateBefore(typeof(PlayerMovementSystem))]
 public partial struct UpdatePlayerStateSystem : ISystem
 {
     [BurstCompile]

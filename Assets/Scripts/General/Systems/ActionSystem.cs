@@ -8,7 +8,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [BurstCompile]
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
+//[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
 public partial struct ActionSystem : ISystem
 {
     [BurstCompile]
@@ -269,9 +269,14 @@ public partial struct ActionSystem : ISystem
                     break;
                 }
             }
-            if (!action.ValueRO.Repeating)
-            { 
-                action.ValueRW.DoAction = false;
+            if (!action.ValueRO.Repeating) { action.ValueRW.DoAction = false; }
+
+            if (playerHasHit)
+            {
+                action.ValueRW.State++;
+                action.ValueRW.RecoverTime += action.ValueRO.ActiveTime;
+                action.ValueRW.ActiveTime = 0;
+                action.ValueRW.DoAction = true;
             }
         }
         cmdBuffer.Playback(state.EntityManager);

@@ -3,9 +3,7 @@ using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
 
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup)),
- UpdateBefore(typeof(ActionSystem)),
- UpdateAfter(typeof(ActionTimerSystem))]
+//[UpdateInGroup(typeof(PredictedSimulationSystemGroup)), UpdateBefore(typeof(ActionSystem)), UpdateAfter(typeof(ActionTimerSystem))]
 public partial struct InitActionSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
@@ -68,7 +66,7 @@ public partial struct InitActionSystem : ISystem
                     cmdBuffer.SetComponent(player.Self, new Action
                     {
                         Name = ActionName.Parry,
-                        Repeating = true,
+                        Repeating = false,
                         State = ActionState.Startup,
                         ActiveTime  = .2f,
                         DoAction = true,
