@@ -18,6 +18,7 @@ public class Getters : MonoBehaviour
     [HideInInspector] public VisualEffect DashTrail;
     public VisualEffect SmokeTrail;
     public VisualEffect LandingImpact;
+    public VisualEffect InkSplatter;
 
     public AudioSource AudioSource_MainOneShots;
     public AudioSource BlockAudioSource;
@@ -101,7 +102,7 @@ public class Getters : MonoBehaviour
     
     public void PlayHitClip(AudioClip audioClip)
     {
-        //if (_hasHit)
+        if (_hasHit)
         {
             AudioSource_MainOneShots.PlayOneShot(audioClip);
         }

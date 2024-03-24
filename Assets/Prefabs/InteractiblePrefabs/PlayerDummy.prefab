@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: -1779064826349053475}
   - component: {fileID: 1244181283632142093}
   - component: {fileID: 1553344042008314389}
-  - component: {fileID: -3312887918091319252}
   - component: {fileID: 1905571665012368345}
   - component: {fileID: 7010235459770899136}
   m_Layer: 0
@@ -52,29 +51,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b275e5f92732148048d7b77e264ac30e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShapeType: 0
+  m_ShapeType: 1
   m_PrimitiveCenter:
     x: 0
-    y: 1.24
+    y: 1.235
     z: 0
   m_PrimitiveSize:
     x: 1.25
-    y: 2.5
-    z: 1.25
+    y: 1.25
+    z: 2.5
   m_PrimitiveOrientation:
     Value:
-      x: 0
+      x: -90
       y: 0
-      z: 0
+      z: -90
     RotationOrder: 4
   m_Capsule:
     Height: 2.5
     Radius: 0.625
-    Axis: 1
+    Axis: 2
   m_Cylinder:
     Height: 2.5
     Radius: 0.625
-    Axis: 1
+    Axis: 2
   m_CylinderSideCount: 20
   m_SphereRadius: 1.25
   m_MinimumSkinnedVertexWeight: 0.1
@@ -83,7 +82,7 @@ MonoBehaviour:
     m_BevelRadius: 0.05
     m_MinimumAngle: 2.5000002
   m_CustomMesh: {fileID: 0}
-  m_ForceUnique: 0
+  m_ForceUnique: 1
   m_Material:
     m_SupportsTemplate: 1
     m_Template: {fileID: 0}
@@ -199,45 +198,47 @@ MonoBehaviour:
   MaxHealth: 10
   Speed: 30
   MaxSpeed: 60
-  JumpHeight: 160
+  JumpHeight: 20
+  JumpDecay: 0.95
+  DashSpeed: 28
   CayoteTime: 0.25
   Damping: 2
   StartingVelocity:
     x: 0
     y: 0
     z: 0
-  FallGravity: 0
+  FallGravity: 7
   OverrideGravity: 0
-  Gravity: 0
+  Gravity: 1
   Pushback:
     x: 0
     y: 0
-  MaxComboDelay: 0
-  BlockCooldown: 0
+  MaxComboDelay: 2
+  BlockCooldown: 2
   JumpTime:
-    x: 0
+    x: 0.05
     y: 0
-    z: 0
+    z: 0.05
   DashTime:
     x: 0
-    y: 0
-    z: 0
+    y: 0.2
+    z: 0.01
   PunchTime:
-    x: 0
-    y: 0
-    z: 0
+    x: 0.1
+    y: 0.1
+    z: 0.2
   HeavyPunchTime:
-    x: 0
-    y: 0
-    z: 0
+    x: 0.2
+    y: 0.2
+    z: 0.5
   KickTime:
-    x: 0
-    y: 0
-    z: 0
+    x: 0.1
+    y: 0.1
+    z: 0.2
   HeavyKickTime:
-    x: 0
-    y: 0
-    z: 0
+    x: 0.2
+    y: 0.2
+    z: 0.5
   IsDummy: 1
 --- !u!114 &6524130790032669571
 MonoBehaviour:
@@ -311,24 +312,6 @@ MonoBehaviour:
   TrackInterpolationDelay: 1
   GhostGroup: 0
   UsePreSerialization: 1
---- !u!114 &-3312887918091319252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5530559309006933450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfdaa6c06fe64fbda2b16e07a4ee0b25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ComponentOverrides:
-  - FullTypeName: Unity.Transforms.LocalTransform
-    EntityIndex: 0
-    PrefabType: -1
-    SendTypeOptimization: -1
-    VariantHash: 6907887384974514810
 --- !u!114 &1905571665012368345
 MonoBehaviour:
   m_ObjectHideFlags: 0

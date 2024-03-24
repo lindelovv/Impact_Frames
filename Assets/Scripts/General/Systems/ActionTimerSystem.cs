@@ -3,7 +3,7 @@ using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
 
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup)), UpdateBefore(typeof(InitActionSystem))]
+//[UpdateInGroup(typeof(PredictedSimulationSystemGroup)), UpdateBefore(typeof(InitActionSystem))]
 public partial struct ActionTimerSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
@@ -60,6 +60,7 @@ public partial struct ActionTimerSystem : ISystem
                 //_________________________
                 case ActionState.Finished: {
                     action.ValueRW.State = ActionState.None;
+                    action.ValueRW.Name = ActionName.None;
                     action.ValueRW.DoAction = false;
                     
                     break;

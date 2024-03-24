@@ -3,7 +3,7 @@ using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
 
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup)), UpdateAfter(typeof(ActionSystem))]
+//[UpdateInGroup(typeof(PredictedSimulationSystemGroup)), UpdateAfter(typeof(ActionSystem))]
 public partial struct DamageSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
@@ -25,15 +25,6 @@ public partial struct DamageSystem : ISystem
             
             cmdBuffer.RemoveComponent<TakeDamage>(entity);
             
-            cmdBuffer.RemoveComponent<Action>(entity);
-            cmdBuffer.AddComponent(entity, new Action {
-                Name = ActionName.HitStun,
-                Repeating = false,
-                State = ActionState.Startup,
-                StartTime = 0,
-                ActiveTime = .2f,
-                RecoverTime = 0,
-            });
             cmdBuffer.SetComponent(entity, new Action
             {
                 Name = ActionName.HitStun,
