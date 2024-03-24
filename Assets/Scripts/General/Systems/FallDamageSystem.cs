@@ -4,15 +4,6 @@ using Unity.Mathematics;
 using Unity.NetCode;
 using UnityEngine;
 
-[GhostComponent(
-    PrefabType = GhostPrefabType.AllPredicted,
-    OwnerSendType = SendToOwnerType.SendToNonOwner
-)]
-public struct Falling : IComponentData
-{
-    public float StartTime;
-}
-
 //______________________________________________________________________________________________________________________
 public partial struct StartFallingSystem : ISystem
 {
@@ -65,11 +56,20 @@ public partial struct FallDamageSystem : ISystem
                 cmdBuffer.AddComponent(player.Self, new TakeDamage {
                     Amount = math.clamp((damage * 2), 0, 10),
                 });
-                
                 cmdBuffer.RemoveComponent<Falling>(player.Self);
             }
         }
         cmdBuffer.Playback(state.EntityManager);
         cmdBuffer.Dispose();
     }
+}
+
+//______________________________________________________________________________________________________________________
+[GhostComponent(
+    PrefabType           = GhostPrefabType.All,
+    SendTypeOptimization = GhostSendType.AllClients,
+    OwnerSendType        = SendToOwnerType.SendToNonOwner)]
+public struct Falling : IComponentData
+{
+    [GhostField(Quantization = 0)] public float StartTime;
 }

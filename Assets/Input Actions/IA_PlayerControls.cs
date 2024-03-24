@@ -42,7 +42,7 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
                     ""id"": ""3cd1477a-2f4d-408d-a918-f712a7492cf5"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -51,7 +51,7 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
                     ""id"": ""75be10c4-6b91-4f4c-bcf7-be6eaf079dd4"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -60,7 +60,7 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
                     ""id"": ""f25a4586-a842-48a5-8fd4-a49374a58aee"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -69,7 +69,7 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
                     ""id"": ""5fd618a4-512f-41fd-99b5-967001791d4b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -78,7 +78,7 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
                     ""id"": ""1e68240f-90b2-4233-959a-691bdcb6262e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -92,11 +92,11 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Dash"",
-                    ""type"": ""Value"",
+                    ""type"": ""Button"",
                     ""id"": ""3ac40184-ee4a-4529-be7c-1e997936717f"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": true
                 },
                 {
@@ -105,7 +105,7 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
                     ""id"": ""9863559a-63b6-4fee-b315-d33e28f845bf"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -114,7 +114,7 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
                     ""id"": ""6de796b0-59a0-423f-bc94-5220dc349503"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -277,7 +277,7 @@ public partial class @IA_PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""b62c76d3-3877-4db2-b185-f65a2dd60572"",
                     ""path"": ""<Keyboard>/space"",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Jump"",

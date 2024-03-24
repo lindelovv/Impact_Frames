@@ -9,7 +9,7 @@ public partial struct InitActionSystem : ISystem
     public void OnCreate(ref SystemState state)
     {
         var builder = new EntityQueryBuilder(Allocator.Temp)
-            .WithAll<InputData>(); //inputComponent för att komma åt inputscriptets inputs
+            .WithAll<Input>(); //inputComponent för att komma åt inputscriptets inputs
         
         state.RequireForUpdate(state.GetEntityQuery(builder));
     }

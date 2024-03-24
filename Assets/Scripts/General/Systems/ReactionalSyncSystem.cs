@@ -9,14 +9,14 @@ public partial struct ReactionalSyncSystem : ISystem
     
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate<PlayerStateComponent>();
+        state.RequireForUpdate<PlayerState>();
     }
 
     public void OnUpdate(ref SystemState state)
     {
         foreach (
             var playerState
-            in SystemAPI.Query<RefRW<PlayerStateComponent>>()
+            in SystemAPI.Query<RefRW<PlayerState>>()
         ) {
             var timeToBeat = Reactional.Playback.MusicSystem.GetTimeToBeat(2);
             if (timeToBeat < _gracePeriod )

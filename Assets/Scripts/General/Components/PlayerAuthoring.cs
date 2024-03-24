@@ -1,12 +1,12 @@
+using System;
 using UnityEngine;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Physics;
-using Unity.Physics.GraphicsIntegration;
 using Unity.Transforms;
 
-public class Player : MonoBehaviour
+public class PlayerAuthoring : MonoBehaviour
 {
     //_______________________________________________________________
     [Header("Health")] 
@@ -80,13 +80,13 @@ public class Player : MonoBehaviour
     public bool IsDummy;
     
     //_______________________________________________________________
-    public class Baker : Baker<Player>
+    public class Baker : Baker<PlayerAuthoring>
     {
-        public override void Bake(Player authoring)
+        public override void Bake(PlayerAuthoring authoring)
         {
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
             
-            AddComponent(entity, new PlayerData {
+            AddComponent(entity, new Player {
                 MovementSpeed = authoring.Speed,
                 MaxSpeed      = authoring.MaxSpeed,
                 JumpHeight    = authoring.JumpHeight,
@@ -133,7 +133,7 @@ public class Player : MonoBehaviour
             // Health component is it's own component in case of reuse,
             // but since we always want one on the player it is added here in code
             // from the values from this authoring component (see [Header("Health")] above).
-            AddComponent(entity, new HealthComponent {
+            AddComponent(entity, new Health {
                 Current = authoring.CurrentHealth,
                 Max     = authoring.MaxHealth,
             });
@@ -141,6 +141,7 @@ public class Player : MonoBehaviour
             AddComponent(entity, new PlayerId {
                 Value = 0,
             });
+            
             if (!authoring.IsDummy)
             {
                 //// Needed to query collisions
@@ -169,56 +170,61 @@ public class Player : MonoBehaviour
 }
 
 // Player-unique data
-//[GhostComponent(
-//    PrefabType=GhostPrefabType.AllPredicted,
-//    OwnerSendType = SendToOwnerType.SendToNonOwner
-//)]
 [GhostComponent(
     PrefabType = GhostPrefabType.All,
     SendTypeOptimization = GhostSendType.AllClients,
     OwnerSendType = SendToOwnerType.SendToNonOwner
 )]
-public struct PlayerData : IComponentData
+public struct Player : IComponentData
 {
-    [GhostField] public float MovementSpeed;
-    [GhostField] public float MaxSpeed;
-    [GhostField] public float JumpHeight;
-    [GhostField] public float JumpDecay;
-    [GhostField] public float DashSpeed;
-    [GhostField] public float2 Pushback;
-    [GhostField] public float MaxComboDelay;
-    [GhostField] public bool IsDummy;
-    [GhostField] public float FallGravity;
-    [GhostField] public bool OverrideGravity;
-    [GhostField] public float CustomGravity;
-    [GhostField] public float CayoteTime;
-    [GhostField] public float CayoteTimer;
-    [GhostField] public float BlockCooldown;
-    [GhostField] public float BlockTimer;
+    [GhostField(Quantization = 0)] public float MovementSpeed;
+    [GhostField(Quantization = 0)] public float MaxSpeed;
+    [GhostField(Quantization = 0)] public float JumpHeight;
+    [GhostField(Quantization = 0)] public float JumpDecay;
+    [GhostField(Quantization = 0)] public float DashSpeed;
+    [GhostField(Quantization = 0)] public float2 Pushback;
+    [GhostField(Quantization = 0)] public float MaxComboDelay;
+    [GhostField]                   public bool IsDummy;
+    [GhostField(Quantization = 0)] public float FallGravity;
+    [GhostField(Quantization = 0)] public bool OverrideGravity;
+    [GhostField(Quantization = 0)] public float CustomGravity;
+    [GhostField(Quantization = 0)] public float CayoteTime;
+    [GhostField(Quantization = 0)] public float CayoteTimer;
+    [GhostField(Quantization = 0)] public float BlockCooldown;
+    [GhostField(Quantization = 0)] public float BlockTimer;
     // Jump time
-    [GhostField] public float jStartTime;
-    [GhostField] public float jActiveTime;
-    [GhostField] public float jRecoverTime;
+    [GhostField(Quantization = 0)] public float jStartTime;
+    [GhostField(Quantization = 0)] public float jActiveTime;
+    [GhostField(Quantization = 0)] public float jRecoverTime;
     // Dash time
-    [GhostField] public float dStartTime;
-    [GhostField] public float dActiveTime;
-    [GhostField] public float dRecoverTime;
+    [GhostField(Quantization = 0)] public float dStartTime;
+    [GhostField(Quantization = 0)] public float dActiveTime;
+    [GhostField(Quantization = 0)] public float dRecoverTime;
     // Punch time
-    [GhostField] public float pStartTime;
-    [GhostField] public float pActiveTime;
-    [GhostField] public float pRecoverTime;
+    [GhostField(Quantization = 0)] public float pStartTime;
+    [GhostField(Quantization = 0)] public float pActiveTime;
+    [GhostField(Quantization = 0)] public float pRecoverTime;
     // Heavy Punch
-    [GhostField] public float hpStartTime;
-    [GhostField] public float hpActiveTime;
-    [GhostField] public float hpRecoverTime;
+    [GhostField(Quantization = 0)] public float hpStartTime;
+    [GhostField(Quantization = 0)] public float hpActiveTime;
+    [GhostField(Quantization = 0)] public float hpRecoverTime;
     // Jump time
-    [GhostField] public float kStartTime;
-    [GhostField] public float kActiveTime;
-    [GhostField] public float kRecoverTime;
+    [GhostField(Quantization = 0)] public float kStartTime;
+    [GhostField(Quantization = 0)] public float kActiveTime;
+    [GhostField(Quantization = 0)] public float kRecoverTime;
     // Jump time
-    [GhostField] public float hkStartTime;
-    [GhostField] public float hkActiveTime;
-    [GhostField] public float hkRecoverTime;
+    [GhostField(Quantization = 0)] public float hkStartTime;
+    [GhostField(Quantization = 0)] public float hkActiveTime;
+    [GhostField(Quantization = 0)] public float hkRecoverTime;
+}
+
+[GhostComponent(
+    PrefabType           = GhostPrefabType.All,
+    SendTypeOptimization = GhostSendType.AllClients,
+    OwnerSendType        = SendToOwnerType.SendToNonOwner)]
+public struct PlayerId : IComponentData
+{
+    public Int16 Value;
 }
 
 public readonly partial struct PlayerAspect : IAspect
@@ -227,10 +233,10 @@ public readonly partial struct PlayerAspect : IAspect
     public readonly Entity Self;
 
     // Raw lookup data data from entity components
-    private readonly RefRW<PlayerData> _data;
-    private readonly RefRW<HealthComponent> _health;
-    private readonly RefRW<InputData> _input;
-    private readonly RefRW<PlayerStateComponent> _state;
+    private readonly RefRW<Player> _data;
+    private readonly RefRW<Health> _health;
+    private readonly RefRW<Input> _input;
+    private readonly RefRW<PlayerState> _state;
     private readonly RefRW<PhysicsCollider> _collider;
     private readonly RefRW<PhysicsVelocity> _velocity;
     private readonly RefRW<PhysicsDamping> _damping;
@@ -238,8 +244,8 @@ public readonly partial struct PlayerAspect : IAspect
     private readonly RefRW<LocalTransform> _transform;
     
     // Shorthand names for the component data variables (use these for access)
-    public PlayerData Data     { get => _data.ValueRO;                set => _data.ValueRW = value;                }
-    public InputData Input     { get => _input.ValueRO;               set => _input.ValueRW = value;               }
+    public Player Data     { get => _data.ValueRO;                set => _data.ValueRW = value;                }
+    public Input Input     { get => _input.ValueRO;               set => _input.ValueRW = value;               }
     
     // Transform
     public float3 Position     { get => _transform.ValueRO.Position;  set => _transform.ValueRW.Position = value;  }

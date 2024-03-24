@@ -38,8 +38,9 @@ public partial struct RespawnPlayerSystem : ISystem
         ) {
             Debug.Log("Respawn");
             transform.ValueRW.Position = spawnPoint.Position;
-            transform.ValueRW.Rotation = spawnPoint.Rotation;
+            //transform.ValueRW.Rotation = spawnPoint.Rotation;
             cmdBuffer.RemoveComponent<Respawn>(entity);
+            cmdBuffer.RemoveComponent<Falling>(entity);
         }
         cmdBuffer.Playback(state.EntityManager);
         cmdBuffer.Dispose();

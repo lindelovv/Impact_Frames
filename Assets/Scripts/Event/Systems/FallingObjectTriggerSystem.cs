@@ -57,7 +57,7 @@ public partial struct FallingObjectTriggerSystem : ISystem
                     case StatefulEventState.Enter:
                     {
                         var other = collisionEvent.GetOtherEntity(entity);
-                        if (state.EntityManager.HasComponent<HealthComponent>(other))
+                        if (state.EntityManager.HasComponent<Health>(other))
                         {
                             cmdBuffer.AddComponent(other, new TakeDamage {
                                 Amount = 1,

@@ -293,7 +293,7 @@ public partial struct ActionSystem : ISystem
         var entityManager = state.EntityManager;
         if (   hasHit 
             && entity != self 
-            && entityManager.HasComponent<HealthComponent>(entity)
+            && entityManager.HasComponent<Health>(entity)
         ) {
             cmdBuffer.AddComponent(entity, new TakeDamage {
                 Amount = 1,
@@ -315,7 +315,7 @@ public partial struct ActionSystem : ISystem
         var entityManager = state.EntityManager;
         if (   hasHit 
             && entity != self 
-            && entityManager.HasComponent<HealthComponent>(entity)
+            && entityManager.HasComponent<Health>(entity)
         ) {
             cmdBuffer.AddComponent(entity, new TakeDamage {
                 Amount = 1,
@@ -337,7 +337,7 @@ public partial struct ActionSystem : ISystem
         var entityManager = state.EntityManager;
         if (   hasHit 
             && entity != self 
-            && entityManager.HasComponent<HealthComponent>(entity)
+            && entityManager.HasComponent<Health>(entity)
         ) {
             cmdBuffer.AddComponent(entity, new TakeDamage {
                 Amount = 1,
@@ -359,7 +359,7 @@ public partial struct ActionSystem : ISystem
         var entityManager = state.EntityManager;
         if (   hasHit 
             && entity != self 
-            && entityManager.HasComponent<HealthComponent>(entity)
+            && entityManager.HasComponent<Health>(entity)
         ) {
             cmdBuffer.AddComponent(entity, new TakeDamage {
                 Amount = 1,
@@ -374,31 +374,33 @@ public partial struct ActionSystem : ISystem
     [BurstCompile]
     private static unsafe void CastCollider(ref float3 position, int forward, ref CollisionWorld collisionWorld, out Entity entity, out bool hasHit)
     {
-        var start = position + (new float3(forward * 0.9f, 1f, 0));
-        var end   = position + (new float3(forward * 1,    1f, 0));
+        var center = position + (new float3(forward * 1.5f, 1f, 0));
         var size = new float3(1, 1, 1);
-        
-        ColliderCastHit hit = new ColliderCastHit();
-        hasHit = collisionWorld.CastCollider(new ColliderCastInput
-            {
-                Collider = (Unity.Physics.Collider*)Unity.Physics.BoxCollider.Create(new BoxGeometry
-                {
-                    BevelRadius = 0f,
-                    Center = float3.zero,
-                    Orientation = quaternion.identity,
-                    Size = size
-                }, filter: new CollisionFilter
-                {
-                    BelongsTo = ~0u,
-                    CollidesWith = ~0u,
-                    GroupIndex = 0,
-                }).GetUnsafePtr(),
-                Start = start,
-                End = end,
+
+        var collider = Unity.Physics.BoxCollider.Create(
+            new BoxGeometry {
+                BevelRadius = 0f,
+                Center = float3.zero,
+                Orientation = quaternion.identity,
+                Size = size
             },
-            out hit);
+            filter: new CollisionFilter {
+                BelongsTo = 1,
+                CollidesWith = 1,
+                GroupIndex = 0,
+            }
+        );
+        hasHit = collisionWorld.CastCollider(
+            new ColliderCastInput {
+                Collider = (Unity.Physics.Collider*)collider.GetUnsafePtr(),
+                Start = center,
+                End = center,
+            },
+            out var hit
+        );
         entity = hit.Entity;
-        DrawBox(ref start, ref end, ref size);
+        DrawBox(ref center, ref center, ref size);
+        Debug.Log($"Collider hit: {hasHit}");
     }
 
     [BurstCompile]

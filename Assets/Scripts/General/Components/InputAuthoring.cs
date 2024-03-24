@@ -4,34 +4,28 @@ using Unity.Mathematics;
 using Unity.NetCode;
 using UnityEngine;
 
-public class Input : MonoBehaviour
+public class InputAuthoring : MonoBehaviour
 {
-    //-----------------------
     [Tooltip("[float2] Movement requested from { w, a, s, d } keypresses."), SerializeField]
     private float2 RequestedMove;
-    
-    private class Baker : Baker<Input>
+
+    private class Baker : Baker<InputAuthoring>
     {
-        public override void Bake(Input authoring)
+        public override void Bake(InputAuthoring authoring)
         {
-            AddComponent<InputData>(GetEntity(TransformUsageFlags.None));
+            AddComponent<Input>(GetEntity(TransformUsageFlags.None));
         }
     }
 }
 
-//[GhostComponent(
-//    PrefabType = GhostPrefabType.AllPredicted,
-//    OwnerSendType = SendToOwnerType.SendToNonOwner
-//)]
 [GhostComponent(
-    PrefabType = GhostPrefabType.All,
+    PrefabType           = GhostPrefabType.AllPredicted,
     SendTypeOptimization = GhostSendType.AllClients,
-    OwnerSendType = SendToOwnerType.SendToNonOwner
-)]
-public struct InputData : IInputComponentData
+    OwnerSendType        = SendToOwnerType.SendToNonOwner)]
+public struct Input : IInputComponentData
 {
     // Movement
-    [GhostField] public float2 RequestedMovement;
+    [GhostField(Quantization = 0)] public float2 RequestedMovement;
     
     // Jumping & DoubleJump
     [GhostField] public bool RequestJump;

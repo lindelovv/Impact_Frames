@@ -7,7 +7,7 @@ using UnityEngine.VFX;
 using UnityEngine.VFX.Utility;
 using Random = UnityEngine.Random;
 
-public class Getters : MonoBehaviour
+public class GameObjectReferenceData : MonoBehaviour
 {
     public GameObject Body;
     public GameObject Face;

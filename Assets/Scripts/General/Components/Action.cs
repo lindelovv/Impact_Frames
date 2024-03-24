@@ -1,15 +1,10 @@
 ﻿using Unity.Entities;
 using Unity.NetCode;
 
-//[GhostComponent(
-//    PrefabType = GhostPrefabType.AllPredicted,
-//    OwnerSendType = SendToOwnerType.SendToNonOwner
-//)]
 [GhostComponent(
-    PrefabType=GhostPrefabType.All,
-    SendTypeOptimization=GhostSendType.AllClients,
-    OwnerSendType = SendToOwnerType.SendToNonOwner
-)]
+    PrefabType           = GhostPrefabType.All,
+    SendTypeOptimization = GhostSendType.AllClients,
+    OwnerSendType        = SendToOwnerType.SendToNonOwner)]
 public struct Action : IComponentData
 {
     [GhostField] public ActionName Name;
@@ -18,9 +13,9 @@ public struct Action : IComponentData
     [GhostField] public bool DoAction;
     [GhostField] public bool Repeating;
     
-    [GhostField] public float StartTime;
-    [GhostField] public float ActiveTime;
-    [GhostField] public float RecoverTime;
+    [GhostField(Quantization = 0)] public float StartTime;
+    [GhostField(Quantization = 0)] public float ActiveTime;
+    [GhostField(Quantization = 0)] public float RecoverTime;
 }
 
 public enum ActionState

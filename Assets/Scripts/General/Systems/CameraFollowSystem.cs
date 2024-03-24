@@ -12,7 +12,7 @@ public partial class UpdateCameraTargetSystem : SystemBase
 
     protected override void OnCreate()
     {
-        RequireForUpdate<InputData>();
+        RequireForUpdate<Input>();
         RequireForUpdate<NetworkId>();
     }
 

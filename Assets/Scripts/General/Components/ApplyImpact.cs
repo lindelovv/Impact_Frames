@@ -3,10 +3,10 @@ using Unity.Mathematics;
 using Unity.NetCode;
 
 [GhostComponent(
-    PrefabType = GhostPrefabType.AllPredicted,
-    OwnerSendType = SendToOwnerType.SendToNonOwner
-)]
+    PrefabType           = GhostPrefabType.AllPredicted,
+    SendTypeOptimization = GhostSendType.AllClients,
+    OwnerSendType        = SendToOwnerType.SendToNonOwner)]
 public struct ApplyImpact : IComponentData
 {
-    public float2 Amount;
+    [GhostField(Quantization = 0)] public float2 Amount;
 }

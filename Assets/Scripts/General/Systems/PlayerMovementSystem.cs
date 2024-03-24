@@ -16,8 +16,8 @@ public partial struct PlayerMovementSystem : ISystem
     {
         // Use EntityQueryBuilder to find all entities with the given components.
         var builder = new EntityQueryBuilder(Allocator.Temp)
-            .WithAll<PlayerData>()
-            .WithAll<InputData>() //inputComponent för att komma åt inputscriptets inputs
+            .WithAll<Player>()
+            .WithAll<Input>() //inputComponent för att komma åt inputscriptets inputs
             .WithAll<LocalTransform>(); // för att kunna röra saker, transform
 
         // Components in RequireForUpdate are all types we need to run system (the query above and the physics world)
@@ -100,7 +100,7 @@ public partial struct PlayerMovementSystem : ISystem
                 if (state.EntityManager.HasComponent<ApplyImpact>(player.Self) 
                 ) {
                     player.Velocity += new float3(state.EntityManager.GetComponentData<ApplyImpact>(player.Self).Amount, 0);
-                    cmdBuffer.RemoveComponent<ApplyImpact>(player.Self);
+                    cmdBuffer.SetComponent(player.Self, new ApplyImpact { Amount = 0, });
                 }
             }
             //Debug.DrawLine(player.Position, player.Position + (player.Velocity / 2), Color.cyan, 1);

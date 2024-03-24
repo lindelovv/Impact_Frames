@@ -4,16 +4,16 @@ using Unity.NetCode;
 using Unity.Transforms;
 using UnityEngine;
 
-public class Spawner : MonoBehaviour
+public class SpawnerAuthoring : MonoBehaviour
 {
     public GameObject Player;
 
-    private class Baker : Baker<Spawner>
+    private class Baker : Baker<SpawnerAuthoring>
     {
-        public override void Bake(Spawner authoring)
+        public override void Bake(SpawnerAuthoring authoring)
         {
             var transform = authoring.transform;
-            AddComponent(GetEntity(TransformUsageFlags.None), new SpawnerComponent
+            AddComponent(GetEntity(TransformUsageFlags.None), new Spawner
             {
                 Player = GetEntity(authoring.Player, TransformUsageFlags.Dynamic),
                 SpawnPoint = new LocalTransform {
@@ -26,7 +26,7 @@ public class Spawner : MonoBehaviour
     }
 }
 
-public struct SpawnerComponent : IComponentData
+public struct Spawner : IComponentData
 {
     [GhostField] public Entity Player;
     [GhostField] public LocalTransform SpawnPoint;

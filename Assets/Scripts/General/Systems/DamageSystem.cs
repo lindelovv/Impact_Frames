@@ -8,7 +8,7 @@ public partial struct DamageSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate<HealthComponent>();
+        state.RequireForUpdate<Health>();
     }
 
     public void OnUpdate(ref SystemState state)
@@ -16,7 +16,7 @@ public partial struct DamageSystem : ISystem
         var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
         foreach (
             var (health, playerState, damage, id, data, entity)
-            in SystemAPI.Query<RefRW<HealthComponent>, RefRW<PlayerStateComponent>, TakeDamage, PlayerId, PlayerData>()
+            in SystemAPI.Query<RefRW<Health>, RefRW<PlayerState>, TakeDamage, PlayerId, Player>()
                 .WithEntityAccess()
                 .WithAll<TakeDamage>()
         ) {

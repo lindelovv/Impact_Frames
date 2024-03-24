@@ -31,7 +31,7 @@ public partial struct GoInGameClientSystem : ISystem
             .WithAll<NetworkId>()
             .WithNone<NetworkStreamInGame>();
         
-        state.RequireForUpdate<SpawnerComponent>();
+        state.RequireForUpdate<Spawner>();
         state.RequireForUpdate(state.GetEntityQuery(builder));
     }
 
@@ -67,7 +67,7 @@ public partial struct GoInGameServerSystem : ISystem
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate<SpawnerComponent>();
+        state.RequireForUpdate<Spawner>();
         state.RequireForUpdate(new EntityQueryBuilder(Allocator.Temp)
             .WithAll<GoInGameRPC>()
             .WithAll<ReceiveRpcCommandRequest>()
@@ -79,7 +79,7 @@ public partial struct GoInGameServerSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        var spawner = SystemAPI.GetSingleton<SpawnerComponent>();
+        var spawner = SystemAPI.GetSingleton<Spawner>();
         state.EntityManager.GetName(spawner.Player, out FixedString64Bytes prefabName);
         
         var worldName = state.WorldUnmanaged.Name;

@@ -2,7 +2,7 @@ using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
 
-public class PlayerState : MonoBehaviour
+public class PlayerStateAuthoring : MonoBehaviour
 {
     //-----------------------
     [Tooltip("[bool] Set if the character currently is grounded.")] // More tooltips needd?
@@ -19,13 +19,13 @@ public class PlayerState : MonoBehaviour
     public bool isFacingRight;
     public bool IsHit;
     
-    private class Baker : Baker<PlayerState>
+    private class Baker : Baker<PlayerStateAuthoring>
     {
-        public override void Bake(PlayerState authoring)
+        public override void Bake(PlayerStateAuthoring authoring)
         {
             var entity = GetEntity(TransformUsageFlags.None); // TransformUsageFlags.None för att det inte behöver synas
                                                               // i världen, till skillnad från player som är Dynamic
-            AddComponent(entity, new PlayerStateComponent {
+            AddComponent(entity, new PlayerState {
                 IsMoving = authoring.isMoving,
                 IsGrounded = authoring.isGrounded,
                 IsMobile = authoring.isMobile,
@@ -43,16 +43,11 @@ public class PlayerState : MonoBehaviour
     }
 }
 
-//[GhostComponent(
-//    PrefabType=GhostPrefabType.AllPredicted,
-//    OwnerSendType = SendToOwnerType.SendToNonOwner
-//)]
 [GhostComponent(
-    PrefabType = GhostPrefabType.All,
+    PrefabType           = GhostPrefabType.All,
     SendTypeOptimization = GhostSendType.AllClients,
-    OwnerSendType = SendToOwnerType.SendToNonOwner
-)]
-public struct PlayerStateComponent : IComponentData
+    OwnerSendType        = SendToOwnerType.SendToNonOwner)]
+public struct PlayerState : IComponentData
 {
     [GhostField] public bool IsFallingHigh;  // When Raytracing from high
 

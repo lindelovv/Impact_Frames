@@ -16,29 +16,28 @@ public partial class VFXSyncSystem : SystemBase
     {
         _ghostPresentationGameObjectSystem = World.GetExistingSystemManaged<GhostPresentationGameObjectSystem>();
         RequireForUpdate<GhostPresentationGameObjectPrefabReference>();
-        RequireForUpdate<PlayerData>();
+        RequireForUpdate<Player>();
     }
 
     [BurstCompile]
     protected override void OnUpdate()
     {
         foreach (
-            var (playerState, player, entity)
-            in SystemAPI.Query<RefRW<PlayerStateComponent>, PlayerAspect>()
-                .WithAll<GhostPresentationGameObjectPrefabReference, PlayerData>()
+            var (playerState, entity)
+            in SystemAPI.Query<RefRW<PlayerState>>()
+                .WithAll<GhostPresentationGameObjectPrefabReference, Player>()
                 .WithEntityAccess()
         ) {
             var reference = _ghostPresentationGameObjectSystem.GetGameObjectForEntity(EntityManager, entity);
             if (!reference) { Debug.Log("[VFXSync] GameObject reference null"); continue; }
 
-            var get = reference.GetComponent<Getters>();
+            var get = reference.GetComponent<GameObjectReferenceData>();
             if (!get) { Debug.Log("[VFXSync] VFX getter null"); continue; }
 
             get._hasHit = playerState.ValueRO.HasHit;
 
             if (playerState.ValueRO.IsBlocking && !get._blockActive)
             {
-                Debug.Log("Activate block");
                 get.BlockAudioSource.Play();
                 get.Block.SetBool("KillParticle", true);
                 get.Block.Play();
@@ -46,7 +45,6 @@ public partial class VFXSyncSystem : SystemBase
             }
             else if (!playerState.ValueRO.IsBlocking && get._blockActive)
             {
-                Debug.Log("Block deactivate");
                 get.BlockAudioSource.Stop();
                 get.Block.SetBool("KillParticle", false);
                 get.Block.Stop();
