@@ -45,9 +45,10 @@ public partial class AnimationSyncSystem : SystemBase
                 .WithEntityAccess()
         ) {
             var reference = _ghostPresentationGameObjectSystem.GetGameObjectForEntity(EntityManager, entity);
-            if (!reference) { Debug.Log("GameObject reference null"); continue; }
+            if (!reference) { Debug.Log("[AnimationSync] GameObject reference null"); continue; }
             
             var animator = reference.GetComponent<Animator>();
+            if (!animator) { Debug.Log("[AnimationSync] Animator null"); continue; }
             
             animator.SetInteger(Parameters.Random,       playerState.ValueRO.Random       );
             animator.SetBool(   Parameters.IsMoving,     playerState.ValueRO.IsMoving     );

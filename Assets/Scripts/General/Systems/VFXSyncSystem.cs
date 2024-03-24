@@ -22,31 +22,31 @@ public partial class VFXSyncSystem : SystemBase
     [BurstCompile]
     protected override void OnUpdate()
     {
-        var cmdBuffer = new EntityCommandBuffer(Allocator.TempJob);
-
         foreach (
-            var (playerState, entity)
-            in SystemAPI.Query<RefRW<PlayerStateComponent>>()
+            var (playerState, player, entity)
+            in SystemAPI.Query<RefRW<PlayerStateComponent>, PlayerAspect>()
                 .WithAll<GhostPresentationGameObjectPrefabReference, PlayerData>()
                 .WithEntityAccess()
         ) {
             var reference = _ghostPresentationGameObjectSystem.GetGameObjectForEntity(EntityManager, entity);
-            if (!reference) { /*Debug.Log("GameObject reference null");*/ continue; }
+            if (!reference) { Debug.Log("[VFXSync] GameObject reference null"); continue; }
 
             var get = reference.GetComponent<Getters>();
-            if (!get) { Debug.Log("VFX getter null"); continue; }
+            if (!get) { Debug.Log("[VFXSync] VFX getter null"); continue; }
 
             get._hasHit = playerState.ValueRO.HasHit;
 
             if (playerState.ValueRO.IsBlocking && !get._blockActive)
             {
+                Debug.Log("Activate block");
                 get.BlockAudioSource.Play();
                 get.Block.SetBool("KillParticle", true);
                 get.Block.Play();
                 get._blockActive = true;
             }
-            else if (get._blockActive)
+            else if (!playerState.ValueRO.IsBlocking && get._blockActive)
             {
+                Debug.Log("Block deactivate");
                 get.BlockAudioSource.Stop();
                 get.Block.SetBool("KillParticle", false);
                 get.Block.Stop();
@@ -83,8 +83,5 @@ public partial class VFXSyncSystem : SystemBase
                 playerState.ValueRW.IsFallingHigh = false;
             }
         }
-
-        cmdBuffer.Playback(EntityManager);
-        cmdBuffer.Dispose();
     }
 }
