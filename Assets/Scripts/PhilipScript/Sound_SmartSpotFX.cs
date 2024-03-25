@@ -7,7 +7,7 @@ using UnityEngine;
 
 /*
  * Set Tags on Occlusion Objects that match the OcclusionDetectionTag
- * And Add a Collider (non Trigger) on the Object for the Raycast to work
+ * And Add a Collider (non Trigger) on the occluding Object for the Raycast to work
  * Set RaycastLength in Inspector
  * set MaxDistance for AudioSource Sphere if enableDistanceCulling is true
  * The SoundClip is set in the Objects AudioSource
@@ -44,10 +44,11 @@ public class Sound_SmartSpotFX : MonoBehaviour
         audioSource.spatialBlend = Mathf.Clamp(spatialBlend, 0, 1);
 
         lpFilter = GetComponent<AudioLowPassFilter>();
+        audioSource.Stop();
     }
     void Start()
     {
-        
+        audioSource.Play();
         if(DebugDistance == true)
         {
             audioSourceMaxDistance = 5f;                     // Debug
