@@ -1,9 +1,9 @@
-﻿using Unity.Collections;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
 
-//[UpdateInGroup(typeof(PredictedSimulationSystemGroup)), UpdateBefore(typeof(ActionSystem)), UpdateAfter(typeof(ActionTimerSystem))]
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup)), UpdateBefore(typeof(ActionSystem)), UpdateAfter(typeof(ActionTimerSystem))]
 public partial struct InitActionSystem : ISystem
 {
     public void OnCreate(ref SystemState state)

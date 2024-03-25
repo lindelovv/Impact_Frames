@@ -18,6 +18,7 @@ public partial struct ReactionalSyncSystem : ISystem
             var playerState
             in SystemAPI.Query<RefRW<PlayerState>>()
         ) {
+            if (!Reactional.Playback.MusicSystem.PlaybackAllowed) { break; }
             var timeToBeat = Reactional.Playback.MusicSystem.GetTimeToBeat(2);
             if (timeToBeat < _gracePeriod )
             {

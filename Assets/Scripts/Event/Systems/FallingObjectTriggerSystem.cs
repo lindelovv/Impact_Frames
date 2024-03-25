@@ -24,12 +24,12 @@ public partial struct FallingObjectTriggerSystem : ISystem
         
         foreach (
             var (triggerEventBuffer, gravityFactor, fallingObject, entity) 
-            in SystemAPI.Query<DynamicBuffer<StatefulTriggerEvent>, RefRW<PhysicsGravityFactor>, FallingObject>()
+            in SystemAPI.Query<DynamicBuffer<StatefulTriggerEvent>, RefRW<PhysicsGravityFactor>, RefRW<FallingObject>>()
                 .WithNone<Respawn>()
                 .WithAll<FallingObject>()
                 .WithEntityAccess()
         ) {
-            if(fallingObject.Active) { continue; }
+            if (fallingObject.ValueRO.Active) { continue; }
             foreach (var triggerEvent in triggerEventBuffer)
             {
                 switch (triggerEvent.State)
@@ -37,6 +37,8 @@ public partial struct FallingObjectTriggerSystem : ISystem
                     case StatefulEventState.Enter:
                     {
                         gravityFactor.ValueRW.Value = 0.4f;
+                        fallingObject.ValueRW.Active = true;
+                        fallingObject.ValueRW.ResetTimer = fallingObject.ValueRO.TimeToRespawn;
                         break;
                     }
                 }
@@ -49,7 +51,7 @@ public partial struct FallingObjectTriggerSystem : ISystem
                 .WithNone<Respawn>()
                 .WithEntityAccess()
         ) {
-            if(fallingObject.ValueRO.Active) { continue; }
+            if (fallingObject.ValueRO.Active) { continue; }
             foreach (var collisionEvent in collisionEventBuffer)
             {
                 switch (collisionEvent.State)
@@ -63,8 +65,6 @@ public partial struct FallingObjectTriggerSystem : ISystem
                                 Amount = 1,
                             });
                         }
-                        fallingObject.ValueRW.Active = true;
-                        fallingObject.ValueRW.ResetTimer = fallingObject.ValueRO.TimeToRespawn;
                         break;
                     }
                 }

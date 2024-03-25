@@ -227,6 +227,16 @@ public struct PlayerId : IComponentData
     public Int16 Value;
 }
 
+//public readonly partial struct NetPlayerAspect : IAspect
+//{
+//    public readonly Entity Self;
+//    private readonly RefRW<PlayerId> _id;
+//    public Int16 Id {
+//        get => _id.ValueRO.Value;  
+//        set => _id.ValueRW.Value = value;
+//    }
+//}
+
 public readonly partial struct PlayerAspect : IAspect
 {
     // Reference to the player entity

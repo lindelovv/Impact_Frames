@@ -3341,11 +3341,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 629597726014974268, guid: b4b1f24d2ed067c4691f4d62fe0545a3, type: 3}
       propertyPath: m_Material.m_BelongsToCategories.m_Value.Category03
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 629597726014974268, guid: b4b1f24d2ed067c4691f4d62fe0545a3, type: 3}
       propertyPath: m_Material.m_BelongsToCategories.m_Value.Category04
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 629597726014974268, guid: b4b1f24d2ed067c4691f4d62fe0545a3, type: 3}
       propertyPath: m_Material.m_BelongsToCategories.m_Value.Category05
@@ -3356,8 +3356,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 629597726014974268, guid: b4b1f24d2ed067c4691f4d62fe0545a3, type: 3}
-      propertyPath: m_Material.m_CollidesWithCategories.m_Value.Category03
+      propertyPath: m_Material.m_CollidesWithCategories.m_Value.Category01
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 629597726014974268, guid: b4b1f24d2ed067c4691f4d62fe0545a3, type: 3}
+      propertyPath: m_Material.m_CollidesWithCategories.m_Value.Category02
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 629597726014974268, guid: b4b1f24d2ed067c4691f4d62fe0545a3, type: 3}
+      propertyPath: m_Material.m_CollidesWithCategories.m_Value.Category03
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5683061845529837923, guid: b4b1f24d2ed067c4691f4d62fe0545a3, type: 3}
+      propertyPath: m_OverrideDefaultMassDistribution
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6561818107425602754, guid: b4b1f24d2ed067c4691f4d62fe0545a3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3404,12 +3416,20 @@ PrefabInstance:
       value: Sign
       objectReference: {fileID: 0}
     - target: {fileID: 9222156817873327946, guid: b4b1f24d2ed067c4691f4d62fe0545a3, type: 3}
+      propertyPath: m_Material.m_BelongsToCategories.m_Value.Category00
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222156817873327946, guid: b4b1f24d2ed067c4691f4d62fe0545a3, type: 3}
       propertyPath: m_Material.m_BelongsToCategories.m_Value.Category01
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9222156817873327946, guid: b4b1f24d2ed067c4691f4d62fe0545a3, type: 3}
-      propertyPath: m_Material.m_BelongsToCategories.m_Value.Category04
+      propertyPath: m_Material.m_BelongsToCategories.m_Value.Category03
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222156817873327946, guid: b4b1f24d2ed067c4691f4d62fe0545a3, type: 3}
+      propertyPath: m_Material.m_BelongsToCategories.m_Value.Category04
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9222156817873327946, guid: b4b1f24d2ed067c4691f4d62fe0545a3, type: 3}
       propertyPath: m_Material.m_CollidesWithCategories.m_Value.Category00
@@ -3425,7 +3445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9222156817873327946, guid: b4b1f24d2ed067c4691f4d62fe0545a3, type: 3}
       propertyPath: m_Material.m_CollidesWithCategories.m_Value.Category03
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9222156817873327946, guid: b4b1f24d2ed067c4691f4d62fe0545a3, type: 3}
       propertyPath: m_Material.m_CollidesWithCategories.m_Value.Category04
@@ -10655,8 +10675,8 @@ MonoBehaviour:
         Category00: 0
         Category01: 0
         Category02: 0
-        Category03: 0
-        Category04: 1
+        Category03: 1
+        Category04: 0
         Category05: 0
         Category06: 0
         Category07: 0
@@ -10688,9 +10708,9 @@ MonoBehaviour:
       m_Override: 0
       m_Value:
         Category00: 0
-        Category01: 0
-        Category02: 0
-        Category03: 1
+        Category01: 1
+        Category02: 1
+        Category03: 0
         Category04: 0
         Category05: 0
         Category06: 0
@@ -15416,8 +15436,8 @@ MonoBehaviour:
         Category00: 0
         Category01: 0
         Category02: 0
-        Category03: 0
-        Category04: 1
+        Category03: 1
+        Category04: 0
         Category05: 0
         Category06: 0
         Category07: 0
@@ -15449,9 +15469,9 @@ MonoBehaviour:
       m_Override: 0
       m_Value:
         Category00: 0
-        Category01: 0
-        Category02: 0
-        Category03: 1
+        Category01: 1
+        Category02: 1
+        Category03: 0
         Category04: 0
         Category05: 0
         Category06: 0
@@ -15716,16 +15736,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7320277742423874261, guid: 1cdce81ce680b224a80bd841824f5644, type: 3}
-      propertyPath: m_Material.m_BelongsToCategories.m_Value.Category04
+      propertyPath: m_Material.m_BelongsToCategories.m_Value.Category03
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7320277742423874261, guid: 1cdce81ce680b224a80bd841824f5644, type: 3}
+      propertyPath: m_Material.m_BelongsToCategories.m_Value.Category04
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7320277742423874261, guid: 1cdce81ce680b224a80bd841824f5644, type: 3}
       propertyPath: m_Material.m_CollidesWithCategories.m_Value.Category00
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7320277742423874261, guid: 1cdce81ce680b224a80bd841824f5644, type: 3}
-      propertyPath: m_Material.m_CollidesWithCategories.m_Value.Category03
+      propertyPath: m_Material.m_CollidesWithCategories.m_Value.Category01
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7320277742423874261, guid: 1cdce81ce680b224a80bd841824f5644, type: 3}
+      propertyPath: m_Material.m_CollidesWithCategories.m_Value.Category02
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7320277742423874261, guid: 1cdce81ce680b224a80bd841824f5644, type: 3}
+      propertyPath: m_Material.m_CollidesWithCategories.m_Value.Category03
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7463598891019787560, guid: 1cdce81ce680b224a80bd841824f5644, type: 3}
       propertyPath: m_Name

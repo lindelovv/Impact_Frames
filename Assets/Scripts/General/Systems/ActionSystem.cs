@@ -7,8 +7,16 @@ using Unity.Physics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+public struct AttackPropterties
+{
+    public float Damage;
+    public float2 Pushback;
+    public CollisionFilter Filter;
+    public float3 Size;
+}
+
 [BurstCompile]
-//[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
 public partial struct ActionSystem : ISystem
 {
     [BurstCompile]
@@ -22,8 +30,8 @@ public partial struct ActionSystem : ISystem
     {
         var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
         foreach (
-            var (player, action)
-            in SystemAPI.Query<PlayerAspect, RefRW<Action>>()
+            var (player, action, playerId)
+            in SystemAPI.Query<PlayerAspect, RefRW<Action>, PlayerId>()
         ) {
             switch (action.ValueRO.State)
             {
@@ -40,9 +48,14 @@ public partial struct ActionSystem : ISystem
                     break;
                 }
             }
+            
             var collisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
             var playerPosition = player.Position;
             var playerHasHit = player.HasHit;
+            var forward = player.IsFacingRight ? 1 : -1;
+            var id = playerId.Value;
+            var otherId = id == 1 ? 2 : 1;
+            
             switch (action.ValueRO.Name)
             {
                 //______________________________________________________________________________________________
@@ -50,13 +63,17 @@ public partial struct ActionSystem : ISystem
                 {
                     switch (action.ValueRO.State)
                     {
-                        case ActionState.Startup:  { player.IsJumping = true; break; }
+                        case ActionState.Startup: 
+                        {
+                            player.IsJumping = true;
+                            player.CayoteTimer = -1;
+                            player.IsAnimLocked = true;
+                            break;
+                        }
                         case ActionState.Active:
                         {
                             // find what causes this to play multiple times with IsOnBeat
-                            player.IsAnimLocked = true;
                             player.Velocity = new float3(player.Velocity.x, player.JumpHeight, 0);
-                            player.CayoteTimer = -1;
                             break;
                         }
                         case ActionState.Recovery: { player.IsJumping = false; break; }
@@ -90,15 +107,22 @@ public partial struct ActionSystem : ISystem
                         case ActionState.Active:
                         {
                             player.Random = Random.Range(0, 2);
-                            Punch(
+                            playerHasHit = Attack(
                                 player.Self,
-                                player.IsFacingRight ? 1 : -1,
-                                ref playerPosition,
-                                player.Pushback,
-                                ref cmdBuffer,
+                                playerPosition + new float3(forward * 2, 1, 0),
+                                new AttackPropterties {
+                                    Damage   = 1,
+                                    Pushback = new float2(forward * 4,1),
+                                    Size     = new float3(1, 1, 1),
+                                    Filter   = new CollisionFilter {
+                                        BelongsTo    = (uint)id,
+                                        CollidesWith = (uint)otherId,
+                                        GroupIndex   = 0,
+                                    },
+                                },
+                                ref collisionWorld,
                                 ref state,
-                                ref collisionWorld, 
-                                out playerHasHit
+                                ref cmdBuffer
                             );
                             player.HitTime = Time.time;
                             break;
@@ -121,15 +145,22 @@ public partial struct ActionSystem : ISystem
                         case ActionState.Startup:  { player.IsPunching = true; break; }
                         case ActionState.Active:
                         {
-                            PunchHeavy(
+                            playerHasHit = Attack(
                                 player.Self,
-                                player.IsFacingRight ? 1 : -1,
-                                ref playerPosition,
-                                player.Pushback,
-                                ref cmdBuffer,
-                                ref state,
+                                playerPosition + new float3(forward * 2, 1, 0),
+                                new AttackPropterties {
+                                    Damage   = 2,
+                                    Pushback = new float2(forward * 8,1),
+                                    Size     = new float3(1, 1, 1),
+                                    Filter   = new CollisionFilter {
+                                        BelongsTo    = (uint)id,
+                                        CollidesWith = (uint)otherId,
+                                        GroupIndex   = 0,
+                                    },
+                                },
                                 ref collisionWorld,
-                                out playerHasHit
+                                ref state,
+                                ref cmdBuffer
                             );
                             player.HitTime = Time.time;
                             break;
@@ -153,15 +184,22 @@ public partial struct ActionSystem : ISystem
                         case ActionState.Active:
                         {
                             player.Random = Random.Range(0, 2);
-                            Kick(
+                            playerHasHit = Attack(
                                 player.Self,
-                                player.IsFacingRight ? 1 : -1,
-                                ref playerPosition,
-                                player.Pushback,
-                                ref cmdBuffer,
-                                ref state,
+                                playerPosition + new float3(forward * 2, 1, 0),
+                                new AttackPropterties {
+                                    Damage   = 1,
+                                    Pushback = new float2(forward * 4,1),
+                                    Size     = new float3(1, 1, 1),
+                                    Filter   = new CollisionFilter {
+                                        BelongsTo    = (uint)id,
+                                        CollidesWith = (uint)otherId,
+                                        GroupIndex   = 0,
+                                    },
+                                },
                                 ref collisionWorld,
-                                out playerHasHit
+                                ref state, 
+                                ref cmdBuffer
                             );
                             player.HitTime = Time.time;
                             break;
@@ -184,15 +222,22 @@ public partial struct ActionSystem : ISystem
                         case ActionState.Startup:  { player.IsKicking = true; break; }
                         case ActionState.Active:
                         {
-                            KickHeavy(
+                            playerHasHit = Attack(
                                 player.Self,
-                                player.IsFacingRight ? 1 : -1,
-                                ref playerPosition,
-                                player.Pushback,
-                                ref cmdBuffer,
-                                ref state,
+                                playerPosition + new float3(forward * 2, 1, 0),
+                                new AttackPropterties {
+                                    Damage   = 2,
+                                    Pushback = new float2(forward * 8,1),
+                                    Size     = new float3(1, 1, 1),
+                                    Filter   = new CollisionFilter {
+                                        BelongsTo    = (uint)id,
+                                        CollidesWith = (uint)otherId,
+                                        GroupIndex   = 0,
+                                    },
+                                },
                                 ref collisionWorld,
-                                out playerHasHit
+                                ref state,
+                                ref cmdBuffer
                             );
                             player.HitTime = Time.time;
                             break;
@@ -271,6 +316,8 @@ public partial struct ActionSystem : ISystem
             }
             if (!action.ValueRO.Repeating) { action.ValueRW.DoAction = false; }
 
+            // TODO: why does this break after first hit ?
+            //player.HasHit = playerHasHit;
             if (playerHasHit)
             {
                 action.ValueRW.State++;
@@ -282,131 +329,64 @@ public partial struct ActionSystem : ISystem
         cmdBuffer.Playback(state.EntityManager);
         cmdBuffer.Dispose();
     }
-    
-    [BurstCompile]
-    public static void Punch(in Entity self, in int forward, ref float3 position, in float2 pushback, ref EntityCommandBuffer cmdBuffer, ref SystemState state, ref CollisionWorld collisionWorld, out bool hasHit)
-    {
-        Entity entity;
-        CastCollider(ref position, forward, ref collisionWorld, out entity, out hasHit);
 
-        // Check Health and Apply Damage
-        var entityManager = state.EntityManager;
-        if (   hasHit 
-            && entity != self 
-            && entityManager.HasComponent<Health>(entity)
+    [BurstCompile]
+    public bool Attack(Entity self, in float3 position, in AttackPropterties attackProperties, ref CollisionWorld collisionWorld, ref SystemState state, ref EntityCommandBuffer cmd)
+    {
+        var attack = attackProperties;
+        var colliderCenter = position;
+        if (CastCollider(ref colliderCenter, ref attack.Size, ref attack.Filter, ref collisionWorld, out var entity) 
+            && entity != self
+            && state.EntityManager.HasComponent<Health>(entity)
         ) {
-            cmdBuffer.AddComponent(entity, new TakeDamage {
-                Amount = 1,
-            });
-            
-            cmdBuffer.AddComponent(entity, new ApplyImpact {
-                Amount = new float2(forward * pushback),
-            });
+            var action = state.EntityManager.GetComponentData<Action>(entity);
+            if (action is { Name: ActionName.Block, State: ActionState.Active })
+            {
+                cmd.AddComponent(entity, new TakeDamage {
+                    Amount = attack.Damage / 4,
+                });
+                cmd.SetComponent(entity, new ApplyImpact {
+                    Amount = attack.Pushback / 4,
+                });
+            }
+            else 
+            {
+                cmd.AddComponent(entity, new TakeDamage {
+                    Amount = attack.Damage,
+                });
+                cmd.SetComponent(entity, new ApplyImpact {
+                    Amount = attack.Pushback,
+                });
+            }
+            return true;
         }
+        return false;
     }
     
     [BurstCompile]
-    public static void PunchHeavy(in Entity self, in int forward, ref float3 position, in float2 pushback, ref EntityCommandBuffer cmdBuffer, ref SystemState state, ref CollisionWorld collisionWorld, out bool hasHit)
+    private static unsafe bool CastCollider(ref float3 colliderCenter, ref float3 colliderSize, ref CollisionFilter filter, ref CollisionWorld collisionWorld, out Entity entity)
     {
-        Entity entity;
-        CastCollider(ref position, forward, ref collisionWorld, out entity, out hasHit);
-
-        // Check Health and Appyl Damage
-        var entityManager = state.EntityManager;
-        if (   hasHit 
-            && entity != self 
-            && entityManager.HasComponent<Health>(entity)
-        ) {
-            cmdBuffer.AddComponent(entity, new TakeDamage {
-                Amount = 1,
-            });
-            
-            cmdBuffer.AddComponent(entity, new ApplyImpact {
-                Amount = new float2(forward * pushback),
-            });
-        }
-    }
-
-    [BurstCompile]
-    public static void Kick(in Entity self, in int forward, ref float3 position, in float2 pushback, ref EntityCommandBuffer cmdBuffer, ref SystemState state, ref CollisionWorld collisionWorld, out bool hasHit)
-    {
-        Entity entity;
-        CastCollider(ref position, forward, ref collisionWorld, out entity, out hasHit);
-
-        // Check Health and Appyl Damage
-        var entityManager = state.EntityManager;
-        if (   hasHit 
-            && entity != self 
-            && entityManager.HasComponent<Health>(entity)
-        ) {
-            cmdBuffer.AddComponent(entity, new TakeDamage {
-                Amount = 1,
-            });
-            
-            cmdBuffer.AddComponent(entity, new ApplyImpact {
-                Amount = new float2(forward * pushback),
-            });
-        }
-    }
-    
-    [BurstCompile]
-    public static void KickHeavy(in Entity self, in int forward, ref float3 position, in float2 pushback, ref EntityCommandBuffer cmdBuffer, ref SystemState state, ref CollisionWorld collisionWorld, out bool hasHit)
-    {
-        Entity entity;
-        CastCollider(ref position, forward, ref collisionWorld, out entity, out hasHit);
-
-        // Check Health and Appyl Damage
-        var entityManager = state.EntityManager;
-        if (   hasHit 
-            && entity != self 
-            && entityManager.HasComponent<Health>(entity)
-        ) {
-            cmdBuffer.AddComponent(entity, new TakeDamage {
-                Amount = 1,
-            });
-            
-            cmdBuffer.AddComponent(entity, new ApplyImpact {
-                Amount = new float2(forward * pushback),
-            });
-        }
-    }
-    
-    [BurstCompile]
-    private static unsafe void CastCollider(ref float3 position, int forward, ref CollisionWorld collisionWorld, out Entity entity, out bool hasHit)
-    {
-        var center = position + (new float3(forward * 1.5f, 1f, 0));
-        var size = new float3(1, 1, 1);
-
         var collider = Unity.Physics.BoxCollider.Create(
             new BoxGeometry {
                 BevelRadius = 0f,
                 Center = float3.zero,
                 Orientation = quaternion.identity,
-                Size = size
+                Size = colliderSize
             },
-            filter: new CollisionFilter {
-                BelongsTo = 1,
-                CollidesWith = 1,
-                GroupIndex = 0,
-            }
+            filter
         );
-        hasHit = collisionWorld.CastCollider(
+        var hasHit = collisionWorld.CastCollider(
             new ColliderCastInput {
                 Collider = (Unity.Physics.Collider*)collider.GetUnsafePtr(),
-                Start = center,
-                End = center,
+                Start = colliderCenter,
+                End = colliderCenter,
             },
             out var hit
         );
         entity = hit.Entity;
-        DrawBox(ref center, ref center, ref size);
-        Debug.Log($"Collider hit: {hasHit}");
-    }
-
-    [BurstCompile]
-    private void Block(PlayerAspect player)
-    {
-        //Debug.Log("Block");
+        DrawBox(ref colliderCenter, ref colliderCenter, ref colliderSize);
+        //Debug.Log($"Collider hit: {hasHit}");
+        return hasHit;
     }
 
     [BurstCompile]

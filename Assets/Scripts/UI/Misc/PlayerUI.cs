@@ -32,20 +32,18 @@ public class PlayerUI : MonoBehaviour
         }
     }
 
-    void Start()
-    {
+    //void Start()
+    //{
     //   comboBarFillWidth = GetComponent<RectTransform>().rect.width;
     //   SetComboFill(0);
     //   SetHealthBarFill(0.5f);
     //
     //   DecreaseLife();
-    }
+    //}
 
-    // Update is called once per frame
-    void Update()
-    {
-     //   GetComponent<RectTransform>().rect.Set(GetComponent<RectTransform>().rect.x , GetComponent<RectTransform>().rect.y, GetComponent<RectTransform>().rect.width + 1, GetComponent<RectTransform>().rect.height + 1);
-
-       // GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal,800);
-    }
+    //void Update()
+    //{
+    //      GetComponent<RectTransform>().rect.Set(GetComponent<RectTransform>().rect.x , GetComponent<RectTransform>().rect.y, GetComponent<RectTransform>().rect.width + 1, GetComponent<RectTransform>().rect.height + 1);
+    //      GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal,800);
+    //}
 }

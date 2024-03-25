@@ -36,28 +36,23 @@ public partial class InputSystem : SystemBase
             in SystemAPI.Query<RefRW<Input>, RefRW<Player>>()
                 .WithAll<GhostOwnerIsLocal>()
         ) {
+            ref var input = ref inputData.ValueRW;
+            var action = _inputActions.Combat;
+            
             inputData.ValueRW.RequestedMovement = _inputActions.Combat.Move.ReadValue<Vector2>();
-            
-            _inputActions.Combat.Reset.performed += context => inputData.ValueRW.RequestReset = true;
-            _inputActions.Combat.Reset.canceled  += context => inputData.ValueRW.RequestReset = false;
-            
-            _inputActions.Combat.Jump.performed += context => inputData.ValueRW.RequestJump = true;
-            _inputActions.Combat.Jump.canceled  += context => inputData.ValueRW.RequestJump = false;
-            
-            _inputActions.Combat.Punch.performed += context => inputData.ValueRW.RequestPunch = true;
-            _inputActions.Combat.Punch.canceled  += context => inputData.ValueRW.RequestPunch = false;
-            
-            _inputActions.Combat.Kick.performed += context => inputData.ValueRW.RequestKick = true;
-            _inputActions.Combat.Kick.canceled  += context => inputData.ValueRW.RequestKick = false;
-            
-            _inputActions.Combat.Dash.performed += context => inputData.ValueRW.RequestDash = true;
-            _inputActions.Combat.Dash.canceled  += context => inputData.ValueRW.RequestDash = false;
-            
-            _inputActions.Combat.Block.performed += context => inputData.ValueRW.RequestBlock = true;
-            _inputActions.Combat.Block.canceled  += context => inputData.ValueRW.RequestBlock = false;
-            
-            _inputActions.Combat.Parry.performed += context => inputData.ValueRW.RequestParry = true;
-            _inputActions.Combat.Parry.canceled  += context => inputData.ValueRW.RequestParry = false;
+            IsButtonHeld(action.Reset, ref input.RequestReset);
+            IsButtonHeld(action.Jump,  ref input.RequestJump );
+            IsButtonHeld(action.Punch, ref input.RequestPunch);
+            IsButtonHeld(action.Kick,  ref input.RequestKick );
+            IsButtonHeld(action.Dash,  ref input.RequestDash );
+            IsButtonHeld(action.Block, ref input.RequestBlock);
+            IsButtonHeld(action.Parry, ref input.RequestParry);
         }
+    }
+
+    void IsButtonHeld(InputAction button, ref bool state)
+    {
+        if (button.WasPressedThisFrame())       { state = true;  }
+        else if (button.WasReleasedThisFrame()) { state = false; }
     }
 }
