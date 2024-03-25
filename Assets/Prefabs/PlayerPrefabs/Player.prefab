@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 1244181283632142093}
   - component: {fileID: 1553344042008314389}
   - component: {fileID: 3902094259571194686}
-  - component: {fileID: 5862067768363504524}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -82,7 +81,7 @@ MonoBehaviour:
     m_BevelRadius: 0.05
     m_MinimumAngle: 2.5000002
   m_CustomMesh: {fileID: 0}
-  m_ForceUnique: 0
+  m_ForceUnique: 1
   m_Material:
     m_SupportsTemplate: 1
     m_Template: {fileID: 0}
@@ -102,10 +101,10 @@ MonoBehaviour:
     m_BelongsToCategories:
       m_Override: 0
       m_Value:
-        Category00: 1
-        Category01: 0
+        Category00: 0
+        Category01: 1
         Category02: 0
-        Category03: 0
+        Category03: 1
         Category04: 0
         Category05: 0
         Category06: 0
@@ -326,24 +325,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ServerPrefab: {fileID: 0}
   ClientPrefab: {fileID: 2056336029179781686, guid: 30119775f5bf0354384cd99953f58f12, type: 3}
---- !u!114 &5862067768363504524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5530559309006933450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb54ea4f67dc17342bcd49954c53502d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DrawColliders: 1
-  DrawColliderEdges: 1
-  DrawColliderAabbs: 1
-  DrawBroadphase: 1
-  DrawMassProperties: 1
-  DrawContacts: 1
-  DrawCollisionEvents: 1
-  DrawTriggerEvents: 1
-  DrawJoints: 1

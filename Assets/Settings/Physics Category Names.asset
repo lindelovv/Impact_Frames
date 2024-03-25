@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Physics Category Names
   m_EditorClassIdentifier: 
   m_CategoryNames:
-  - Player
-  - 
-  - 
-  - 
-  - 
+  - Environment
+  - Player1
+  - Player2
+  - AnyPlayer
+  - Trigger
   - 
   - 
   - 
