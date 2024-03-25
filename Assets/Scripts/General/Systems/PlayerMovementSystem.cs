@@ -8,7 +8,7 @@ using Unity.Transforms;
 using UnityEngine;
 
 [BurstCompile]
-//[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
 public partial struct PlayerMovementSystem : ISystem
 {
     [BurstCompile]
@@ -97,13 +97,10 @@ public partial struct PlayerMovementSystem : ISystem
 
             // Apply impact
             {
-                if (state.EntityManager.HasComponent<ApplyImpact>(player.Self) 
-                ) {
-                    player.Velocity += new float3(state.EntityManager.GetComponentData<ApplyImpact>(player.Self).Amount, 0);
-                    cmdBuffer.SetComponent(player.Self, new ApplyImpact { Amount = 0, });
-                }
+                player.Velocity += new float3(state.EntityManager.GetComponentData<ApplyImpact>(player.Self).Amount, 0);
+                cmdBuffer.SetComponent(player.Self, new ApplyImpact { Amount = 0, });
             }
-            //Debug.DrawLine(player.Position, player.Position + (player.Velocity / 2), Color.cyan, 1);
+            Debug.DrawLine(player.Position, player.Position + (player.Velocity / 2), Color.cyan, 1);
         }
         cmdBuffer.Playback(state.EntityManager);
         cmdBuffer.Dispose();
