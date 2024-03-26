@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 7267052156357287816}
   - component: {fileID: 4738199482222643031}
   - component: {fileID: 2209695234964894617}
-  - component: {fileID: 7797099647647076167}
-  - component: {fileID: 5151175915657794800}
   m_Layer: 0
   m_Name: VFX_DashTrails
   m_TagString: Untagged
@@ -134,34 +132,3 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &7797099647647076167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1899259693060525602}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdafc37f32b176349b1684c4455b98e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ExecuteInEditor: 1
-  m_Bindings:
-  - {fileID: 5151175915657794800}
-  m_VisualEffect: {fileID: 4738199482222643031}
---- !u!114 &5151175915657794800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1899259693060525602}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fdfea1f838247c40921a07afedde962, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Property:
-    m_Name: TrailTarget
-  Target: {fileID: 0}
