@@ -1,6 +1,8 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.NetCode;
 using Unity.Physics;
 
 // Some extra custom made math utility functions
@@ -30,3 +32,15 @@ public struct Util {
         return hit.Entity;
     }
 }
+
+[GhostComponent(
+    PrefabType           = GhostPrefabType.AllPredicted  ,
+    SendTypeOptimization = GhostSendType  .AllClients    ,
+    OwnerSendType        = SendToOwnerType.SendToNonOwner)]
+public class PredictAll : Attribute {}
+
+[GhostComponent(
+    PrefabType           = GhostPrefabType.AllPredicted,
+    SendTypeOptimization = GhostSendType  .AllClients  ,
+    OwnerSendType        = SendToOwnerType.None        )]
+public class PredictAllNoSend : Attribute {}
