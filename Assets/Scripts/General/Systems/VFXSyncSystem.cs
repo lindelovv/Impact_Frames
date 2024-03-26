@@ -34,6 +34,7 @@ public partial class VFXSyncSystem : SystemBase
             var get = reference.GetComponent<GameObjectReferenceData>();
             if (!get) { Debug.Log("[VFXSync] VFX getter null"); continue; }
 
+            //Debug.Log($"has hit {playerState.ValueRO.HasHit}");
             get._hasHit = playerState.ValueRO.HasHit;
 
             if (playerState.ValueRO.IsBlocking && !get._blockActive)

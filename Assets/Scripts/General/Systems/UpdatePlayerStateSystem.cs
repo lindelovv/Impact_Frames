@@ -6,7 +6,7 @@ using Unity.Transforms;
 using UnityEngine;
 
 [BurstCompile]
-//[UpdateInGroup(typeof(PredictedSimulationSystemGroup)), UpdateBefore(typeof(PlayerMovementSystem))]
+[UpdateInGroup(typeof(PredictedSimulationSystemGroup)), UpdateBefore(typeof(PlayerMovementSystem))]
 public partial struct UpdatePlayerStateSystem : ISystem
 {
     [BurstCompile]
@@ -29,18 +29,21 @@ public partial struct UpdatePlayerStateSystem : ISystem
             player.IsGrounded = (Physics.Raycast(
                     player.Position + new float3(0, 1, 0),
                     Vector3.down,
-                    1.5f
+                    1.5f,
+                    Physics.AllLayers
                 ) || Physics.Raycast(
                     player.Position + new float3(0.6f, 1, 0),
                     Vector3.down,
-                    1.5f
+                    1.5f,
+                    Physics.AllLayers
                 ) || Physics.Raycast(
                     player.Position + new float3(-0.6f, 1, 0),
                     Vector3.down,
-                    1.5f
+                    1.5f,
+                    Physics.AllLayers
             ));
             
-            if (!player.IsBlocking) { player.BlockTimer -= Time.deltaTime; }
+            if (player is { IsBlocking: false, BlockTimer: >= 0 } ) { player.BlockTimer -= Time.deltaTime; }
 
             if (player.CayoteTimer > 0) { player.CayoteTimer -= Time.deltaTime; }  // Lower jump buffer timer
 
@@ -59,16 +62,12 @@ public partial struct UpdatePlayerStateSystem : ISystem
                 if (isMoving.x)
                 {
                     player.IsMoving = true;
-                    player.IsFacingRight = (player.Input.RequestedMovement.x > 0.0f);
+                    player.IsFacingRight = (player.Input.RequestedMovement.x > 0.001f);
                 }
                 else
                 {
                     player.IsMoving = false;
                 }
-                //else if (!isMoving.y)
-                //{
-                //    player.IsMoving = false;
-                //}
             }
             else
             {

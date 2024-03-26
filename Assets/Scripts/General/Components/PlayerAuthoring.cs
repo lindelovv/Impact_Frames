@@ -9,15 +9,6 @@ using Unity.Transforms;
 public class PlayerAuthoring : MonoBehaviour
 {
     //_______________________________________________________________
-    [Header("Health")] 
-    
-    [Tooltip("[float] Remaining health points.")]
-    public float CurrentHealth;
-    
-    [Tooltip("[float] The maximum health possible.")]
-    public float MaxHealth;
-    
-    //_______________________________________________________________
     [Header("Movement")] 
     
     [Tooltip("[float] How fast the player can move.")]
@@ -129,17 +120,11 @@ public class PlayerAuthoring : MonoBehaviour
                 State = ActionState.None,
                 DoAction = false,
             });
-            
-            // Health component is it's own component in case of reuse,
-            // but since we always want one on the player it is added here in code
-            // from the values from this authoring component (see [Header("Health")] above).
-            AddComponent(entity, new Health {
-                Current = authoring.CurrentHealth,
-                Max     = authoring.MaxHealth,
-            });
-
             AddComponent(entity, new PlayerId {
                 Value = 0,
+            });
+            AddComponent(entity, new ApplyImpact {
+                Amount = 0f,
             });
             
             if (!authoring.IsDummy)
@@ -159,22 +144,13 @@ public class PlayerAuthoring : MonoBehaviour
                     AngularExpansionFactor = 0,
                 });
                 AddComponent<PhysicsGravityFactor>(entity);
-
-                // Might switch this out later to add/remove as needed instead
-                AddComponent(entity, new ApplyImpact {
-                    Amount = 0f,
-                });
             }
         }
     }
 }
 
 // Player-unique data
-[GhostComponent(
-    PrefabType = GhostPrefabType.All,
-    SendTypeOptimization = GhostSendType.AllClients,
-    OwnerSendType = SendToOwnerType.SendToNonOwner
-)]
+[PredictAll]
 public struct Player : IComponentData
 {
     [GhostField(Quantization = 0)] public float MovementSpeed;
@@ -184,7 +160,6 @@ public struct Player : IComponentData
     [GhostField(Quantization = 0)] public float DashSpeed;
     [GhostField(Quantization = 0)] public float2 Pushback;
     [GhostField(Quantization = 0)] public float MaxComboDelay;
-    [GhostField]                   public bool IsDummy;
     [GhostField(Quantization = 0)] public float FallGravity;
     [GhostField(Quantization = 0)] public bool OverrideGravity;
     [GhostField(Quantization = 0)] public float CustomGravity;
@@ -192,6 +167,7 @@ public struct Player : IComponentData
     [GhostField(Quantization = 0)] public float CayoteTimer;
     [GhostField(Quantization = 0)] public float BlockCooldown;
     [GhostField(Quantization = 0)] public float BlockTimer;
+    [GhostField] public bool IsDummy;
     // Jump time
     [GhostField(Quantization = 0)] public float jStartTime;
     [GhostField(Quantization = 0)] public float jActiveTime;
@@ -227,6 +203,16 @@ public struct PlayerId : IComponentData
     public Int16 Value;
 }
 
+//public readonly partial struct NetPlayerAspect : IAspect
+//{
+//    public readonly Entity Self;
+//    private readonly RefRW<PlayerId> _id;
+//    public Int16 Id {
+//        get => _id.ValueRO.Value;  
+//        set => _id.ValueRW.Value = value;
+//    }
+//}
+
 public readonly partial struct PlayerAspect : IAspect
 {
     // Reference to the player entity
@@ -234,10 +220,8 @@ public readonly partial struct PlayerAspect : IAspect
 
     // Raw lookup data data from entity components
     private readonly RefRW<Player> _data;
-    private readonly RefRW<Health> _health;
     private readonly RefRW<Input> _input;
     private readonly RefRW<PlayerState> _state;
-    private readonly RefRW<PhysicsCollider> _collider;
     private readonly RefRW<PhysicsVelocity> _velocity;
     private readonly RefRW<PhysicsDamping> _damping;
     private readonly RefRW<PhysicsGravityFactor> _gravity;
@@ -263,10 +247,6 @@ public readonly partial struct PlayerAspect : IAspect
     public float DashSpeed     { get => _data.ValueRO.DashSpeed;      set => _data.ValueRW.DashSpeed = value;      }
     public float CayoteTime    { get => _data.ValueRO.CayoteTime;     set => _data.ValueRW.CayoteTime = value;     }
     public float CayoteTimer   { get => _data.ValueRO.CayoteTimer;    set => _data.ValueRW.CayoteTimer = value;    }
-    
-    // Health
-    public float CurrentHealth { get => _health.ValueRO.Current;      set => _health.ValueRW.Current = value;      }
-    public float MaxHealth     { get => _health.ValueRO.Max;          set => _health.ValueRW.Max = value;          }
     
     // State variables
     public bool IsMoving       { get => _state.ValueRO.IsMoving;      set => _state.ValueRW.IsMoving = value;      }          

@@ -10,13 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1211897881023766861}
   - component: {fileID: 9034196937517906588}
+  - component: {fileID: 8555926310863916892}
   - component: {fileID: 157595006982165000}
   - component: {fileID: 6524130790032669571}
   - component: {fileID: -1779064826349053475}
   - component: {fileID: 1244181283632142093}
   - component: {fileID: 1553344042008314389}
   - component: {fileID: 3902094259571194686}
-  - component: {fileID: 5862067768363504524}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -82,7 +82,7 @@ MonoBehaviour:
     m_BevelRadius: 0.05
     m_MinimumAngle: 2.5000002
   m_CustomMesh: {fileID: 0}
-  m_ForceUnique: 0
+  m_ForceUnique: 1
   m_Material:
     m_SupportsTemplate: 1
     m_Template: {fileID: 0}
@@ -102,8 +102,8 @@ MonoBehaviour:
     m_BelongsToCategories:
       m_Override: 0
       m_Value:
-        Category00: 1
-        Category01: 0
+        Category00: 0
+        Category01: 1
         Category02: 0
         Category03: 0
         Category04: 0
@@ -182,6 +182,20 @@ MonoBehaviour:
         Tag07: 0
     m_SerializedVersion: 1
   m_SerializedVersion: 1
+--- !u!114 &8555926310863916892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5530559309006933450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc680f80dcab44e7a9f3a78c2b1ad6d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Current: 10
+  Max: 10
 --- !u!114 &157595006982165000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,8 +208,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1784d5218da4d80b82178235eea8d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentHealth: 10
-  MaxHealth: 10
   Speed: 30
   MaxSpeed: 60
   JumpHeight: 20
@@ -214,7 +226,7 @@ MonoBehaviour:
     x: 0
     y: 0
   MaxComboDelay: 2
-  BlockCooldown: 2
+  BlockCooldown: 4
   JumpTime:
     x: 0.05
     y: 0
@@ -228,17 +240,17 @@ MonoBehaviour:
     y: 0.05
     z: 0.15
   HeavyPunchTime:
-    x: 0.2
+    x: 0.3
     y: 0.15
-    z: 0.45
+    z: 0.3
   KickTime:
     x: 0.1
     y: 0.05
     z: 0.15
   HeavyKickTime:
-    x: 0.2
+    x: 0.25
     y: 0.2
-    z: 0.5
+    z: 0.3
   IsDummy: 0
 --- !u!114 &6524130790032669571
 MonoBehaviour:
@@ -326,24 +338,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ServerPrefab: {fileID: 0}
   ClientPrefab: {fileID: 2056336029179781686, guid: 30119775f5bf0354384cd99953f58f12, type: 3}
---- !u!114 &5862067768363504524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5530559309006933450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb54ea4f67dc17342bcd49954c53502d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DrawColliders: 1
-  DrawColliderEdges: 1
-  DrawColliderAabbs: 1
-  DrawBroadphase: 1
-  DrawMassProperties: 1
-  DrawContacts: 1
-  DrawCollisionEvents: 1
-  DrawTriggerEvents: 1
-  DrawJoints: 1

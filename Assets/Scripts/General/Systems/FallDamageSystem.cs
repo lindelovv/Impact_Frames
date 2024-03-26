@@ -11,13 +11,14 @@ public partial struct StartFallingSystem : ISystem
     {
         var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
         foreach (
-            var player
-            in SystemAPI.Query<PlayerAspect>()
+            var (playerState, entity)
+            in SystemAPI.Query<PlayerState>()
                 .WithNone<Falling>()
+                .WithEntityAccess()
         ) {
-            if (player.IsFalling)
+            if (playerState.IsFalling)
             {
-                cmdBuffer.AddComponent(player.Self, new Falling { StartTime = Time.time });
+                cmdBuffer.AddComponent(entity, new Falling { StartTime = Time.time });
             }
         }
         cmdBuffer.Playback(state.EntityManager);
@@ -32,31 +33,32 @@ public partial struct FallDamageSystem : ISystem
     {
         var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
         foreach (
-            var player
-            in SystemAPI.Query<PlayerAspect>()
+            var (playerState, falling, entity)
+            in SystemAPI.Query<RefRW<PlayerState>, Falling>()
                 .WithAll<Falling>()
+                .WithEntityAccess()
         ) {
-            if (player.IsJumping || player.IsDashing)
+            if (playerState.ValueRO.IsJumping || playerState.ValueRO.IsDashing)
             {
-                cmdBuffer.RemoveComponent<Falling>(player.Self);
+                cmdBuffer.RemoveComponent<Falling>(entity);
                 continue;
             }
             
-            player.IsFallingHigh = Time.time - state.EntityManager.GetComponentData<Falling>(player.Self).StartTime > .7f;
+            playerState.ValueRW.IsFallingHigh = Time.time - falling.StartTime > .7f;
             
-            if (player.IsGrounded)
+            if (playerState.ValueRO.IsGrounded)
             {
-                var damage = Time.time - state.EntityManager.GetComponentData<Falling>(player.Self).StartTime;
+                var damage = Time.time - falling.StartTime;
                 if (damage < 0.7f)
                 {
-                    cmdBuffer.RemoveComponent<Falling>(player.Self);
+                    cmdBuffer.RemoveComponent<Falling>(entity);
                     continue;
                 }
-                player.IsFallingHigh = true;
-                cmdBuffer.AddComponent(player.Self, new TakeDamage {
+                playerState.ValueRW.IsFallingHigh = true;
+                cmdBuffer.AddComponent(entity, new TakeDamage {
                     Amount = math.clamp((damage * 2), 0, 10),
                 });
-                cmdBuffer.RemoveComponent<Falling>(player.Self);
+                cmdBuffer.RemoveComponent<Falling>(entity);
             }
         }
         cmdBuffer.Playback(state.EntityManager);
@@ -65,10 +67,7 @@ public partial struct FallDamageSystem : ISystem
 }
 
 //______________________________________________________________________________________________________________________
-[GhostComponent(
-    PrefabType           = GhostPrefabType.All,
-    SendTypeOptimization = GhostSendType.AllClients,
-    OwnerSendType        = SendToOwnerType.SendToNonOwner)]
+[PredictAll]
 public struct Falling : IComponentData
 {
     [GhostField(Quantization = 0)] public float StartTime;
