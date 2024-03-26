@@ -76,15 +76,14 @@ public partial struct InitActionSystem : ISystem
                 {
                     if (player.BlockTimer < 0)
                     {
-                        cmdBuffer.SetComponent(player.Self, new Action
-                        {
+                        cmdBuffer.SetComponent(player.Self, new Action {
                             Name = ActionName.Block,
                             Repeating = true,
                             State = ActionState.Startup,
                             ActiveTime  = 4,
                             DoAction = true,
                         });
-                        player.IsBlocking = true;
+                        //player.IsBlocking = true;
                     }
                 } else {
                     //Input button logik för att köra punch

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
@@ -18,37 +17,15 @@ public class InputAuthoring : MonoBehaviour
     }
 }
 
-[GhostComponent(
-    PrefabType           = GhostPrefabType.AllPredicted,
-    SendTypeOptimization = GhostSendType.AllClients,
-    OwnerSendType        = SendToOwnerType.SendToNonOwner)]
+[PredictAllNoSend]
 public struct Input : IInputComponentData
 {
-    // Movement
     [GhostField(Quantization = 0)] public float2 RequestedMovement;
-    
-    // Jumping & DoubleJump
     [GhostField] public bool RequestJump;
-
-    // Punch & HeavyPunch
     [GhostField] public bool RequestPunch;
-
-    // Kick & HeavyKick
     [GhostField] public bool RequestKick;
-
-    // Block
     [GhostField] public bool RequestBlock;
-    
-    // Parry
     [GhostField] public bool RequestParry;
-
-    // Dash & AirDash
     [GhostField] public bool RequestDash;
-
-    // Special Attack
-
-    // Animation Cancle
-    
-    //
     [GhostField] public bool RequestReset;
 }

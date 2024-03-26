@@ -45,24 +45,32 @@ public partial class AnimationSyncSystem : SystemBase
                 .WithEntityAccess()
         ) {
             var reference = _ghostPresentationGameObjectSystem.GetGameObjectForEntity(EntityManager, entity);
-            if (!reference) { Debug.Log("[AnimationSync] GameObject reference null"); continue; }
-            
+            if (!reference)
+            {
+                Debug.Log("[AnimationSync] GameObject reference null");
+                continue;
+            }
+
             var animator = reference.GetComponent<Animator>();
-            if (!animator) { Debug.Log("[AnimationSync] Animator null"); continue; }
-            
-            animator.SetInteger(Parameters.Random,       playerState.ValueRO.Random       );
-            animator.SetBool(   Parameters.IsMoving,     playerState.ValueRO.IsMoving     );
-            animator.SetBool(   Parameters.IsGrounded,   playerState.ValueRO.IsGrounded   );
-            animator.SetBool(   Parameters.IsFalling,    playerState.ValueRO.IsFalling    );
-            animator.SetBool(   Parameters.IsJumping,    playerState.ValueRO.IsJumping    );
-            animator.SetBool(   Parameters.IsPunching,   playerState.ValueRO.IsPunching   );
-            animator.SetBool(   Parameters.IsKicking,    playerState.ValueRO.IsKicking    );
-            animator.SetBool(   Parameters.FallingHigh,  playerState.ValueRO.IsFallingHigh);
-            animator.SetBool(   Parameters.IsBlocking,   playerState.ValueRO.IsBlocking   );
-            animator.SetBool(   Parameters.IsParrying,   playerState.ValueRO.IsParrying   );
-            animator.SetBool(   Parameters.IsAnimLocked, playerState.ValueRO.IsAnimLocked );
-            animator.SetBool(   Parameters.IsHit,        playerState.ValueRO.IsHit        );
-            animator.SetInteger(Parameters.HitCounter,   playerState.ValueRO.HitCounter   );
+            if (!animator)
+            {
+                Debug.Log("[AnimationSync] Animator null");
+                continue;
+            }
+
+            animator.SetInteger(Parameters.Random, playerState.ValueRO.Random);
+            animator.SetBool(Parameters.IsMoving, playerState.ValueRO.IsMoving);
+            animator.SetBool(Parameters.IsGrounded, playerState.ValueRO.IsGrounded);
+            animator.SetBool(Parameters.IsFalling, playerState.ValueRO.IsFalling);
+            animator.SetBool(Parameters.IsJumping, playerState.ValueRO.IsJumping);
+            animator.SetBool(Parameters.IsPunching, playerState.ValueRO.IsPunching);
+            animator.SetBool(Parameters.IsKicking, playerState.ValueRO.IsKicking);
+            animator.SetBool(Parameters.FallingHigh, playerState.ValueRO.IsFallingHigh);
+            animator.SetBool(Parameters.IsBlocking, playerState.ValueRO.IsBlocking);
+            animator.SetBool(Parameters.IsParrying, playerState.ValueRO.IsParrying);
+            animator.SetBool(Parameters.IsAnimLocked, playerState.ValueRO.IsAnimLocked);
+            animator.SetBool(Parameters.IsHit, playerState.ValueRO.IsHit);
+            animator.SetInteger(Parameters.HitCounter, playerState.ValueRO.HitCounter);
         }
     }
 }
