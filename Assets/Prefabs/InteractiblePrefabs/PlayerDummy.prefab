@@ -337,4 +337,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ServerPrefab: {fileID: 0}
-  ClientPrefab: {fileID: 2056336029179781686, guid: 30119775f5bf0354384cd99953f58f12, type: 3}
+  ClientPrefab: {fileID: 8339117072283069822, guid: 86ea04b0f9f69b64dbf488419a067b03, type: 3}
