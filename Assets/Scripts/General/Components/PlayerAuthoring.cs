@@ -121,7 +121,7 @@ public class PlayerAuthoring : MonoBehaviour
                 DoAction = false,
             });
             AddComponent(entity, new PlayerId {
-                Value = 1,
+                Value = 0,
             });
             AddComponent(entity, new ApplyImpact {
                 Amount = 0f,
@@ -194,6 +194,10 @@ public struct Player : IComponentData
     [GhostField(Quantization = 0)] public float hkRecoverTime;
 }
 
+[GhostComponent(
+    PrefabType           = GhostPrefabType.All,
+    SendTypeOptimization = GhostSendType.AllClients,
+    OwnerSendType        = SendToOwnerType.SendToNonOwner)]
 public struct PlayerId : IComponentData
 {
     public Int16 Value;

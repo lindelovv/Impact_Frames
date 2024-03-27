@@ -9,8 +9,6 @@ TagManager:
   - Dummy
   - Occluded
   - DashTrail
-  - PlayerOne
-  - PlayerTwo
   layers:
   - Default
   - TransparentFX
