@@ -99,12 +99,14 @@ public class GameObjectReferenceData : MonoBehaviour
     {
         AudioSource_MainOneShots.PlayOneShot(audioClip);
     }
-    
+
     public void PlayHitClip(AudioClip audioClip)
     {
+        //Debug.Log($"has hit bool: {_hasHit}");
         if (_hasHit)
         {
             AudioSource_MainOneShots.PlayOneShot(audioClip);
+            _hasHit = false;
         }
     }
 
