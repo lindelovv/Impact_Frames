@@ -249,7 +249,7 @@ MonoBehaviour:
     z: 0.15
   HeavyKickTime:
     x: 0.25
-    y: 0.2
+    y: 0.15
     z: 0.3
   IsDummy: 0
 --- !u!114 &6524130790032669571

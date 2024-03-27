@@ -16,7 +16,7 @@ public struct AttackPropterties
 }
 
 [BurstCompile]
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
+//[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
 public partial struct ActionSystem : ISystem
 {
     [BurstCompile]
@@ -30,8 +30,8 @@ public partial struct ActionSystem : ISystem
     {
         var cmdBuffer = new EntityCommandBuffer(Allocator.Temp);
         foreach (
-            var (player, action, playerId)
-            in SystemAPI.Query<PlayerAspect, RefRW<Action>, PlayerId>()
+            var (player, playerState, action, playerId)
+            in SystemAPI.Query<PlayerAspect, RefRW<PlayerState>, RefRW<Action>, PlayerId>()
         ) {
             switch (action.ValueRO.State)
             {
@@ -51,7 +51,6 @@ public partial struct ActionSystem : ISystem
             
             var collisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
             var playerPosition = player.Position;
-            var playerHasHit = player.HasHit;
             var forward = player.IsFacingRight ? 1 : -1;
             var id = playerId.Value;
             var otherId = id == 1 ? 2 : 1;
@@ -107,7 +106,7 @@ public partial struct ActionSystem : ISystem
                         case ActionState.Active:
                         {
                             player.Random = Random.Range(0, 2);
-                            playerHasHit = Attack(
+                            playerState.ValueRW.HasHit = Attack(
                                 player.Self,
                                 playerPosition + new float3(forward * 2, 1, 0),
                                 new AttackPropterties {
@@ -127,13 +126,8 @@ public partial struct ActionSystem : ISystem
                             player.HitTime = Time.time;
                             break;
                         }
-                        case ActionState.Recovery:
-                        {
-                            player.IsPunching = false;
-                            player.HasHit = false;
-                            break;
-                        }
-                        case ActionState.Finished: { break; }
+                        case ActionState.Recovery: { player.IsPunching = false; break; }
+                        case ActionState.Finished: { playerState.ValueRW.HasHit = false; break; }
                     }
                     break;
                 }
@@ -145,7 +139,7 @@ public partial struct ActionSystem : ISystem
                         case ActionState.Startup:  { player.IsPunching = true; break; }
                         case ActionState.Active:
                         {
-                            playerHasHit = Attack(
+                            playerState.ValueRW.HasHit = Attack(
                                 player.Self,
                                 playerPosition + new float3(forward * 2, 1, 0),
                                 new AttackPropterties {
@@ -165,13 +159,8 @@ public partial struct ActionSystem : ISystem
                             player.HitTime = Time.time;
                             break;
                         }
-                        case ActionState.Recovery:
-                        {
-                            player.IsPunching = false;
-                            player.HasHit = false;
-                            break;
-                        }
-                        case ActionState.Finished: { break; }
+                        case ActionState.Recovery: { player.IsPunching = false; break; }
+                        case ActionState.Finished: { playerState.ValueRW.HasHit = false; break; }
                     }
                     break;
                 }
@@ -184,7 +173,7 @@ public partial struct ActionSystem : ISystem
                         case ActionState.Active:
                         {
                             player.Random = Random.Range(0, 2);
-                            playerHasHit = Attack(
+                            playerState.ValueRW.HasHit = Attack(
                                 player.Self,
                                 playerPosition + new float3(forward * 2, 1, 0),
                                 new AttackPropterties {
@@ -204,13 +193,8 @@ public partial struct ActionSystem : ISystem
                             player.HitTime = Time.time;
                             break;
                         }
-                        case ActionState.Recovery:
-                        {
-                            player.IsKicking = false;
-                            player.HasHit = false;
-                            break;
-                        }
-                        case ActionState.Finished: { break; }
+                        case ActionState.Recovery: { player.IsKicking = false; break; }
+                        case ActionState.Finished: { playerState.ValueRW.HasHit = false; break; }
                     }
                     break;
                 }
@@ -222,7 +206,7 @@ public partial struct ActionSystem : ISystem
                         case ActionState.Startup:  { player.IsKicking = true; break; }
                         case ActionState.Active:
                         {
-                            playerHasHit = Attack(
+                            playerState.ValueRW.HasHit = Attack(
                                 player.Self,
                                 playerPosition + new float3(forward * 2, 1, 0),
                                 new AttackPropterties {
@@ -242,13 +226,8 @@ public partial struct ActionSystem : ISystem
                             player.HitTime = Time.time;
                             break;
                         }
-                        case ActionState.Recovery:
-                        {
-                            player.IsKicking = false;
-                            player.HasHit = false;
-                            break;
-                        }
-                        case ActionState.Finished: { break; }
+                        case ActionState.Recovery: { player.IsKicking = false; break; }
+                        case ActionState.Finished: { playerState.ValueRW.HasHit = false; break; }
                     }
                     break;
                 }
@@ -316,10 +295,9 @@ public partial struct ActionSystem : ISystem
             }
             if (!action.ValueRO.Repeating) { action.ValueRW.DoAction = false; }
 
-            // TODO: why does this break after first hit ?
-            //player.HasHit = playerHasHit;
-            if (playerHasHit)
+            if (playerState.ValueRO.HasHit && action.ValueRO.State == ActionState.Active)
             {
+                Debug.Log(playerState.ValueRO.HasHit);
                 action.ValueRW.State++;
                 action.ValueRW.RecoverTime += action.ValueRO.ActiveTime;
                 action.ValueRW.ActiveTime = 0;
